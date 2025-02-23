@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+    <head>        
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Microgreens for All is dedicated to providing the freshest and healthiest microgreens to our community. Our mission is to promote healthy eating and sustainable farming practices." />
+        <meta name="keywords" content="microgreens, healthy eating, sustainable farming, fresh produce, vitamins, nutrients" />
+        <meta name="author" content="Microgreens for All" />
+        <title>Microgreens</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            body {
+                margin: 0;
+                font-family: "Poppins", sans-serif;
+            }
+
+            .hero {
+                position: relative;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .hero-background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-position: center;
+                filter: blur(4px) brightness(80%);
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                color: white;
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+
+            .hero-content img {
+                max-width: 100px;
+                margin-bottom: 1rem;
+            }
+
+            .navbar {
+                background: linear-gradient(
+                    to bottom,
+                    rgba(255, 0, 255, 0.6),
+                    transparent
+                ) !important; /* Add a gradient background */
+                box-shadow: none !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 1rem;
+                z-index: 1000;
+            }
+
+            .navbar-brand img {
+                max-height: 40px;
+            }
+
+            .navbar-menu {
+                justify-content: flex-end;
+            }
+
+            .navbar-item {
+                color: white !important; /* Change text color to white */
+                font-weight: bold !important;
+            }
+
+            .navbar-item:hover {
+                color: #ff00ff !important; /* Change text color on hover */
+                background-color: rgba(255, 255, 255, 0.2); /* Add a background color */
+                border-radius: 10px; /* Make the hover effect curved */
+                padding: 0.5rem 1rem; /* Adjust padding to make it smaller */
+            }
+
+            /* Adiciona os gradientes */
+            .hero::before,
+            .hero::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100px;
+                pointer-events: none;
+            }
+
+            .hero::after {
+                bottom: 0;
+                background: linear-gradient(
+                    to top,
+                    rgba(255, 255, 255, 0.5),
+                    transparent
+                );
+            }
+
+            /* Estilos do rodapé */
+            footer {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                color: white;
+            }
+
+            footer h1 {
+                font-size: 8em;
+                margin-bottom: 0.5rem;
+                font-weight: bold;
+            }
+
+            footer p {
+                font-size: 2em;
+                margin-bottom: 0.25rem;
+            }
+            /* Estilos da segunda seção */
+            .second-section {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 4rem 2rem;
+            }
+
+            .image-container {
+                width: 40%;
+                max-width: 500px;
+                position: relative;
+            }
+
+            .circular-image {
+                width: 100%;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+
+            .circular-image img {
+                width: 100%;
+                display: block;
+            }
+
+            .news-label {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background-color: #4caf50; /* Cor verde */
+                color: white;
+                padding: 0.5rem 1rem;
+                font-weight: bold;
+            }
+
+            .text-content {
+                width: 60%;
+                padding-left: 2rem;
+            }
+
+            .text-content h2 {
+                font-size: 3em;
+                margin-bottom: 1rem;
+            }
+
+            .text-content p {
+                font-size: 1.2em;
+                margin-bottom: 1.5rem;
+            }
+
+            .imagem-redonda {
+                width: 200px;
+                height: 200px;
+                border-radius: 50%;
+                overflow: hidden; /* Garante que a imagem não vaze para fora do círculo */
+            }
+
+            .imagem-redonda img {
+                width: 100%;
+                height: auto;
+                display: block; /* Remove espaços extras abaixo da imagem */
+            }
+
+            /* Ou, usando clip-path */
+            .imagem-redonda-clip {
+                clip-path: circle(50% at 50% 50%);
+            }
+
+            /* Estilos da terceira seção */
+            .third-section {
+                padding: 4rem 2rem;
+                text-align: center;
+            }
+
+            .third-section h2 {
+                font-size: 3em;
+                margin-bottom: 2rem;
+            }
+
+            .product-grid {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+
+            .product-item {
+                width: 300px;
+            }
+
+            .product-item .circular-image {
+                width: 200px;
+                height: 200px;
+                margin: 0 auto 1rem;
+            }
+
+            .product-item h3 {
+                font-size: 1.5em;
+                margin-bottom: 0.5rem;
+            }
+
+            .product-item p {
+                font-size: 1.1em;
+                text-align: left;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="hero is-fullheight" id="home">
+            <div class="hero-background" id="hero-bg"></div>
+
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    <a class="navbar-item" id="logo-link">
+                        <img id="logo" src="" alt="Logo" />
+                    </a>
+                </div>
+
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item" href="#home" id="nav-home">Home</a>
+                        <a class="navbar-item" href="#menu" id="nav-menu">Menu</a>
+                        <a class="navbar-item" href="#about" id="nav-about">About Me</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="hero-content">
+                <img id="main-logo" src="" alt="Microgreens Logo" />
+            </div>
+
+            <footer>
+                <h1 id="main-title"></h1>
+                <p id="contact-email"></p>
+                <p id="social-link"></p>
+            </footer>
+        </section>
+        <section
+            class="second-section"
+            id="about"
+            style="margin-top: 14rem; margin-bottom: 14rem; scroll-margin-top: 5rem;"
+        >
+            <div class="image-container">
+                <div class="circular-image">
+                    <img id="about-image" src="" alt="Breaking News" />
+                </div>
+            </div>
+            <div class="text-content">
+                <h2 id="about-title"></h2>
+                <p id="about-text" style="text-align: justify"></p>
+                <h2 id="about-healthy-title"></h2>
+                <p id="about-healthy-text" style="text-align: justify"></p>
+            </div>
+            <div class="column" style="width: 100%; margin-top: 2rem;"></div>
+                <div class="box">
+                    <p class="subtitle">Address:</p>
+                    <p id="address"></p>
+                    <div class="map" id="map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?view=map"
+                            width="100%"
+                            height="300"
+                            frameborder="0"
+                            style="border: 0"
+                            allowfullscreen=""
+                        >
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="third-section" id="menu" style="margin-top: 10rem; margin-bottom: 8rem">
+            <h2 id="products-title"></h2>
+            <div class="product-grid" id="product-grid">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <script>
+            $(document).ready(function () {
+                // Parâmetros para os elementos da página
+                const pageData = {
+                    backgroundImage:
+                        "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/repli-2LVAiiQrkN.webp",
+                    logoSrc:
+                        "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/logomarca.png",
+                    mainLogoSrc:
+                        "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/logomarca.png",
+                    mainTitle: "Microgreens for All",
+                    contactEmail: "contact@microgreensforall.com",
+                    socialLink: "@microgreensforall",
+                    navHome: "Home",
+                    navMenu: "Products",
+                    navAbout: "About Us",
+                    aboutImage:
+                        "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/breacking%20news.jpeg",
+                    aboutTitle: "About Us",
+                    aboutText:
+                        "Microgreens for All is dedicated to providing the freshest and healthiest microgreens to our community. Our mission is to promote healthy eating and sustainable farming practices.",
+                    aboutHealthyTitle: "About Healthy Food",
+                    aboutHealthyText:
+                        "Microgreens are packed with nutrients and are a great addition to any meal. They are easy to grow and can be harvested in just a few weeks. Join us in our journey to a healthier lifestyle.",
+                    address: "5760, Av. de Darlington, Montreal, Canada",
+                    productsTitle: "Our Products",
+                    products: [
+                        {
+                            image:
+                                "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/repli-op2WWrDXyK.webp",
+                            title: "Sunflower Microgreens",
+                            description:
+                                "Sunflower microgreens are a great source of vitamins A, B, C, D, and E. They have a nutty flavor and are perfect for adding to salads, sandwiches, and smoothies.",
+                        },
+                        {
+                            image:
+                                "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/repli-YkMcbGw0je.webp",
+                            title: "Radish Microgreens",
+                            description:
+                                "Radish microgreens have a spicy flavor and are rich in vitamins A, B, C, E, and K. They are known for their high antioxidant content and are great for boosting the immune system.",
+                        },
+                        {
+                            image:
+                                "https://raw.githubusercontent.com/rondweb/cdn-leaftix/refs/heads/main/images/repli-s1bzJwgBwK.webp",
+                            title: "Broccoli Microgreens",
+                            description:
+                                "Broccoli microgreens are packed with vitamins A, B, C, E, and K. They have a mild, fresh flavor and are known for their cancer-fighting properties due to their high sulforaphane content.",
+                        },
+                    ],
+                };
+
+                // Insere os dados na página
+                $("#hero-bg").css(
+                    "background-image",
+                    `url(${pageData.backgroundImage})`
+                );
+                $("#logo").attr("src", pageData.logoSrc);
+                $("#main-logo").attr("src", pageData.mainLogoSrc);
+                $("#main-title").text(pageData.mainTitle);
+                $("#contact-email").text(pageData.contactEmail);
+                $("#social-link").text(pageData.socialLink);
+                $("#nav-home").text(pageData.navHome);
+                $("#nav-menu").text(pageData.navMenu);
+                $("#nav-about").text(pageData.navAbout);
+                $("#about-image").attr("src", pageData.aboutImage);
+                $("#about-title").text(pageData.aboutTitle);
+                $("#about-text").text(pageData.aboutText);
+                $("#about-healthy-title").text(pageData.aboutHealthyTitle);
+                $("#about-healthy-text").text(pageData.aboutHealthyText);
+                $("#address").text(pageData.address);
+                $("#products-title").text(pageData.productsTitle);
+
+                // Insere os produtos na página
+                pageData.products.forEach((product) => {
+                    $("#product-grid").append(`
+                        <div class="product-item">
+                            <div class="circular-image">
+                                <img src="${product.image}" alt="${product.title}" />
+                            </div>
+                            <h3>${product.title}</h3>
+                            <p style="text-align: justify">${product.description}</p>
+                        </div>
+                    `);
+                });
+            });
+        </script>
+    </body>
+</html>
