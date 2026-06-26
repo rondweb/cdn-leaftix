@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="pt-BR" dir="ltr">
+<html class="dark" lang="en" dir="ltr">
 <head>
   <!-- ═══════════════════════════════════════════════════════
        CHARSET & VIEWPORT
@@ -7,42 +7,60 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="format-detection" content="telephone=no, email=no, address=no">
 
   <!-- ═══════════════════════════════════════════════════════
        SEO CORE — Primary
   ═══════════════════════════════════════════════════════ -->
-  <title data-i18n-title="meta.title">Leaftix GaiaOS — Governança Inteligente para Produção Sustentável | Leaftix</title>
-  <meta name="description" content="Leaftix GaiaOS é o sistema operacional de governança autônoma da Leaftix para produção sustentável de alimentos. IA multi-agente, Digital Twin, arquitetura edge-native — do monitoramento à governança proativa." data-i18n-meta="meta.description">
-  <meta name="keywords" content="Leaftix GaiaOS, Leaftix, inteligência artificial agricultura, governança autônoma, produção sustentável, digital twin, agtech, precision farming, food security, AI agriculture, sustainable food production, autonomous governance">
+  <title data-i18n-title="meta.title">Leaftix GaiaOS — Intelligent Governance for Sustainable Production | Leaftix</title>
+  <meta name="description" content="Leaftix GaiaOS is Leaftix's autonomous governance operating system for sustainable food production. Multi-agent AI, Digital Twin, edge-native architecture — from monitoring to proactive governance." data-i18n-meta="meta.description">
+  <meta name="keywords" content="Leaftix GaiaOS, Leaftix, artificial intelligence agriculture, autonomous governance, sustainable production, digital twin, agtech, precision farming, food security, AI agriculture, sustainable food production, autonomous governance, edge computing agriculture">
   <meta name="author" content="Leaftix">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="googlebot" content="index, follow">
+  <meta name="googlebot" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://leaftix.com">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://leaftix.com/sitemap.xml">
 
   <!-- ═══════════════════════════════════════════════════════
        HREFLANG — Multilingual SEO
+       English is the primary / x-default language
   ═══════════════════════════════════════════════════════ -->
-  <link rel="alternate" hreflang="pt" href="https://leaftix.com">
-  <link rel="alternate" hreflang="en" href="https://leaftix.com?lang=en">
+  <link rel="alternate" hreflang="en" href="https://leaftix.com">
+  <link rel="alternate" hreflang="pt" href="https://leaftix.com?lang=pt">
   <link rel="alternate" hreflang="fr" href="https://leaftix.com?lang=fr">
   <link rel="alternate" hreflang="x-default" href="https://leaftix.com">
+
+  <!-- ═══════════════════════════════════════════════════════
+       DNS-PREFETCH & PRECONNECT — Performance
+  ═══════════════════════════════════════════════════════ -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.clarity.ms">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preload" href="leaftix_green.png" as="image" fetchpriority="high">
 
   <!-- ═══════════════════════════════════════════════════════
        OPEN GRAPH — Social Sharing (FB, LinkedIn, WhatsApp)
   ═══════════════════════════════════════════════════════ -->
   <meta property="og:site_name" content="Leaftix">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Leaftix GaiaOS — Governança Inteligente para Produção Sustentável">
-  <meta property="og:description" content="O futuro da produção sustentável não será monitorado. Será governado. Leaftix GaiaOS é a infraestrutura cognitiva da Leaftix para ambientes que não podem errar.">
+  <meta property="og:title" content="Leaftix GaiaOS — Intelligent Governance for Sustainable Production">
+  <meta property="og:description" content="The future of sustainable production will not be monitored. It will be governed. Leaftix GaiaOS is Leaftix's cognitive infrastructure for environments that cannot afford to fail.">
   <meta property="og:image" content="https://leaftix.com/og-image.png">
   <meta property="og:image:secure_url" content="https://leaftix.com/og-image.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Leaftix GaiaOS — Sistema operacional de governança autônoma por Leaftix">
+  <meta property="og:image:alt" content="Leaftix GaiaOS — Autonomous governance operating system by Leaftix for sustainable food production">
   <meta property="og:url" content="https://leaftix.com">
-  <meta property="og:locale" content="pt_BR">
-  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="pt_BR">
   <meta property="og:locale:alternate" content="fr_FR">
 
   <!-- ═══════════════════════════════════════════════════════
@@ -51,10 +69,10 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@leaftix">
   <meta name="twitter:creator" content="@leaftix">
-  <meta name="twitter:title" content="Leaftix GaiaOS — Governança Inteligente para Produção Sustentável">
-  <meta name="twitter:description" content="O futuro da produção sustentável não será monitorado. Será governado. IA multi-agente para segurança alimentar global.">
+  <meta name="twitter:title" content="Leaftix GaiaOS — Intelligent Governance for Sustainable Production">
+  <meta name="twitter:description" content="The future of sustainable production will not be monitored. It will be governed. Multi-agent AI for global food security.">
   <meta name="twitter:image" content="https://leaftix.com/og-image.png">
-  <meta name="twitter:image:alt" content="Leaftix GaiaOS por Leaftix">
+  <meta name="twitter:image:alt" content="Leaftix GaiaOS by Leaftix — Autonomous governance for sustainable agriculture">
 
   <!-- ═══════════════════════════════════════════════════════
        FAVICONS & PWA
@@ -63,9 +81,11 @@
   <link rel="apple-touch-icon" href="leaftix_green.png">
   <meta name="theme-color" content="#04080F">
   <meta name="msapplication-TileColor" content="#04080F">
+  <meta name="msapplication-TileImage" content="leaftix_green.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="thumbnail" content="https://leaftix.com/og-image.png">
 
   <!-- ═══════════════════════════════════════════════════════
        GOOGLE RICH SNIPPETS — Structured Data (JSON-LD)
@@ -90,9 +110,9 @@
           "caption": "Leaftix"
         },
         "image": {"@id": "https://leaftix.com/#logo"},
-        "description": "Leaftix desenvolve sistemas de governança autônoma baseados em IA para produção sustentável de alimentos. Nosso produto principal, Leaftix GaiaOS, combina arquitetura multi-agente, Digital Twin e edge computing para governança proativa de ambientes agrícolas.",
+        "description": "Leaftix develops AI-based autonomous governance systems for sustainable food production. Our flagship product, Leaftix GaiaOS, combines multi-agent architecture, Digital Twin and edge computing for proactive governance of agricultural environments.",
         "foundingDate": "2024",
-        "knowsLanguage": ["pt-BR", "en", "fr"],
+        "knowsLanguage": ["en", "pt-BR", "fr"],
         "areaServed": "Worldwide",
         "sameAs": [
           "https://www.linkedin.com/company/leaftix",
@@ -102,7 +122,7 @@
           "@type": "ContactPoint",
           "contactType": "customer support",
           "email": "hello@leaftix.com",
-          "availableLanguage": ["Portuguese", "English", "French"]
+          "availableLanguage": ["English", "Portuguese", "French"]
         }
       },
       {
@@ -110,17 +130,26 @@
         "@id": "https://leaftix.com/#website",
         "url": "https://leaftix.com",
         "name": "Leaftix — Leaftix GaiaOS",
-        "description": "Sistema operacional de governança autônoma para produção sustentável de alimentos.",
+        "description": "Autonomous governance operating system for sustainable food production.",
         "publisher": {"@id": "https://leaftix.com/#organization"},
-        "inLanguage": ["pt-BR", "en", "fr"],
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://leaftix.com?q={search_term_string}"
+        "inLanguage": ["en", "pt-BR", "fr"],
+        "potentialAction": [
+          {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://leaftix.com?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
           },
-          "query-input": "required name=search_term_string"
-        }
+          {
+            "@type": "ReadAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://leaftix.com"
+            }
+          }
+        ]
       },
       {
         "@type": "SoftwareApplication",
@@ -129,7 +158,7 @@
         "applicationCategory": "BusinessApplication",
         "applicationSubCategory": "Agricultural Technology",
         "operatingSystem": "Web, Cloud, Edge",
-        "description": "Sistema operacional de governança autônoma multi-agente para produção sustentável de alimentos. Combina Digital Twin (variância < 2%), IA edge-native e arquitetura tripartite mitológica (Olimpo, Terra, Hades) para governança proativa de ambientes agrícolas. Redução comprovada de 34% no consumo de energia por grama de biomassa.",
+        "description": "Multi-agent autonomous governance operating system for sustainable food production. Combines Digital Twin (variance < 2%), edge-native AI and tripartite mythological architecture (Olympus, Terra, Hades) for proactive governance of agricultural environments. Proven 34% reduction in energy consumption per gram of biomass.",
         "url": "https://leaftix.com",
         "creator": {"@id": "https://leaftix.com/#organization"},
         "provider": {"@id": "https://leaftix.com/#organization"},
@@ -138,32 +167,55 @@
           "price": "0",
           "priceCurrency": "USD",
           "availability": "https://schema.org/PreOrder",
-          "description": "Acesso antecipado — lista de espera gratuita"
+          "description": "Early access — free waitlist"
         },
         "featureList": [
-          "Arquitetura Multi-Agente com orquestração Gaia",
-          "Digital Twin com variância menor que 2%",
-          "Redução de 34% no consumo de energia por grama de biomassa",
-          "Arquitetura Edge-native distribuída",
-          "Processamento de dados ambientais em tempo real",
-          "Governança financeira e estratégica automatizada",
-          "Integração com sensores IoT e maquinário autônomo"
+          "Multi-Agent Architecture with Gaia orchestration",
+          "Digital Twin with less than 2% variance",
+          "34% reduction in energy consumption per gram of biomass",
+          "Distributed edge-native architecture",
+          "Real-time environmental data processing",
+          "Automated financial and strategic governance",
+          "IoT sensor and autonomous machinery integration"
         ],
-        "screenshot": "https://leaftix.com/screen.png"
+        "screenshot": "https://leaftix.com/screen.png",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Leaftix GaiaOS Plans",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Early Access Waitlist",
+                "description": "Free early access to Leaftix GaiaOS"
+              },
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
       },
       {
         "@type": "WebPage",
         "@id": "https://leaftix.com/#webpage",
         "url": "https://leaftix.com",
-        "name": "Leaftix GaiaOS Manifesto — O futuro da produção sustentável | Leaftix",
+        "name": "Leaftix GaiaOS Manifesto — The future of sustainable production | Leaftix",
         "isPartOf": {"@id": "https://leaftix.com/#website"},
         "about": {"@id": "https://leaftix.com/#gaiaos"},
         "primaryImageOfPage": {
           "@type": "ImageObject",
           "url": "https://leaftix.com/og-image.png"
         },
-        "description": "Manifesto pela resiliência planetária: o futuro da produção sustentável não será monitorado, será governado por inteligência autônoma.",
-        "inLanguage": "pt-BR",
+        "description": "A manifesto for planetary resilience: the future of sustainable production will not be monitored, it will be governed by autonomous intelligence.",
+        "inLanguage": "en",
+        "hasPart": [
+          {"@type": "WebPageElement", "name": "The Crisis", "url": "https://leaftix.com#crisis"},
+          {"@type": "WebPageElement", "name": "The Solution", "url": "https://leaftix.com#solution"},
+          {"@type": "WebPageElement", "name": "Architecture", "url": "https://leaftix.com#architecture"},
+          {"@type": "WebPageElement", "name": "The System", "url": "https://leaftix.com#system"},
+          {"@type": "WebPageElement", "name": "Vision", "url": "https://leaftix.com#vision"}
+        ],
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
@@ -187,26 +239,42 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "O que é o Leaftix GaiaOS?",
+            "name": "What is Leaftix GaiaOS?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Leaftix GaiaOS é o sistema operacional de governança autônoma da Leaftix para produção sustentável de alimentos. É uma infraestrutura cognitiva multi-agente que conecta sensores ambientais, nós de borda e maquinário autônomo em uma única inteligência capaz de antecipar e mitigar riscos climáticos antes que impactem a produção."
+              "text": "Leaftix GaiaOS is Leaftix's autonomous governance operating system for sustainable food production. It is a multi-agent cognitive infrastructure that connects environmental sensors, edge nodes and autonomous machinery into a single intelligence capable of anticipating and mitigating climate risks before they impact production."
             }
           },
           {
             "@type": "Question",
-            "name": "Como o Leaftix GaiaOS diferencia de sistemas de monitoramento convencionais?",
+            "name": "How does Leaftix GaiaOS differ from conventional monitoring systems?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Enquanto sistemas convencionais apenas monitoram passivamente, o Leaftix GaiaOS governa proativamente. Com Digital Twin de variância menor que 2%, redução de 34% no consumo de energia e arquitetura edge-native distribuída, o sistema toma decisões autônomas antes que problemas climáticos impactem a produção."
+              "text": "While conventional systems only monitor passively, Leaftix GaiaOS governs proactively. With Digital Twin variance under 2%, a 34% reduction in energy consumption and distributed edge-native architecture, the system makes autonomous decisions before climate problems impact production."
             }
           },
           {
             "@type": "Question",
-            "name": "Qual é a arquitetura do Leaftix GaiaOS?",
+            "name": "What is the architecture of Leaftix GaiaOS?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "O Leaftix GaiaOS utiliza uma arquitetura tripartite mitológica: Olimpo (conselho de soberania com Gaia, Athena e Hermes), Terra (interface de manifestação e execução física) e Hades (motor de inteligência material para mineração de dados). Esta estrutura garante governança hierárquica e multi-agente robusta."
+              "text": "Leaftix GaiaOS uses a tripartite mythological architecture: Olympus (sovereignty council with Gaia, Athena and Hermes), Terra (manifestation interface and physical execution) and Hades (material intelligence engine for data mining). This structure ensures robust hierarchical and multi-agent governance."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I get early access to Leaftix GaiaOS?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can join the free early access waitlist by submitting your professional email through the form on the Leaftix GaiaOS website. We will contact you as soon as the system becomes available."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What kind of data does Leaftix GaiaOS process?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Leaftix GaiaOS processes terabytes of environmental data in real time, including climate patterns, soil moisture, temperature gradients, market data and IoT sensor inputs. This data feeds the multi-agent AI system to enable proactive governance decisions."
             }
           }
         ]
@@ -217,7 +285,7 @@
 
   <!-- ═══════════════════════════════════════════════════════
        GOOGLE ANALYTICS 4
-       Valor injetado via build.ps1 a partir do .env
+       Value injected via build.ps1 from .env
   ═══════════════════════════════════════════════════════ -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=XXXXX"></script>
   <script>
@@ -229,7 +297,7 @@
       page_location: window.location.href,
       send_page_view: true
     });
-    // Helper para eventos GA4
+    // GA4 event helper
     function trackEvent(action, category, label, value) {
       if (typeof gtag !== 'undefined') {
         gtag('event', action, {
@@ -243,7 +311,7 @@
 
   <!-- ═══════════════════════════════════════════════════════
        MICROSOFT CLARITY
-       Valor injetado via build.ps1 a partir do .env
+       Value injected via build.ps1 from .env
   ═══════════════════════════════════════════════════════ -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -256,9 +324,6 @@
   <!-- ═══════════════════════════════════════════════════════
        FONTS — Preconnect + Google Fonts
   ═══════════════════════════════════════════════════════ -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://www.googletagmanager.com">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -486,16 +551,16 @@
   <!-- ═══════════════════════════════════════════════════════
        MOBILE MENU OVERLAY
   ═══════════════════════════════════════════════════════ -->
-  <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navegação">
-    <button id="mobile-menu-close" class="absolute top-6 right-6 text-primary" aria-label="Fechar menu">
+  <div id="mobile-menu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <button id="mobile-menu-close" class="absolute top-6 right-6 text-primary" aria-label="Close menu">
       <span class="material-symbols-outlined text-3xl">close</span>
     </button>
     <nav class="flex flex-col items-center gap-8">
-      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#crisis" data-i18n="nav.crisis" onclick="closeMobileMenu()">O Problema</a>
-      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#solution" data-i18n="nav.solution" onclick="closeMobileMenu()">A Solução</a>
-      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#architecture" data-i18n="nav.architecture" onclick="closeMobileMenu()">Arquitetura</a>
+      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#crisis" data-i18n="nav.crisis" onclick="closeMobileMenu()">The Problem</a>
+      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#solution" data-i18n="nav.solution" onclick="closeMobileMenu()">The Solution</a>
+      <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#architecture" data-i18n="nav.architecture" onclick="closeMobileMenu()">Architecture</a>
       <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors" href="#vision" data-i18n="nav.manifesto" onclick="closeMobileMenu()">Manifesto</a>
-      <a class="mt-4 inline-flex items-center justify-center px-8 py-3 bg-primary text-on-primary font-label-caps text-label-caps uppercase font-bold rounded hover:bg-resilience-green transition-colors" href="#vision" onclick="closeMobileMenu()" data-i18n="nav.cta">Solicitar Acesso</a>
+      <a class="mt-4 inline-flex items-center justify-center px-8 py-3 bg-primary text-on-primary font-label-caps text-label-caps uppercase font-bold rounded hover:bg-resilience-green transition-colors" href="#vision" onclick="closeMobileMenu()" data-i18n="nav.cta">Request Access</a>
     </nav>
   </div>
 
@@ -503,20 +568,20 @@
        NAVIGATION
   ═══════════════════════════════════════════════════════ -->
   <header>
-    <nav id="main-nav" class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/20 transition-all duration-300" role="navigation" aria-label="Navegação principal">
+    <nav id="main-nav" class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/20 transition-all duration-300" role="navigation" aria-label="Main navigation">
       <div class="flex justify-between items-center w-full px-5 md:px-16 py-4 max-w-[1440px] mx-auto">
 
         <!-- Brand -->
-        <a class="flex items-center gap-3 group" href="/" aria-label="Leaftix — Página inicial">
-          <img alt="Leaftix Logo" class="h-8 w-auto drop-shadow-[0_0_10px_rgba(61,211,161,0.5)] group-hover:scale-105 transition-transform" src="leaftix_green.png" width="120" height="32" loading="eager">
+        <a class="flex items-center gap-3 group" href="/" aria-label="Leaftix — Home page">
+          <img alt="Leaftix Logo — Green leaf symbol representing sustainable agriculture technology" class="h-8 w-auto drop-shadow-[0_0_10px_rgba(61,211,161,0.5)] group-hover:scale-105 transition-transform" src="leaftix_green.png" width="120" height="32" loading="eager">
           <span class="font-headline-md text-headline-md font-black tracking-tighter text-primary">Leaftix GaiaOS</span>
         </a>
 
         <!-- Desktop Nav Links -->
         <div class="hidden md:flex items-center gap-8" role="menubar">
-          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#crisis" data-i18n="nav.crisis" role="menuitem">O Problema</a>
-          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#solution" data-i18n="nav.solution" role="menuitem">A Solução</a>
-          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#architecture" data-i18n="nav.architecture" role="menuitem">Arquitetura</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#crisis" data-i18n="nav.crisis" role="menuitem">The Problem</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#solution" data-i18n="nav.solution" role="menuitem">The Solution</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase" href="#architecture" data-i18n="nav.architecture" role="menuitem">Architecture</a>
           <a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps uppercase" href="#vision" data-i18n="nav.manifesto" role="menuitem">Manifesto</a>
         </div>
 
@@ -525,17 +590,17 @@
 
           <!-- Language Switcher -->
           <div class="relative" id="lang-switcher">
-            <button id="lang-btn" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors duration-300 px-2 py-1 rounded" aria-haspopup="listbox" aria-expanded="false" aria-label="Selecionar idioma">
+            <button id="lang-btn" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary transition-colors duration-300 px-2 py-1 rounded" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language">
               <span class="material-symbols-outlined text-lg" style="font-variation-settings:'FILL' 0;">language</span>
-              <span id="lang-label" class="font-label-caps text-label-caps uppercase">PT</span>
+              <span id="lang-label" class="font-label-caps text-label-caps uppercase">EN</span>
               <span class="material-symbols-outlined text-sm">expand_more</span>
             </button>
-            <div id="lang-dropdown" class="lang-dropdown" role="listbox" aria-label="Idiomas disponíveis">
-              <div class="lang-option active" data-lang="pt" role="option" aria-selected="true" tabindex="0">
-                <span>🇧🇷</span> Português
-              </div>
-              <div class="lang-option" data-lang="en" role="option" aria-selected="false" tabindex="0">
+            <div id="lang-dropdown" class="lang-dropdown" role="listbox" aria-label="Available languages">
+              <div class="lang-option" data-lang="en" role="option" aria-selected="true" tabindex="0">
                 <span>🇺🇸</span> English
+              </div>
+              <div class="lang-option" data-lang="pt" role="option" aria-selected="false" tabindex="0">
+                <span>🇧🇷</span> Português
               </div>
               <div class="lang-option" data-lang="fr" role="option" aria-selected="false" tabindex="0">
                 <span>🇫🇷</span> Français
@@ -545,11 +610,11 @@
 
           <!-- Desktop CTA -->
           <a id="nav-cta" class="hidden md:inline-flex items-center justify-center px-6 py-2 bg-primary text-on-primary font-label-caps text-label-caps uppercase font-bold rounded hover:bg-resilience-green transition-colors hover:shadow-[0_0_15px_rgba(61,211,161,0.4)] active:scale-95" href="#vision" data-i18n="nav.cta">
-            Solicitar Acesso
+            Request Access
           </a>
 
           <!-- Mobile Hamburger -->
-          <button id="mobile-menu-btn" class="md:hidden text-primary p-1" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false">
+          <button id="mobile-menu-btn" class="md:hidden text-primary p-1" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
             <span class="material-symbols-outlined text-2xl">menu</span>
           </button>
         </div>
@@ -567,19 +632,19 @@
       <!-- Status badge -->
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 backdrop-blur-md mb-8 reveal">
         <div class="w-2 h-2 rounded-full bg-resilience-green animate-pulse" aria-hidden="true"></div>
-        <span class="font-label-caps text-label-caps text-primary uppercase tracking-widest" data-i18n="hero.badge">Inicialização do Sistema</span>
+        <span class="font-label-caps text-label-caps text-primary uppercase tracking-widest" data-i18n="hero.badge">System Initialization</span>
       </div>
 
       <h1 id="hero-heading" class="font-display-lg text-[32px] md:text-[72px] text-on-surface mb-8 max-w-5xl leading-tight glow-text reveal">
-        <span data-i18n="hero.title1">O futuro da produção sustentável não será monitorado.</span><br>
-        <span class="text-primary" data-i18n="hero.title2">Será governado.</span>
+        <span data-i18n="hero.title1">The future of sustainable production will not be monitored.</span><br>
+        <span class="text-primary" data-i18n="hero.title2">It will be governed.</span>
       </h1>
 
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12 reveal" data-i18n="hero.subtitle">
-        Um manifesto pela resiliência planetária, impulsionado por inteligência artificial e precisão absoluta de dados.
+        A manifesto for planetary resilience, driven by artificial intelligence and absolute data precision.
       </p>
 
-      <a class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-primary/20 bg-surface-container/50 text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300 animate-bounce backdrop-blur-sm" href="#crisis" aria-label="Rolar para conteúdo principal">
+      <a class="inline-flex items-center justify-center w-14 h-14 rounded-full border border-primary/20 bg-surface-container/50 text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300 animate-bounce backdrop-blur-sm" href="#crisis" aria-label="Scroll to main content">
         <span class="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
       </a>
     </section>
@@ -591,16 +656,16 @@
           <div class="absolute top-0 right-0 p-4 opacity-10" aria-hidden="true">
             <span class="material-symbols-outlined text-9xl">cyclone</span>
           </div>
-          <p class="font-label-caps text-label-caps text-error mb-4 uppercase tracking-widest" id="crisis-heading" data-i18n="crisis.label">01 // A Crise</p>
+          <p class="font-label-caps text-label-caps text-error mb-4 uppercase tracking-widest" id="crisis-heading" data-i18n="crisis.label">01 // The Crisis</p>
           <h2 class="font-headline-md text-[32px] md:text-headline-md text-on-surface mb-6" data-i18n="crisis.title">
-            A agricultura convencional foi construída sobre uma premissa que o planeta já não sustenta: clima estável.
+            Conventional agriculture was built on a premise the planet no longer sustains: a stable climate.
           </h2>
           <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="crisis.body">
-            As variáveis mudaram. Com o Super El Niño redefinindo a pluviometria global e as rotas de fertilizantes bloqueadas por conflitos, a estratégia de segurança alimentar exige novos paradigmas. Não estamos apenas navegando em uma tempestade; os modelos antigos simplesmente pararam de funcionar.
+            The variables have changed. With Super El Niño redefining global rainfall patterns and fertilizer routes blocked by conflict, food security strategy demands new paradigms. We are not just navigating a storm; the old models have simply stopped working.
           </p>
         </div>
         <div class="md:col-span-6 md:col-start-7 h-[400px] rounded-xl overflow-hidden relative border border-outline-variant/30 reveal">
-          <img class="w-full h-full object-cover mix-blend-luminosity opacity-70" alt="Visualização científica de anomalias de temperatura oceânica — evento El Niño. Mapa global mostrando gradientes de calor intensos em verde esmeralda e ciano contra fundo azul marinho." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ1cZSKZ6_kqFzbbmjogiRfVtVCL8SFZeHEtLn5rBTR-R-tv8NZ64XOyB57IPIKxo_Rh26HBj30UVKMeb78GhbRWyKlhCfXgQ6W_Q8RXytbFvbSIYdKBwaNLm2_zS2JOofWh0qpXBXZl9rI-KT4KcZzpfuR6s-AorKr1v97-4qwv-hpTFmB17ucnfpy6JcHHnhzUhXT8zCEhKHWplK71qGb__XxjHV3IRO4tm-MQ7VM9GLOKOXULuOo-MssZUGYSqXeNlJwBJa_CcD_ik" width="800" height="400" loading="lazy">
+          <img class="w-full h-full object-cover mix-blend-luminosity opacity-70" alt="Scientific visualization of ocean temperature anomalies — El Niño event. Global map showing intense heat gradients in emerald green and cyan against a navy blue background, illustrating climate disruption patterns that impact global food production." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ1cZSKZ6_kqFzbbmjogiRfVtVCL8SFZeHEtLn5rBTR-R-tv8NZ64XOyB57IPIKxo_Rh26HBj30UVKMeb78GhbRWyKlhCfXgQ6W_Q8RXytbFvbSIYdKBwaNLm2_zS2JOofWh0qpXBXZl9rI-KT4KcZzpfuR6s-AorKr1v97-4qwv-hpTFmB17ucnfpy6JcHHnhzUhXT8zCEhKHWplK71qGb__XxjHV3IRO4tm-MQ7VM9GLOKOXULuOo-MssZUGYSqXeNlJwBJa_CcD_ik" width="800" height="400" loading="lazy">
           <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" aria-hidden="true"></div>
         </div>
       </div>
@@ -609,9 +674,9 @@
     <!-- ─── SECTION 2: THE SOLUTION ───────────────────────── -->
     <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16" id="solution" aria-labelledby="solution-heading">
       <div class="flex flex-col items-center text-center mb-16 reveal">
-        <p class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest" data-i18n="solution.label">02 // A Solução</p>
+        <p class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest" data-i18n="solution.label">02 // The Solution</p>
         <h2 id="solution-heading" class="font-headline-lg text-[32px] md:text-headline-lg text-on-surface max-w-4xl" data-i18n="solution.title">
-          Nascemos da certeza de que a produção de alimentos precisa ser ativamente governada por inteligência autônoma.
+          We were born from the certainty that food production must be actively governed by autonomous intelligence.
         </h2>
       </div>
 
@@ -622,8 +687,8 @@
             <span class="material-symbols-outlined">hub</span>
           </div>
           <div>
-            <h3 id="card1-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card1.title">Arquitetura Multi-Agente</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card1.body">Arquitetura multi-agente estabelecendo uma rede neural em ecossistemas de produção.</p>
+            <h3 id="card1-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card1.title">Multi-Agent Architecture</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card1.body">Multi-agent architecture establishing a neural network across production ecosystems.</p>
           </div>
         </article>
         <!-- Card 2 -->
@@ -632,8 +697,8 @@
             <span class="material-symbols-outlined">memory</span>
           </div>
           <div>
-            <h3 id="card2-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card2.title">Núcleo Cognitivo</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card2.body">Algoritmos de aprendizado contínuo processando terabytes de dados ambientais em tempo real.</p>
+            <h3 id="card2-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card2.title">Cognitive Core</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card2.body">Continuous learning algorithms processing terabytes of environmental data in real time.</p>
           </div>
         </article>
         <!-- Card 3 -->
@@ -642,8 +707,8 @@
             <span class="material-symbols-outlined">shield_lock</span>
           </div>
           <div>
-            <h3 id="card3-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card3.title">Governança Autônoma</h3>
-            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card3.body">Mudando do monitoramento reativo para uma governança proativa e automatizada.</p>
+            <h3 id="card3-title" class="font-headline-md text-xl font-bold text-on-surface mb-2" data-i18n="solution.card3.title">Autonomous Governance</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant" data-i18n="solution.card3.body">Shifting from reactive monitoring to proactive and automated governance.</p>
           </div>
         </article>
       </div>
@@ -652,31 +717,31 @@
     <!-- ─── SECTION 3: MYTHOLOGICAL ARCHITECTURE ─────────── -->
     <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16" id="architecture" aria-labelledby="arch-heading">
       <div class="flex flex-col items-center text-center mb-16 reveal">
-        <p class="font-label-caps text-label-caps text-tertiary mb-4 uppercase tracking-widest" data-i18n="arch.label">A Arquitetura Mitológica</p>
+        <p class="font-label-caps text-label-caps text-tertiary mb-4 uppercase tracking-widest" data-i18n="arch.label">The Mythological Architecture</p>
         <h2 id="arch-heading" class="font-headline-lg text-[32px] md:text-headline-lg text-on-surface max-w-4xl" data-i18n="arch.title">
-          O Modelo de Governança Tripartite
+          The Tripartite Governance Model
         </h2>
         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mx-auto mt-6" data-i18n="arch.subtitle">
-          Uma infraestrutura de IA hierárquica e multi-agente. A ingestão contínua de dados globais impulsiona a execução física agrícola sob estrita governança financeira e estratégica de modelos de alta performance.
+          A hierarchical and multi-agent AI infrastructure. Continuous global data ingestion drives agricultural physical execution under the strict financial and strategic governance of high-performance models.
         </p>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
         <div class="glass-panel p-2 rounded-xl border border-primary/20 bg-black/40 reveal">
-          <img alt="Diagrama do Modelo de Governança Tripartite do Leaftix GaiaOS: três camadas (Olimpo, Terra, Hades) interconectadas em rede neural hierárquica" class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_tripartite.jpg" width="600" height="400" loading="lazy">
+          <img alt="Leaftix GaiaOS Tripartite Governance Model diagram: three interconnected layers (Olympus, Terra, Hades) forming a hierarchical neural network for autonomous agricultural governance and decision-making" class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_tripartite.jpg" width="600" height="400" loading="lazy">
         </div>
         <div class="flex flex-col gap-8 reveal">
           <div class="border-l-2 border-tertiary pl-6 py-2">
-            <h3 class="font-headline-md text-2xl text-tertiary mb-2" data-i18n="arch.olimpo.title">Olimpo</h3>
-            <p class="font-body-md text-on-surface-variant" data-i18n="arch.olimpo.body">O Conselho de Soberania. Deliberação Estratégica e Decisão Final.</p>
+            <h3 class="font-headline-md text-2xl text-tertiary mb-2" data-i18n="arch.olimpo.title">Olympus</h3>
+            <p class="font-body-md text-on-surface-variant" data-i18n="arch.olimpo.body">The Council of Sovereignty. Strategic Deliberation and Final Decision.</p>
           </div>
           <div class="border-l-2 border-resilience-green pl-6 py-2">
             <h3 class="font-headline-md text-2xl text-primary mb-2" data-i18n="arch.terra.title">Terra</h3>
-            <p class="font-body-md text-on-surface-variant" data-i18n="arch.terra.body">A Interface de Manifestação. Execução Física e Feedback Biológico.</p>
+            <p class="font-body-md text-on-surface-variant" data-i18n="arch.terra.body">The Manifestation Interface. Physical Execution and Biological Feedback.</p>
           </div>
           <div class="border-l-2 border-secondary pl-6 py-2">
             <h3 class="font-headline-md text-2xl text-secondary mb-2" data-i18n="arch.hades.title">Hades</h3>
-            <p class="font-body-md text-on-surface-variant" data-i18n="arch.hades.body">O Motor de Inteligência Material. Mineração, Extração e Refinamento de Dados.</p>
+            <p class="font-body-md text-on-surface-variant" data-i18n="arch.hades.body">The Material Intelligence Engine. Data Mining, Extraction and Refinement.</p>
           </div>
         </div>
       </div>
@@ -684,20 +749,20 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="order-2 lg:order-1 flex flex-col gap-6">
           <article class="glass-panel p-6 rounded-xl border border-tertiary/20 hover:border-tertiary/50 transition-colors reveal" aria-labelledby="gaia-title">
-            <h3 id="gaia-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.gaia.title">Gaia: A Orquestradora Suprema</h3>
-            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.gaia.body">Resolve conflitos, roteia tarefas e mantém a visão estratégica do sistema. A inteligência que tudo governa.</p>
+            <h3 id="gaia-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.gaia.title">Gaia: The Supreme Orchestrator</h3>
+            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.gaia.body">Resolves conflicts, routes tasks and maintains the strategic vision of the system. The intelligence that governs everything.</p>
           </article>
           <article class="glass-panel p-6 rounded-xl border border-tertiary/20 hover:border-tertiary/50 transition-colors reveal" aria-labelledby="athena-title">
-            <h3 id="athena-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.athena.title">Athena: A Arquiteta da Eficiência</h3>
-            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.athena.body">Meta-otimizadora. Refina os prompts do sistema, audita logs e reduz o custo computacional por decisão.</p>
+            <h3 id="athena-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.athena.title">Athena: The Efficiency Architect</h3>
+            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.athena.body">Meta-optimizer. Refines system prompts, audits logs and reduces computational cost per decision.</p>
           </article>
           <article class="glass-panel p-6 rounded-xl border border-tertiary/20 hover:border-tertiary/50 transition-colors reveal" aria-labelledby="hermes-title">
-            <h3 id="hermes-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.hermes.title">Hermes: O Estrategista de Capital</h3>
-            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.hermes.body">Transforma dados de mercado e editais públicos em submissões de subsídios e projeções de ROI com 98% de precisão de extração.</p>
+            <h3 id="hermes-title" class="font-headline-md text-xl text-tertiary mb-2" data-i18n="arch.hermes.title">Hermes: The Capital Strategist</h3>
+            <p class="font-body-md text-on-surface-variant text-sm" data-i18n="arch.hermes.body">Transforms market data and public tenders into grant submissions and ROI projections with 98% extraction accuracy.</p>
           </article>
         </div>
         <div class="order-1 lg:order-2 glass-panel p-2 rounded-xl border border-tertiary/20 bg-black/40 reveal">
-          <img alt="Camada Olimpo do Leaftix GaiaOS: Conselho de Soberania com agentes Gaia, Athena e Hermes em rede de deliberação estratégica" class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_layers.jpg" width="600" height="400" loading="lazy">
+          <img alt="Olympus layer of Leaftix GaiaOS: Sovereignty Council with Gaia, Athena and Hermes agents in a strategic deliberation neural network, orchestrating autonomous agricultural governance" class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_layers.jpg" width="600" height="400" loading="lazy">
         </div>
       </div>
     </section>
@@ -706,32 +771,32 @@
     <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16" id="system" aria-labelledby="system-heading">
       <div class="glass-panel rounded-2xl overflow-hidden flex flex-col md:flex-row border border-primary/20 reveal">
         <div class="md:w-1/2 p-12 md:p-16 flex flex-col justify-center bg-surface-container-low/80 relative z-10">
-          <p class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest" data-i18n="system.label">03 // O Sistema</p>
+          <p class="font-label-caps text-label-caps text-primary mb-4 uppercase tracking-widest" data-i18n="system.label">03 // The System</p>
           <h2 id="system-heading" class="font-headline-md text-[32px] md:text-headline-md text-on-surface mb-6" data-i18n="system.title">
-            A infraestrutura cognitiva para ambientes que não podem errar.
+            The cognitive infrastructure for environments that cannot afford to fail.
           </h2>
           <p class="font-body-md text-body-md text-on-surface-variant mb-8" data-i18n="system.body">
-            Leaftix GaiaOS não é apenas um painel de controle. É a camada lógica subjacente conectando sensores ambientais, nós de borda e maquinário autônomo em uma inteligência única e coesa, capaz de antecipar e mitigar o risco climático antes que impacte a produção.
+            Leaftix GaiaOS is not just a control panel. It is the underlying logical layer connecting environmental sensors, edge nodes and autonomous machinery into a single, cohesive intelligence, capable of anticipating and mitigating climate risk before it impacts production.
           </p>
           <ul class="flex flex-col gap-3" role="list">
             <li class="flex items-center gap-3 text-on-surface font-label-caps text-sm">
               <span class="material-symbols-outlined text-primary text-sm" aria-hidden="true">check_circle</span>
-              <span data-i18n="system.feat1">Variância de Digital Twin &lt; 2%.</span>
+              <span data-i18n="system.feat1">Digital Twin variance < 2%.</span>
             </li>
             <li class="flex items-center gap-3 text-on-surface font-label-caps text-sm">
               <span class="material-symbols-outlined text-primary text-sm" aria-hidden="true">check_circle</span>
-              <span data-i18n="system.feat2">Redução de 34% no consumo de energia por grama de biomassa.</span>
+              <span data-i18n="system.feat2">34% reduction in energy consumption per gram of biomass.</span>
             </li>
             <li class="flex items-center gap-3 text-on-surface font-label-caps text-sm">
               <span class="material-symbols-outlined text-primary text-sm" aria-hidden="true">check_circle</span>
-              <span data-i18n="system.feat3">Arquitetura Edge-native distribuída.</span>
+              <span data-i18n="system.feat3">Distributed edge-native architecture.</span>
             </li>
           </ul>
         </div>
         <div class="md:w-1/2 relative min-h-[400px]">
           <div class="absolute inset-0 cyber-grid opacity-50" aria-hidden="true"></div>
           <div class="absolute inset-0 bg-gradient-to-l from-transparent to-surface-container-low/80 z-10 hidden md:block" aria-hidden="true"></div>
-          <img class="w-full h-full object-cover" alt="Visualização 3D futurista de rede neural global — Leaftix GaiaOS conectando sensores agrícolas, nós de borda e maquinário autônomo em ecossistema de produção sustentável" src="screen.png" width="720" height="480" loading="lazy">
+          <img class="w-full h-full object-cover" alt="Futuristic 3D visualization of a global neural network — Leaftix GaiaOS connecting agricultural sensors, edge computing nodes and autonomous machinery in a sustainable production ecosystem powered by multi-agent AI" src="screen.png" width="720" height="480" loading="lazy">
         </div>
       </div>
     </section>
@@ -739,20 +804,20 @@
     <!-- ─── SECTION 5: VISION / CTA ───────────────────────── -->
     <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16 text-center py-24" id="vision" aria-labelledby="vision-heading">
       <h2 id="vision-heading" class="font-display-lg text-[32px] md:text-[72px] text-on-surface mb-12 max-w-4xl mx-auto glow-text reveal">
-        <span data-i18n="vision.title1">E nós estamos escrevendo</span><br>
-        <span class="text-primary italic" data-i18n="vision.title2">o seu código.</span>
+        <span data-i18n="vision.title1">And we are writing</span><br>
+        <span class="text-primary italic" data-i18n="vision.title2">your code.</span>
       </h2>
 
       <div class="flex flex-col items-center gap-8 max-w-xl mx-auto reveal">
         <!-- Status badge -->
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/40 bg-primary/5 backdrop-blur-sm animate-pulse">
           <div class="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true"></div>
-          <span class="font-label-caps text-[10px] text-primary uppercase tracking-[0.2em]" data-i18n="vision.badge">[FASE DE INICIALIZAÇÃO · ACESSO LIMITADO]</span>
+          <span class="font-label-caps text-[10px] text-primary uppercase tracking-[0.2em]" data-i18n="vision.badge">[INITIALIZATION PHASE · LIMITED ACCESS]</span>
         </div>
 
         <!-- Email capture form -->
-        <form id="email-form" class="w-full flex flex-col md:flex-row gap-3" novalidate aria-label="Formulário de acesso antecipado">
-          <label for="email-input" class="sr-only" data-i18n="vision.emailLabel">Seu e-mail profissional</label>
+        <form id="email-form" class="w-full flex flex-col md:flex-row gap-3" novalidate aria-label="Early access request form">
+          <label for="email-input" class="sr-only" data-i18n="vision.emailLabel">Your professional email</label>
           <input
             id="email-input"
             type="email"
@@ -760,7 +825,7 @@
             autocomplete="email"
             inputmode="email"
             required
-            placeholder="Seu e-mail profissional"
+            placeholder="Your professional email"
             data-i18n-placeholder="vision.emailPlaceholder"
             class="flex-grow bg-surface-container-lowest border border-outline-variant/30 rounded-lg px-6 py-4 text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary/50 transition-colors font-body-md"
             aria-required="true"
@@ -771,9 +836,9 @@
             id="submit-btn"
             type="submit"
             class="inline-flex items-center justify-center px-8 py-4 bg-primary text-on-primary font-headline-md text-lg font-bold rounded-lg hover:bg-resilience-green transition-all duration-300 hover:shadow-[0_0_20px_rgba(61,211,161,0.4)] active:scale-95 whitespace-nowrap group disabled:opacity-60 disabled:cursor-not-allowed"
-            aria-label="Solicitar acesso antecipado ao Leaftix GaiaOS"
+            aria-label="Request early access to Leaftix GaiaOS"
           >
-            <span id="btn-label" data-i18n="vision.cta">Solicitar Acesso</span>
+            <span id="btn-label" data-i18n="vision.cta">Request Access</span>
             <span id="btn-spinner" class="material-symbols-outlined ml-2 hidden animate-spin text-xl">progress_activity</span>
             <span id="btn-arrow" class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true">arrow_forward</span>
           </button>
@@ -781,7 +846,7 @@
 
         <!-- Social proof counter -->
         <p class="font-body-md text-sm text-on-surface-variant opacity-70" data-i18n="vision.social">
-          Junto com <span class="text-primary font-bold" id="waitlist-count">1.240</span> operadores e pesquisadores aguardando o sistema.
+          Together with <span class="text-primary font-bold" id="waitlist-count">1.240</span> operators and researchers awaiting the system.
         </p>
       </div>
     </section>
@@ -795,22 +860,22 @@
     <div class="flex flex-col md:flex-row justify-between items-center w-full px-5 md:px-16 py-6 max-w-[1440px] mx-auto gap-6">
       <!-- Brand -->
       <div class="flex items-center gap-2">
-        <img alt="Leaftix Logo" class="h-6 w-auto opacity-50 grayscale" src="leaftix_green.png" width="80" height="24" loading="lazy">
+        <img alt="Leaftix Logo — Sustainable agriculture technology brand mark" class="h-6 w-auto opacity-50 grayscale" src="leaftix_green.png" width="80" height="24" loading="lazy">
         <span class="font-headline-md text-lg text-on-surface opacity-50">Leaftix GaiaOS</span>
       </div>
 
       <!-- Footer links -->
-      <nav class="flex flex-wrap justify-center gap-6" aria-label="Links do rodapé">
-        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.mission">Nossa Missão</a>
-        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.docs">Documentação Técnica</a>
-        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.privacy">Protocolo de Privacidade</a>
-        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.status">Status do Sistema</a>
+      <nav class="flex flex-wrap justify-center gap-6" aria-label="Footer links">
+        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.mission">Our Mission</a>
+        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.docs">Technical Documentation</a>
+        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.privacy">Privacy Protocol</a>
+        <a class="font-label-caps text-label-caps text-on-surface-variant hover:text-resilience-green transition-colors uppercase focus:outline-none focus:ring-2 focus:ring-primary rounded" href="#" data-i18n="footer.status">System Status</a>
       </nav>
 
       <!-- Copyright -->
       <div class="font-body-md text-sm text-on-surface-variant text-center md:text-right">
         <span>© 2026 Leaftix. </span>
-        <span data-i18n="footer.rights">Todos os direitos reservados.</span>
+        <span data-i18n="footer.rights">All rights reserved.</span>
       </div>
     </div>
   </footer>
@@ -820,9 +885,50 @@
   ═══════════════════════════════════════════════════════ -->
   <script>
   // ─────────────────────────────────────────────────────────
-  // TRANSLATIONS — Adicionar novos idiomas aqui
+  // TRANSLATIONS — Add new languages here
   // ─────────────────────────────────────────────────────────
   const TRANSLATIONS = {
+    en: {
+      "meta.title": "Leaftix GaiaOS — Intelligent Governance for Sustainable Production | Leaftix",
+      "meta.description": "Leaftix GaiaOS is Leaftix's autonomous governance operating system for sustainable food production. Multi-agent AI, Digital Twin, edge-native architecture — from monitoring to proactive governance.",
+      "nav.crisis": "The Problem", "nav.solution": "The Solution",
+      "nav.architecture": "Architecture", "nav.manifesto": "Manifesto",
+      "nav.cta": "Request Access",
+      "hero.badge": "System Initialization",
+      "hero.title1": "The future of sustainable production will not be monitored.",
+      "hero.title2": "It will be governed.",
+      "hero.subtitle": "A manifesto for planetary resilience, driven by artificial intelligence and absolute data precision.",
+      "crisis.label": "01 // The Crisis",
+      "crisis.title": "Conventional agriculture was built on a premise the planet no longer sustains: a stable climate.",
+      "crisis.body": "The variables have changed. With Super El Niño redefining global rainfall patterns and fertilizer routes blocked by conflict, food security strategy demands new paradigms. We are not just navigating a storm; the old models have simply stopped working.",
+      "solution.label": "02 // The Solution",
+      "solution.title": "We were born from the certainty that food production must be actively governed by autonomous intelligence.",
+      "solution.card1.title": "Multi-Agent Architecture", "solution.card1.body": "Multi-agent architecture establishing a neural network across production ecosystems.",
+      "solution.card2.title": "Cognitive Core", "solution.card2.body": "Continuous learning algorithms processing terabytes of environmental data in real time.",
+      "solution.card3.title": "Autonomous Governance", "solution.card3.body": "Shifting from reactive monitoring to proactive and automated governance.",
+      "arch.label": "The Mythological Architecture", "arch.title": "The Tripartite Governance Model",
+      "arch.subtitle": "A hierarchical and multi-agent AI infrastructure. Continuous global data ingestion drives agricultural physical execution under the strict financial and strategic governance of high-performance models.",
+      "arch.olimpo.title": "Olympus", "arch.olimpo.body": "The Council of Sovereignty. Strategic Deliberation and Final Decision.",
+      "arch.terra.title": "Terra", "arch.terra.body": "The Manifestation Interface. Physical Execution and Biological Feedback.",
+      "arch.hades.title": "Hades", "arch.hades.body": "The Material Intelligence Engine. Data Mining, Extraction and Refinement.",
+      "arch.gaia.title": "Gaia: The Supreme Orchestrator", "arch.gaia.body": "Resolves conflicts, routes tasks and maintains the strategic vision of the system. The intelligence that governs everything.",
+      "arch.athena.title": "Athena: The Efficiency Architect", "arch.athena.body": "Meta-optimizer. Refines system prompts, audits logs and reduces computational cost per decision.",
+      "arch.hermes.title": "Hermes: The Capital Strategist", "arch.hermes.body": "Transforms market data and public tenders into grant submissions and ROI projections with 98% extraction accuracy.",
+      "system.label": "03 // The System", "system.title": "The cognitive infrastructure for environments that cannot afford to fail.",
+      "system.body": "Leaftix GaiaOS is not just a control panel. It is the underlying logical layer connecting environmental sensors, edge nodes and autonomous machinery into a single, cohesive intelligence, capable of anticipating and mitigating climate risk before it impacts production.",
+      "system.feat1": "Digital Twin variance < 2%.", "system.feat2": "34% reduction in energy consumption per gram of biomass.", "system.feat3": "Distributed edge-native architecture.",
+      "vision.title1": "And we are writing", "vision.title2": "your code.",
+      "vision.badge": "[INITIALIZATION PHASE · LIMITED ACCESS]",
+      "vision.emailLabel": "Your professional email", "vision.emailPlaceholder": "Your professional email",
+      "vision.cta": "Request Access",
+      "vision.social": "Together with {count} operators and researchers awaiting the system.",
+      "vision.success": "Access requested! We'll be in touch soon.",
+      "vision.error": "Failed to send. Please try again.",
+      "vision.invalid": "Please enter a valid email address.",
+      "footer.mission": "Our Mission", "footer.docs": "Technical Documentation",
+      "footer.privacy": "Privacy Protocol", "footer.status": "System Status",
+      "footer.rights": "All rights reserved."
+    },
     pt: {
       "meta.title": "Leaftix GaiaOS — Governança Inteligente para Produção Sustentável | Leaftix",
       "meta.description": "Leaftix GaiaOS é o sistema operacional de governança autônoma da Leaftix para produção sustentável de alimentos. IA multi-agente, Digital Twin, arquitetura edge-native.",
@@ -863,47 +969,6 @@
       "footer.mission": "Nossa Missão", "footer.docs": "Documentação Técnica",
       "footer.privacy": "Protocolo de Privacidade", "footer.status": "Status do Sistema",
       "footer.rights": "Todos os direitos reservados."
-    },
-    en: {
-      "meta.title": "Leaftix GaiaOS — Intelligent Governance for Sustainable Production | Leaftix",
-      "meta.description": "Leaftix GaiaOS is Leaftix's autonomous governance operating system for sustainable food production. Multi-agent AI, Digital Twin, edge-native architecture.",
-      "nav.crisis": "The Problem", "nav.solution": "The Solution",
-      "nav.architecture": "Architecture", "nav.manifesto": "Manifesto",
-      "nav.cta": "Request Access",
-      "hero.badge": "System Initialization",
-      "hero.title1": "The future of sustainable production will not be monitored.",
-      "hero.title2": "It will be governed.",
-      "hero.subtitle": "A manifesto for planetary resilience, driven by artificial intelligence and absolute data precision.",
-      "crisis.label": "01 // The Crisis",
-      "crisis.title": "Conventional agriculture was built on a premise the planet no longer sustains: a stable climate.",
-      "crisis.body": "The variables have changed. With Super El Niño redefining global rainfall patterns and fertilizer routes blocked by conflict, food security strategy demands new paradigms. We are not just navigating a storm; the old models have simply stopped working.",
-      "solution.label": "02 // The Solution",
-      "solution.title": "We were born from the certainty that food production must be actively governed by autonomous intelligence.",
-      "solution.card1.title": "Multi-Agent Architecture", "solution.card1.body": "Multi-agent architecture establishing a neural network across production ecosystems.",
-      "solution.card2.title": "Cognitive Core", "solution.card2.body": "Continuous learning algorithms processing terabytes of environmental data in real time.",
-      "solution.card3.title": "Autonomous Governance", "solution.card3.body": "Shifting from reactive monitoring to proactive and automated governance.",
-      "arch.label": "The Mythological Architecture", "arch.title": "The Tripartite Governance Model",
-      "arch.subtitle": "A hierarchical and multi-agent AI infrastructure. Continuous global data ingestion drives agricultural physical execution under the strict financial and strategic governance of high-performance models.",
-      "arch.olimpo.title": "Olympus", "arch.olimpo.body": "The Council of Sovereignty. Strategic Deliberation and Final Decision.",
-      "arch.terra.title": "Terra", "arch.terra.body": "The Manifestation Interface. Physical Execution and Biological Feedback.",
-      "arch.hades.title": "Hades", "arch.hades.body": "The Material Intelligence Engine. Data Mining, Extraction and Refinement.",
-      "arch.gaia.title": "Gaia: The Supreme Orchestrator", "arch.gaia.body": "Resolves conflicts, routes tasks and maintains the strategic vision of the system. The intelligence that governs everything.",
-      "arch.athena.title": "Athena: The Efficiency Architect", "arch.athena.body": "Meta-optimizer. Refines system prompts, audits logs and reduces computational cost per decision.",
-      "arch.hermes.title": "Hermes: The Capital Strategist", "arch.hermes.body": "Transforms market data and public tenders into grant submissions and ROI projections with 98% extraction accuracy.",
-      "system.label": "03 // The System", "system.title": "The cognitive infrastructure for environments that cannot afford to fail.",
-      "system.body": "Leaftix GaiaOS is not just a control panel. It is the underlying logical layer connecting environmental sensors, edge nodes and autonomous machinery into a single, cohesive intelligence, capable of anticipating and mitigating climate risk before it impacts production.",
-      "system.feat1": "Digital Twin variance < 2%.", "system.feat2": "34% reduction in energy consumption per gram of biomass.", "system.feat3": "Distributed edge-native architecture.",
-      "vision.title1": "And we are writing", "vision.title2": "your code.",
-      "vision.badge": "[INITIALIZATION PHASE · LIMITED ACCESS]",
-      "vision.emailLabel": "Your professional email", "vision.emailPlaceholder": "Your professional email",
-      "vision.cta": "Request Access",
-      "vision.social": "Together with {count} operators and researchers awaiting the system.",
-      "vision.success": "Access requested! We'll be in touch soon.",
-      "vision.error": "Failed to send. Please try again.",
-      "vision.invalid": "Please enter a valid email address.",
-      "footer.mission": "Our Mission", "footer.docs": "Technical Documentation",
-      "footer.privacy": "Privacy Protocol", "footer.status": "System Status",
-      "footer.rights": "All rights reserved."
     },
     fr: {
       "meta.title": "Leaftix GaiaOS — Gouvernance Intelligente pour une Production Durable | Leaftix",
@@ -951,20 +1016,20 @@
   // ─────────────────────────────────────────────────────────
   // i18n ENGINE
   // ─────────────────────────────────────────────────────────
-  const LANG_LABELS = { pt: 'PT', en: 'EN', fr: 'FR' };
-  let currentLang = 'pt';
+  const LANG_LABELS = { en: 'EN', pt: 'PT', fr: 'FR' };
+  let currentLang = 'en';
 
   function detectLang() {
     const saved = localStorage.getItem('leaftix_lang');
     if (saved && TRANSLATIONS[saved]) return saved;
     const param = new URLSearchParams(window.location.search).get('lang');
     if (param && TRANSLATIONS[param]) return param;
-    const browser = (navigator.language || navigator.userLanguage || 'pt').split('-')[0].toLowerCase();
-    return TRANSLATIONS[browser] ? browser : 'pt';
+    const browser = (navigator.language || navigator.userLanguage || 'en').split('-')[0].toLowerCase();
+    return TRANSLATIONS[browser] ? browser : 'en';
   }
 
   function applyTranslations(lang) {
-    const t = TRANSLATIONS[lang] || TRANSLATIONS.pt;
+    const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
     currentLang = lang;
 
     // Update HTML lang attr
@@ -1010,7 +1075,7 @@
 
     // Update OG locale meta (for dynamic scrapers)
     const ogLocale = document.querySelector('meta[property="og:locale"]');
-    if (ogLocale) ogLocale.content = lang === 'pt' ? 'pt_BR' : lang === 'en' ? 'en_US' : 'fr_FR';
+    if (ogLocale) ogLocale.content = lang === 'en' ? 'en_US' : lang === 'pt' ? 'pt_BR' : 'fr_FR';
 
     // Save preference
     localStorage.setItem('leaftix_lang', lang);
@@ -1109,7 +1174,7 @@
 
   // ─────────────────────────────────────────────────────────
   // EMAIL CAPTURE → GOOGLE SHEETS
-  // Script URL injetado via build.ps1 a partir do .env
+  // Script URL injected via build.ps1 from .env
   // ─────────────────────────────────────────────────────────
   const SHEETS_SCRIPT_URL = 'https://xxxxx.com';
 
@@ -1130,7 +1195,7 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const t = TRANSLATIONS[currentLang] || TRANSLATIONS.pt;
+      const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
       const emailInput = document.getElementById('email-input');
       const submitBtn = document.getElementById('submit-btn');
       const btnLabel = document.getElementById('btn-label');
@@ -1172,26 +1237,23 @@
 
         await fetch(SHEETS_SCRIPT_URL, {
           method: 'POST',
-          mode: 'no-cors', // Google Apps Script requires no-cors
+          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        // no-cors means we assume success if no network error
         showToast(t['vision.success'], 'success');
         if (emailInput) emailInput.value = '';
 
-        // GA4 event
         if (typeof trackEvent === 'function') {
           trackEvent('email_signup', 'conversion', email, 1);
           gtag('event', 'generate_lead', { currency: 'USD', value: 1.0, email });
         }
 
-        // Increment counter (optimistic)
         const counter = document.getElementById('waitlist-count');
         if (counter) {
           const current = parseInt(counter.textContent.replace(/\D/g, ''), 10) || 1240;
-          counter.textContent = (current + 1).toLocaleString('pt-BR');
+          counter.textContent = (current + 1).toLocaleString('en-US');
         }
 
       } catch (err) {
@@ -1256,8 +1318,8 @@
 
   <!--
   ═══════════════════════════════════════════════════════════
-  GOOGLE APPS SCRIPT — Copie e cole em:
-  Google Sheets > Extensões > Apps Script
+  GOOGLE APPS SCRIPT — Copy and paste at:
+  Google Sheets > Extensions > Apps Script
 
   function doPost(e) {
     try {
@@ -1285,12 +1347,12 @@
     }
   }
 
-  Após colar o script:
-  1. Clique em "Implantar" > "Nova implantação"
-  2. Tipo: Aplicativo da Web
-  3. Executar como: Eu (sua conta)
-  4. Quem tem acesso: Qualquer pessoa
-  5. Copie a URL gerada e coloque em .env como SCRIPT_CAPTURE_EMAIL
+  After pasting the script:
+  1. Click "Deploy" > "New deployment"
+  2. Type: Web App
+  3. Execute as: Me (your account)
+  4. Who has access: Anyone
+  5. Copy the generated URL and place it in .env as SCRIPT_CAPTURE_EMAIL
   ═══════════════════════════════════════════════════════════
   -->
 
