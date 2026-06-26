@@ -1,0 +1,11 @@
+# robots.txt for Leaftix.com
+# https://leaftix.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://leaftix.com/sitemap.xml
+
+# Crawl-delay for polite crawling (optional)
+Crawl-delay: 10
