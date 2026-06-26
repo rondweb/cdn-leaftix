@@ -44,4 +44,24 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ═══════════════════════════════════════════════════════
+       SUB-APPS — Leaftix Care
+  ═══════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://care.leaftix.com/</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SUB-APPS — Leaftix Microgreens
+  ═══════════════════════════════════════════════════════ -->
+  <url>
+    <loc>http://microgreens.leaftix.com/</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
