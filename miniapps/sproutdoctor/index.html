@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SproutDoctor | Private Microgreens AI Diagnostic Assistant</title>
+  <meta name="description" content="Diagnose and troubleshoot microgreens mold, rot, and watering issues offline. SproutDoctor uses Transformers.js and WebLLM for secure, in-browser crop analysis.">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Vue 3 Global Build -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: #020617;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+  <div id="app" class="flex-1 flex flex-col" v-cloak>
+    
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50 px-4 py-3.5 sm:px-6">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-emerald-600 text-white p-2 rounded-xl shadow-lg shadow-emerald-500/10">
+            <i class="fa-solid fa-stethoscope text-lg"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">SproutDoctor</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest ml-2 px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">Local Crop AI</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-xs px-2.5 py-1 rounded-full border flex items-center space-x-1.5" :class="webGpuBadgeStyle">
+            <span class="w-1.5 h-1.5 rounded-full" :class="webGpuDotStyle"></span>
+            <span>WebGPU: {{ webGpuStatusLabel }}</span>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Settings, Presets, and Ingestion (5 Columns) -->
+      <section class="lg:col-span-5 flex flex-col space-y-6">
+        
+        <!-- Symptom Ingest Area -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-seedling text-emerald-400"></i>
+              <span>1. Describe Crop Symptoms</span>
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">Select Preset</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button @click="loadPreset('mold')" class="py-1.5 px-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg text-left text-[11px] font-medium transition flex items-center space-x-1.5">
+              <i class="fa-solid fa-spider text-amber-400"></i>
+              <span>Cobweb Mold</span>
+            </button>
+            <button @click="loadPreset('damping')" class="py-1.5 px-2 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-lg text-left text-[11px] font-medium transition flex items-center space-x-1.5">
+              <i class="fa-solid fa-skull-crossbones text-rose-400"></i>
+              <span>Damping-off</span>
+            </button>
+          </div>
+
+          <textarea 
+            v-model="rawSymptomText" 
+            rows="5" 
+            class="w-full bg-[#152035] border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500 transition resize-none scrollbar-thin"
+            placeholder="Type symptoms (e.g. My peas are falling over in patches and have mushy brown stems)..."
+          ></textarea>
+
+          <!-- Audit trigger -->
+          <button 
+            @click="diagnoseSymptom" 
+            class="w-full py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-800 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5"
+            :disabled="embeddingLoading || !rawSymptomText.trim()"
+          >
+            <i v-if="embeddingLoading" class="fa-solid fa-spinner animate-spin"></i>
+            <i v-else class="fa-solid fa-user-doctor"></i>
+            <span>{{ embeddingLoading ? 'Indexing System: ' + embeddingProgress + '%' : 'Diagnose Symptoms' }}</span>
+          </button>
+        </div>
+
+        <!-- Local GenAI (WebLLM) Setup -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl space-y-4">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-microchip text-emerald-400"></i>
+              <span>2. Local Assistant Config</span>
+            </h3>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Local LLM Instance</label>
+              <select v-model="selectedLlmModel" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" :disabled="llmLoading">
+                <option value="SmolLM2-360M-Instruct-q4f16_1-MLC">SmolLM2 360M (Fast, Cache-Friendly ~130MB)</option>
+                <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen2.5 0.5B (Multilingual, Precise ~350MB)</option>
+              </select>
+            </div>
+
+            <button 
+              @click="initLocalLlm" 
+              class="w-full py-2 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5"
+              :class="llmLoaded ? 'bg-emerald-600/20 text-emerald-400 border border-emerald-500/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'"
+              :disabled="llmLoading || !webGpuSupported"
+            >
+              <i v-if="llmLoading" class="fa-solid fa-spinner animate-spin"></i>
+              <i v-else-if="llmLoaded" class="fa-solid fa-circle-check"></i>
+              <i v-else class="fa-solid fa-download"></i>
+              <span>{{ llmLoading ? 'Downloading Model: ' + llmProgress : (llmLoaded ? 'Local Crop AI Active' : 'Initialize Local LLM') }}</span>
+            </button>
+            <p v-if="!webGpuSupported" class="text-[10px] text-amber-500 leading-relaxed">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i> WebGPU is not active in this browser. You can still run semantic disease mapping, and view direct mitigation blueprints.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Interactive Diagnostic Workspace (7 Columns) -->
+      <section class="lg:col-span-7 flex flex-col space-y-4">
+        
+        <!-- Results display panel -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex-1 flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-square-poll-horizontal text-emerald-400"></i>
+              <span>Diagnostics & Remediation Panel</span>
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">Semantic Matching Output</span>
+          </div>
+
+          <!-- Matching Anomalies and AI Remedy generator -->
+          <div class="flex-1 flex flex-col justify-between space-y-4">
+            
+            <div v-if="!activeDiagnostic" class="flex-1 flex flex-col items-center justify-center text-center p-4 text-slate-500">
+              <div class="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
+                <i class="fa-solid fa-heart-pulse text-xl"></i>
+              </div>
+              <h4 class="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1">Awaiting Diagnosis Input</h4>
+              <p class="text-[11px] leading-relaxed max-w-xs">
+                Enter symptoms or click a preset on the left. The local model will match similarities and generate treatment guides.
+              </p>
+            </div>
+
+            <!-- Diagnostics Details -->
+            <div v-else class="space-y-4 overflow-y-auto scrollbar-thin max-h-[50vh] pr-1">
+              
+              <!-- Matched Crop Disease Indicator -->
+              <div class="p-3.5 rounded-xl bg-slate-950 border border-slate-900/60 space-y-2">
+                <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+                  <span class="text-slate-400">Diagnostic Match</span>
+                  <span :class="activeDiagnostic.severity === 'danger' ? 'text-red-400 animate-pulse' : 'text-amber-400'">
+                    {{ activeDiagnostic.severity === 'danger' ? 'Severe Outbreak Risk' : 'Warning Alert' }}
+                  </span>
+                </div>
+                <p class="text-[12px] font-bold text-slate-200">
+                  {{ activeDiagnostic.category }}
+                </p>
+                <div class="text-[11px] text-slate-400 leading-relaxed text-justify space-y-1.5">
+                  <p><strong class="text-slate-300">Description:</strong> {{ activeDiagnostic.description }}</p>
+                  <p><strong class="text-slate-300">Basic Manual Remedy:</strong> {{ activeDiagnostic.remedy }}</p>
+                </div>
+              </div>
+
+              <!-- Local GenAI Redline/Treatment Builder output -->
+              <div class="space-y-2">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">AI Custom Treatment Blueprint</span>
+                  <button 
+                    v-if="aiTreatmentOutput" 
+                    @click="copyTreatment" 
+                    class="text-[10px] text-emerald-400 hover:underline"
+                  >
+                    <i class="fa-solid fa-copy"></i> Copy Blueprint
+                  </button>
+                </div>
+                
+                <div v-if="aiLoading" class="p-8 text-center flex flex-col items-center justify-center space-y-3 bg-slate-950 rounded-lg border border-slate-900">
+                  <i class="fa-solid fa-spinner animate-spin text-emerald-400 text-lg"></i>
+                  <span class="text-[10px] text-slate-500 font-mono">On-device AI compiling custom recipe...</span>
+                </div>
+
+                <div v-else-if="aiTreatmentOutput" class="text-xs text-slate-300 bg-slate-950 p-3.5 rounded-lg border border-slate-900 leading-relaxed space-y-2">
+                  <p class="whitespace-pre-line text-justify">{{ aiTreatmentOutput }}</p>
+                </div>
+
+                <!-- Run Local redline button -->
+                <button 
+                  v-else
+                  @click="generateCustomTreatment" 
+                  class="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow"
+                  :disabled="!llmLoaded || aiLoading"
+                >
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                  <span>{{ llmLoaded ? 'Synthesize Custom Recipe with Local AI' : 'Requires Active Local LLM' }}</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Diagnostics Logs -->
+    <section v-if="logs.length > 0" class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+      <div class="bg-[#0f172a] rounded-2xl border border-slate-800 p-5 shadow-xl">
+        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center">
+          <i class="fa-solid fa-clipboard-list text-indigo-400 mr-2"></i> Diagnostics Pipeline Log
+        </h4>
+        <div class="space-y-1 max-h-32 overflow-y-auto scrollbar-thin pr-1 text-[11px] font-mono text-slate-400">
+          <p v-for="(log, idx) in logs" :key="idx" :class="log.isError ? 'text-rose-400' : 'text-slate-400'">
+            [{{ log.time }}] - {{ log.message }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contextual SEO Education Panel -->
+    <section class="bg-[#060910] border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-6 text-sm text-center">
+        <h2 class="text-xl font-bold text-white">How Offline AI Diagnostics Elevate Farm Biosecurity</h2>
+        <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed text-xs">
+          Maintaining clean vertical grow environments requires immediate identification of crop anomalies. Relying on remote servers creates lag and poses operational security risks.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 text-xs text-left">
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">1. Vector Similarity Mapping</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Standard keyword search engines fail when growers use imprecise descriptions. By utilizing Transformers.js vector representations, the app maps descriptive keywords (e.g. *"mushy stems, collapsing in circles"*) directly to the botanical Pythium (damping-off) reference schema.
+            </p>
+          </div>
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">2. Localized Airflow and Sanitation Recipes</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Applying exact chemical mitigation steps like food-grade hydrogen peroxide dilutions or fan adjustments needs to be immediate. Synthesizing recipes locally protects grow parameters while delivering zero-latency guides.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Toast Alerts -->
+    <div 
+      v-if="toast.show" 
+      class="fixed bottom-6 right-6 px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold text-emerald-400 z-50 transition-all duration-300"
+    >
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-[#04060b] py-6 px-4 text-center text-xs text-slate-500 mt-auto">
+      <p>&copy; 2026 SproutDoctor. Urban agriculture AI diagnostics compiled entirely inside client-side browser memory.</p>
+    </footer>
+
+  </div>
+
+  <!-- ES Modules initialization script block -->
+  <script type="module">
+    import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2";
+    env.allowLocalModels = false; // Bypass local model check for static runtime CDNs
+
+    const { createApp, ref, computed, onMounted } = Vue;
+
+    // Embedded clinical dictionary of microgreens anomalies for semantic matching
+    const DISEASE_DICTIONARY = [
+      {
+        id: 'cobweb_mold',
+        category: 'Cobweb Mold (Botrytis / Web Mold)',
+        description: 'White or grey fuzzy spiderweb-like strings spreading quickly over seed hulls and grow medium, usually occurring on high-density sunflower or pea trays.',
+        severity: 'danger',
+        remedy: 'Apply a mist of 3% Food Grade Hydrogen Peroxide diluted with water (1:10 ratio) directly onto the web strands. Immediately increase relative airflow using vertical crop fans.'
+      },
+      {
+        id: 'damping_off',
+        category: 'Damping-Off Disease (Pythium / Root Rot)',
+        description: 'Microgreens collapsing in circular patches, falling over with thin, pinched, mushy brown stems at soil level. Roots look brown and slimy instead of white.',
+        severity: 'danger',
+        remedy: 'Unstack affected trays immediately. Reduce watering frequency, sanitize all plastic tools, lower relative room humidity below 50%, and discard heavily collapsed sections to prevent spreading.'
+      },
+      {
+        id: 'chlorosis_light',
+        category: 'Yellowing / Legginess (Light Starvation)',
+        description: 'Microgreens looking pale, thin, leggy, or excessively yellow after unstacking. Stems are abnormally elongated and cotyledons fail to display rich green colors.',
+        severity: 'warning',
+        remedy: 'Increase daily grow light cycle to 16-18 hours. Bring the LED fixtures closer to the canopy (6-8 inches) or increase PPFD settings. Ensure light intensity reaches at least 150 umol/m²/s.'
+      },
+      {
+        id: 'underwatering_drying',
+        category: 'Under-watering / Tray Dehydration',
+        description: 'Entire tray of microgreens wilting or drooping uniformly across the medium, soil looks dry, cracked, and lightweight when lifted, though stems do not look mushy or rotten.',
+        severity: 'warning',
+        remedy: 'Perform an immediate heavy bottom watering run. Wait 30 minutes, then drain off excess water. Mist canopy with clean, un-chlorinated water to restore turgor pressure.'
+      },
+      {
+        id: 'sour_odor',
+        category: 'Sour Odor / Fermentation Outbreak',
+        description: 'Strong sour, swampy, or rotten food smell emitting from the root zone of dense trays, especially when bottom watering. Seed hulls show slimy dark film layers.',
+        severity: 'danger',
+        remedy: 'Improve base drainage. Empty tray collection basins completely to prevent standing stagnant water. Next cycle, sanitize trays with a food-safe bleach solution (1:20) and decrease seed weight density.'
+      }
+    ];
+
+    const PRESETS = {
+      mold: 'My sunflower tray has a grey fuzzy spiderweb spreading over the hulls, it looks like mold',
+      damping: 'The broccoli seedlings are falling over in round patches and the stems look rotten at the bottom'
+    };
+
+    createApp({
+      setup() {
+        const rawSymptomText = ref('');
+        const activeDiagnostic = ref(null);
+        
+        // ML frameworks states
+        const webGpuSupported = ref(false);
+        const selectedLlmModel = ref('SmolLM2-360M-Instruct-q4f16_1-MLC');
+        const embeddingLoading = ref(false);
+        const embeddingProgress = ref(0);
+        const llmLoading = ref(false);
+        const llmLoaded = ref(false);
+        const llmProgress = ref('');
+        const aiLoading = ref(false);
+        const aiTreatmentOutput = ref('');
+        const logs = ref([]);
+        const toast = ref({ show: false, message: '' });
+
+        let embedderInstance = null;
+        let webllmInstance = null;
+        let mlcEngine = null;
+
+        // Status Styles mapping
+        const webGpuStatusLabel = computed(() => {
+          return webGpuSupported.value ? 'Active / Hardware Ready' : 'Unsupported on Browser';
+        });
+
+        const webGpuBadgeStyle = computed(() => {
+          return webGpuSupported.value ? 'border-emerald-800 bg-emerald-950/20 text-emerald-400' : 'border-rose-800 bg-rose-950/20 text-rose-400';
+        });
+
+        const webGpuDotStyle = computed(() => {
+          return webGpuSupported.value ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500';
+        });
+
+        const addLog = (message, isError = false) => {
+          const time = new Date().toLocaleTimeString();
+          logs.value.unshift({ time, message, isError });
+        };
+
+        const triggerToast = (msg) => {
+          toast.value = { show: true, message: msg };
+          setTimeout(() => { toast.value.show = false; }, 3000);
+        };
+
+        const loadPreset = (key) => {
+          if (PRESETS[key]) {
+            rawSymptomText.value = PRESETS[key];
+            triggerToast('Symptom template loaded. Click "Diagnose Symptoms" to match.');
+          }
+        };
+
+        // Cosine Similarity helper
+        const cosineSimilarity = (vecA, vecB) => {
+          let dotProduct = 0.0;
+          let normA = 0.0;
+          let normB = 0.0;
+          for (let i = 0; i < vecA.length; i++) {
+            dotProduct += vecA[i] * vecB[i];
+            normA += vecA[i] * vecA[i];
+            normB += vecB[i] * vecB[i];
+          }
+          if (normA === 0 || normB === 0) return 0;
+          return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        };
+
+        // Semantic Diagnosis using local Transformers.js
+        const diagnoseSymptom = async () => {
+          if (!rawSymptomText.value.trim()) return;
+
+          embeddingLoading.value = true;
+          embeddingProgress.value = 5;
+          activeDiagnostic.value = null;
+          aiTreatmentOutput.value = '';
+
+          try {
+            if (!embedderInstance) {
+              addLog('Initializing local Transformers.js pipeline (all-MiniLM-L6-v2)...');
+              embedderInstance = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+              addLog('Embeddings model initialized successfully.');
+            }
+
+            // A: Pre-compute Embeddings for our DISEASE_DICTIONARY descriptors
+            addLog('Computing clinical dictionary vector representations...');
+            for (const item of DISEASE_DICTIONARY) {
+              if (!item.vector) {
+                const res = await embedderInstance(item.description, { pooling: 'mean', normalize: true });
+                item.vector = Array.from(res.data);
+              }
+            }
+
+            // B: Compute Embeddings for user's described symptoms
+            embeddingProgress.value = 50;
+            addLog('Extracting vector representations from symptom description...');
+            const symptomRes = await embedderInstance(rawSymptomText.value, { pooling: 'mean', normalize: true });
+            const symptomVector = Array.from(symptomRes.data);
+
+            // C: Match closest anomaly using cosine similarity
+            let bestMatch = null;
+            let highestScore = -1;
+
+            DISEASE_DICTIONARY.forEach(item => {
+              const score = cosineSimilarity(symptomVector, item.vector);
+              addLog(`Evaluated match for [${item.category}] - score: ${(score * 100).toFixed(1)}%`);
+              if (score > highestScore) {
+                highestScore = score;
+                bestMatch = item;
+              }
+            });
+
+            embeddingProgress.value = 100;
+            if (highestScore > 0.35 && bestMatch) {
+              activeDiagnostic.value = {
+                ...bestMatch,
+                score: highestScore
+              };
+              addLog(`Matched most likely anomaly: ${bestMatch.category} (Confidence: ${(highestScore * 100).toFixed(1)}%)`);
+              triggerToast('Diagnosis compiled! See recommendations on the right.');
+            } else {
+              activeDiagnostic.value = {
+                category: 'Unknown Anomaly Outbreak',
+                description: 'The symptoms described do not match standard documented anomalies closely enough.',
+                remedy: 'Sanitize environment. Check relative humidity (keep under 50%), adjust vertical fan circulation, and monitor seed sourcing sanitation standards.',
+                severity: 'warning'
+              };
+              addLog('Description had low confidence matches. Loaded default protection instructions.', true);
+              triggerToast('Unknown symptoms. Default safeguards loaded.');
+            }
+
+          } catch (e) {
+            addLog(`Diagnostics Pipeline Error: ${e.message}`, true);
+            triggerToast('Diagnosis mapping failed.');
+          } finally {
+            embeddingLoading.value = false;
+          }
+        };
+
+        // WebGPU and WebLLM Model Initialization
+        const checkWebGpuSupport = async () => {
+          if (!navigator.gpu) return false;
+          try {
+            const adapter = await navigator.gpu.requestAdapter();
+            return !!adapter;
+          } catch (e) {
+            return false;
+          }
+        };
+
+        const initLocalLlm = async () => {
+          if (!webGpuSupported.value) return;
+          llmLoading.value = true;
+          llmProgress.value = 'Preparing configuration...';
+
+          try {
+            if (!webllmInstance) {
+              addLog('Loading WebLLM library module...');
+              webllmInstance = await import("https://esm.run/@mlc-ai/web-llm");
+            }
+
+            const initProgressCallback = (report) => {
+              llmProgress.value = report.text;
+              addLog(`LLM Loading: ${report.text}`);
+            };
+
+            mlcEngine = await webllmInstance.CreateMLCEngine(
+              selectedLlmModel.value,
+              { initProgressCallback }
+            );
+
+            llmLoaded.value = true;
+            addLog('WebLLM offline engine ready to receive query instructions.');
+            triggerToast('Local LLM successfully initialized!');
+          } catch (e) {
+            addLog(`LLM Loader Error: ${e.message}`, true);
+            triggerToast('Local LLM initialization failed.');
+          } finally {
+            llmLoading.value = false;
+          }
+        };
+
+        // Local RAG inference generation
+        const generateCustomTreatment = async () => {
+          if (!activeDiagnostic.value || !mlcEngine) return;
+
+          aiLoading.value = true;
+          aiTreatmentOutput.value = '';
+          addLog(`Inference generation initiated for anomaly [${activeDiagnostic.value.category}]`);
+
+          try {
+            const prompt = `Context:
+You are an expert microgreens grower. Diagnose and treat this crop disease.
+
+Observed Symptoms:
+"${rawSymptomText.value}"
+
+Closest Semantic Disease:
+${activeDiagnostic.value.category} - ${activeDiagnostic.value.description}
+
+Remedy Goal:
+${activeDiagnostic.value.remedy}
+
+Objective:
+Write a step-by-step custom remediation guide (3 steps max). Be precise, action-oriented, and direct.
+
+Your Output:`;
+
+            const messages = [
+              { role: 'system', content: 'You are an offline vertical farm disease assistant. Provide highly concise, actionable remedies.' },
+              { role: 'user', content: prompt }
+            ];
+
+            const reply = await mlcEngine.chat.completions.create({
+              messages,
+              stream: false,
+              temperature: 0.1
+            });
+
+            aiTreatmentOutput.value = reply.choices[0].message.content;
+            addLog('Local AI model successfully generated remediation blueprint.');
+          } catch (e) {
+            addLog(`AI Generation Error: ${e.message}`, true);
+            triggerToast('AI generation execution error.');
+          } finally {
+            aiLoading.value = false;
+          }
+        };
+
+        const copyTreatment = async () => {
+          if (!aiTreatmentOutput.value) return;
+          try {
+            await navigator.clipboard.writeText(aiTreatmentOutput.value);
+            triggerToast('Blueprint copied successfully!');
+          } catch (e) {
+            triggerToast('Copy failed.');
+          }
+        };
+
+        onMounted(async () => {
+          webGpuSupported.value = await checkWebGpuSupport();
+          loadPreset('mold');
+        });
+
+        return {
+          rawSymptomText,
+          activeDiagnostic,
+          webGpuSupported,
+          webGpuStatusLabel,
+          webGpuBadgeStyle,
+          webGpuDotStyle,
+          selectedLlmModel,
+          embeddingLoading,
+          embeddingProgress,
+          llmLoading,
+          llmLoaded,
+          llmProgress,
+          aiLoading,
+          aiTreatmentOutput,
+          logs,
+          toast,
+          loadPreset,
+          diagnoseSymptom,
+          initLocalLlm,
+          generateCustomTreatment,
+          copyTreatment
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

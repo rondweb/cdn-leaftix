@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SproutPlan | Microgreens Seeding Calculator & Crop Scheduler</title>
+  <meta name="description" content="Calculate microgreens seeding density, generate reverse crop timelines, and track your active tray batches privately. 100% offline-first urban farming tool.">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Vue 3 Global Build -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: #020617;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+  <div id="app" class="flex-1 flex flex-col" v-cloak>
+    
+    <!-- Top Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50 px-4 py-3.5 sm:px-6">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-emerald-600 text-white p-2 rounded-xl shadow-lg shadow-emerald-500/10">
+            <i class="fa-solid fa-seedling text-lg"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">SproutPlan</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest ml-2 px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">Sow-to-Harvest</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 text-xs text-slate-400">
+          <span class="hidden sm:inline-block"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i>All data saved in local browser memory</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Seeding Calculator & Timeline Generator (5 Columns) -->
+      <section class="lg:col-span-5 flex flex-col space-y-6">
+        
+        <!-- Calculator Card -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-calculator text-emerald-400"></i>
+              <span>1. Tray Seeding Calculator</span>
+            </h3>
+          </div>
+
+          <!-- Inputs Group -->
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Select Variety</label>
+              <select v-model="selectedVarietyId" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                <option v-for="variety in cropVarieties" :key="variety.id" :value="variety.id">
+                  {{ variety.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Tray Format</label>
+                <select v-model="selectedTrayFormat" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                  <option value="1020">Standard 1020 Tray</option>
+                  <option value="1010">Standard 1010 Tray</option>
+                  <option value="custom">Custom Dimensions</option>
+                </select>
+              </div>
+              <div v-if="selectedTrayFormat === 'custom'">
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Grow Area (sq inches)</label>
+                <input v-model.number="customArea" type="number" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+              <div v-else>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Tray Count</label>
+                <input v-model.number="trayCount" type="number" min="1" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Calculator Outputs -->
+          <div class="grid grid-cols-2 gap-3 bg-slate-950 p-3.5 rounded-xl border border-slate-900 text-center">
+            <div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Required Seed Weight</span>
+              <strong class="text-lg font-extrabold text-white">{{ calculatedSeedWeight.toFixed(1) }}g</strong>
+              <span class="text-[10px] text-slate-500 block">({{ (calculatedSeedWeight * 0.035274).toFixed(2) }} oz)</span>
+            </div>
+            <div>
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Est. Fresh Yield</span>
+              <strong class="text-lg font-extrabold text-emerald-400">~{{ calculatedYieldWeight.toFixed(0) }}g</strong>
+              <span class="text-[10px] text-slate-500 block">({{ (calculatedYieldWeight * 0.035274).toFixed(1) }} oz)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Crop Scheduler Card -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-calendar-days text-emerald-400"></i>
+              <span>2. Timeline Builder</span>
+            </h3>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex bg-slate-950 rounded-lg p-1 border border-slate-900">
+              <button 
+                @click="scheduleDirection = 'forward'" 
+                :class="['w-1/2 py-1.5 text-xs font-semibold rounded-md transition-all', scheduleDirection === 'forward' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-slate-200']"
+              >
+                Schedule from Sow Date
+              </button>
+              <button 
+                @click="scheduleDirection = 'backward'" 
+                :class="['w-1/2 py-1.5 text-xs font-semibold rounded-md transition-all', scheduleDirection === 'backward' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-slate-200']"
+              >
+                Schedule from Target Harvest
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+              <div v-if="scheduleDirection === 'forward'">
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Sowing Date</label>
+                <input v-model="targetSowDate" type="date" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+              <div v-else>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Target Market/Harvest Date</label>
+                <input v-model="targetHarvestDate" type="date" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Schedule Roadmap -->
+          <div class="border-t border-slate-800/80 pt-3.5 space-y-3 text-xs">
+            <h4 class="font-bold text-slate-400 uppercase text-[10px] tracking-wider">Growth Roadmap & Milestones</h4>
+            <div class="space-y-2.5">
+              <div v-if="calculatedTimeline.soak" class="flex items-start space-x-2">
+                <div class="w-4 h-4 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center text-[9px] shrink-0 mt-0.5"><i class="fa-solid fa-droplet"></i></div>
+                <div>
+                  <span class="block font-bold text-slate-200">Soak Seeds: <span class="text-blue-400 font-medium">{{ formatDate(calculatedTimeline.soak) }}</span></span>
+                  <p class="text-[10px] text-slate-500">Soak variety seeds in water for {{ activeVariety.soakHours }} hours before sowing.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-2">
+                <div class="w-4 h-4 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-[9px] shrink-0 mt-0.5"><i class="fa-solid fa-seedling"></i></div>
+                <div>
+                  <span class="block font-bold text-slate-200">Sow Date: <span class="text-emerald-400 font-medium">{{ formatDate(calculatedTimeline.sow) }}</span></span>
+                  <p class="text-[10px] text-slate-500">Spread seeds over soil or grow medium, water well, and apply stacking weights.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-2">
+                <div class="w-4 h-4 rounded-full bg-slate-500/20 text-slate-400 flex items-center justify-center text-[9px] shrink-0 mt-0.5"><i class="fa-solid fa-box"></i></div>
+                <div>
+                  <span class="block font-bold text-slate-200">Unstack (Lights): <span class="text-slate-400 font-medium">{{ formatDate(calculatedTimeline.lights) }}</span></span>
+                  <p class="text-[10px] text-slate-500">Remove stacking weights after {{ activeVariety.blackoutDays }} blackout days and place under grow lights.</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-2">
+                <div class="w-4 h-4 rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center text-[9px] shrink-0 mt-0.5"><i class="fa-solid fa-scissors"></i></div>
+                <div>
+                  <span class="block font-bold text-slate-200">Harvest Date: <span class="text-amber-400 font-medium">{{ formatDate(calculatedTimeline.harvest) }}</span></span>
+                  <p class="text-[10px] text-slate-500">Crop is mature and ready for harvest. Yield estimation is calculated for healthy conditions.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add to Active Batches Button -->
+          <div class="pt-2">
+            <button 
+              @click="addBatch" 
+              class="w-full py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow-lg shadow-emerald-600/15"
+            >
+              <i class="fa-solid fa-plus"></i>
+              <span>Log Active Growing Batch</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Active Growing Batches & Unit Economics (7 Columns) -->
+      <section class="lg:col-span-7 flex flex-col space-y-6">
+        
+        <!-- Tab selector for Active Log / Economics -->
+        <div class="flex justify-between items-center bg-[#0f172a] px-4 py-2.5 rounded-xl border border-slate-800/80">
+          <div class="flex space-x-1 bg-slate-950 p-1 rounded-lg border border-slate-800/60">
+            <button 
+              @click="activeRightTab = 'batches'" 
+              :class="['px-3.5 py-1.5 rounded-md text-xs font-semibold transition', activeRightTab === 'batches' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white']"
+            >
+              Active Batches Log
+            </button>
+            <button 
+              @click="activeRightTab = 'economics'" 
+              :class="['px-3.5 py-1.5 rounded-md text-xs font-semibold transition', activeRightTab === 'economics' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white']"
+            >
+              Batch Economics (COGS)
+            </button>
+          </div>
+          <div v-if="activeRightTab === 'batches' && activeBatches.length > 0" class="text-xs text-slate-500">
+            Trays: <strong class="text-slate-300">{{ activeBatches.length }}</strong>
+          </div>
+        </div>
+
+        <!-- Panel A: Active Batches Log -->
+        <div v-show="activeRightTab === 'batches'" class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex-1 flex flex-col space-y-4">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Growing Trays Monitoring</h3>
+            <button v-if="activeBatches.length > 0" @click="clearBatches" class="text-[10px] text-rose-400 hover:underline">Clear Log</button>
+          </div>
+
+          <div class="flex-1 max-h-[50vh] overflow-y-auto scrollbar-thin pr-1 space-y-3.5">
+            <div v-if="activeBatches.length === 0" class="py-24 text-center flex flex-col items-center justify-center space-y-3">
+              <div class="w-12 h-12 rounded-full bg-slate-900 text-slate-500 flex items-center justify-center text-lg"><i class="fa-solid fa-list"></i></div>
+              <p class="text-xs text-slate-400 font-semibold">No active growing batches recorded</p>
+              <p class="text-[11px] text-slate-500 max-w-xs leading-relaxed">Schedule a crop cycle on the left side, configure parameters, and click "Log Active Growing Batch" to monitor progress.</p>
+            </div>
+
+            <div 
+              v-else 
+              v-for="(batch, idx) in activeBatches" 
+              :key="batch.id"
+              class="p-4 rounded-xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 transition flex flex-col space-y-3.5"
+            >
+              <!-- Batch Header -->
+              <div class="flex justify-between items-start border-b border-slate-900 pb-2">
+                <div>
+                  <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-400 font-mono">{{ batch.trayFormat }} Tray</span>
+                  <h4 class="text-sm font-bold text-white mt-0.5 flex items-center">
+                    <i class="fa-solid fa-leaf text-xs mr-1.5 text-emerald-500"></i>
+                    <span>{{ batch.cropName }}</span>
+                  </h4>
+                </div>
+                <button @click="removeBatch(idx)" class="text-slate-500 hover:text-rose-400 transition p-1 text-xs">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              <!-- Progress bar and statuses -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <span>Growth Stage</span>
+                  <span :class="getStageColor(batch)">{{ getStageLabel(batch) }}</span>
+                </div>
+                <!-- Mini visual slider representing phase -->
+                <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                  <div class="h-full bg-emerald-500 rounded-full transition-all duration-300" :style="{ width: getBatchProgressPercentage(batch) + '%' }"></div>
+                </div>
+              </div>
+
+              <!-- Dates & density meta parameters -->
+              <div class="grid grid-cols-3 gap-2 text-[10px] text-slate-400">
+                <div>
+                  <span class="block text-slate-500">Sow Weight:</span>
+                  <strong class="text-slate-200">{{ batch.seedWeight.toFixed(1) }}g</strong>
+                </div>
+                <div>
+                  <span class="block text-slate-500">Lights On:</span>
+                  <strong class="text-slate-200">{{ formatDateString(batch.timeline.lights) }}</strong>
+                </div>
+                <div>
+                  <span class="block text-slate-500">Est. Harvest:</span>
+                  <strong class="text-slate-200">{{ formatDateString(batch.timeline.harvest) }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel B: Cost of Goods Sold (COGS) & Economics -->
+        <div v-show="activeRightTab === 'economics'" class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Single Tray Cost & Revenue Planner</h3>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Inputs -->
+            <div class="space-y-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Seed Price (per kg)</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[10px] text-slate-500">$</span>
+                  <input v-model.number="econ.seedPricePerKg" type="number" class="w-full bg-[#152035] border border-slate-700 rounded-lg pl-6 pr-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Soil/Medium Cost per Tray</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[10px] text-slate-500">$</span>
+                  <input v-model.number="econ.soilCostPerTray" type="number" class="w-full bg-[#152035] border border-slate-700 rounded-lg pl-6 pr-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Retail Selling Price per Tray</label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-[10px] text-slate-500">$</span>
+                  <input v-model.number="econ.retailPricePerTray" type="number" class="w-full bg-[#152035] border border-slate-700 rounded-lg pl-6 pr-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+                </div>
+              </div>
+            </div>
+
+            <!-- Financial Outputs -->
+            <div class="bg-slate-950 rounded-xl p-4 border border-slate-900 flex flex-col justify-between">
+              <div class="space-y-3">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block border-b border-slate-900 pb-1">Economics Summary</span>
+                <div class="flex justify-between text-xs text-slate-400">
+                  <span>Seed Cost:</span>
+                  <span class="font-mono text-slate-200">${{ econSeedCost.toFixed(2) }}</span>
+                </div>
+                <div class="flex justify-between text-xs text-slate-400">
+                  <span>Other COGS:</span>
+                  <span class="font-mono text-slate-200">${{ econ.soilCostPerTray.toFixed(2) }}</span>
+                </div>
+                <div class="flex justify-between text-xs text-slate-400">
+                  <span>Total Tray Cost:</span>
+                  <span class="font-mono text-rose-400">${{ econTotalCogs.toFixed(2) }}</span>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-slate-900 flex justify-between items-baseline">
+                <span class="text-xs font-bold text-slate-400">Gross Margin:</span>
+                <div class="text-right">
+                  <span class="text-lg font-bold text-emerald-400 font-mono">${{ econNetMargin.toFixed(2) }}</span>
+                  <span class="text-[10px] text-slate-500 block">({{ econMarginPercentage }}% Profit)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Contextual Educational and Informative Section -->
+    <section class="bg-[#060910] border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-6 text-sm text-center">
+        <h2 class="text-xl font-bold text-white">Understanding Seeding Density & Operational Margins</h2>
+        <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed text-xs">
+          High-yield microgreens production depends on strict spatial density parameters. Oversowing creates overcrowding, leading to restricted airflow and mold outbreaks, while undersowing compromises total tray yields.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 text-xs text-left">
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">1. The Blackout Phase</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Placing a stacked weight (like concrete blocks or loaded trays) over sown seeds for the initial 3–4 days triggers root system expansion. This forces sprouts to grow uniform, elongated, and highly durable stems.
+            </p>
+          </div>
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">2. Density Calculations</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Standard 1020 trays have approximately 200 square inches of grow area. Small seeds (Amaranth, Broccoli) require lower seeding weights, while large seeds (Sunflower, Peas) have high-volume hulls and need heavy densities.
+            </p>
+          </div>
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">3. Reverse Crop Schedules</h3>
+            <p class="text-slate-400 leading-relaxed">
+              To supply consistent batches to weekly markets, calculate crop cycles backwards. Sunflower and pea trays require early starts (~10-12 days), while radish and broccoli can be started later in the week.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast Notifications -->
+    <div 
+      v-if="toast.show" 
+      class="fixed bottom-6 right-6 px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold text-emerald-400 z-50 transition-all duration-300"
+    >
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-[#04060b] py-6 px-4 text-center text-xs text-slate-500 mt-auto">
+      <p>&copy; 2026 SproutPlan. Private urban agriculture crop logs. Offline local execution sandbox.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const { createApp, ref, computed, watch, onMounted } = Vue;
+
+    // Fixed default parameters for standard commercial microgreen crops
+    const CROP_VARIETIES = [
+      { id: 'broccoli', name: 'Broccoli (Sia)', d1020: 12, blackoutDays: 3, growDays: 5, soakHours: 0, yieldMultiplier: 28 },
+      { id: 'sunflower', name: 'Sunflower (Black Oil)', d1020: 100, blackoutDays: 4, growDays: 6, soakHours: 12, yieldMultiplier: 6.8 },
+      { id: 'pea', name: 'Pea (Dwarf Grey Sugar)', d1020: 150, blackoutDays: 3, growDays: 7, soakHours: 12, yieldMultiplier: 4.5 },
+      { id: 'radish', name: 'Radish (Rambo/China Rose)', d1020: 25, blackoutDays: 3, growDays: 5, soakHours: 0, yieldMultiplier: 18 },
+      { id: 'amaranth', name: 'Amaranth (Red Garnet)', d1020: 6, blackoutDays: 3, growDays: 7, soakHours: 0, yieldMultiplier: 25 },
+      { id: 'basil', name: 'Basil (Genovese/Dark Opal)', d1020: 10, blackoutDays: 4, growDays: 12, soakHours: 0, yieldMultiplier: 14 },
+      { id: 'kale', name: 'Kale (Red Russian)', d1020: 15, blackoutDays: 3, growDays: 5, soakHours: 0, yieldMultiplier: 20 }
+    ];
+
+    createApp({
+      setup() {
+        const selectedVarietyId = ref('broccoli');
+        const selectedTrayFormat = ref('1020');
+        const customArea = ref(200);
+        const trayCount = ref(1);
+
+        // Timeline variables
+        const scheduleDirection = ref('forward');
+        const targetSowDate = ref('');
+        const targetHarvestDate = ref('');
+
+        // Economics variables
+        const econ = ref({
+          seedPricePerKg: 35.00,
+          soilCostPerTray: 1.50,
+          retailPricePerTray: 15.00
+        });
+
+        // Active Batch log tracker array
+        const activeBatches = ref([]);
+        const activeRightTab = ref('batches');
+        const toast = ref({ show: false, message: '' });
+
+        // Computed Properties
+        const cropVarieties = computed(() => CROP_VARIETIES);
+
+        const activeVariety = computed(() => {
+          return CROP_VARIETIES.find(v => v.id === selectedVarietyId.value);
+        });
+
+        // Seed Area Weight calculation
+        const calculatedSeedWeight = computed(() => {
+          let areaFactor = 1.0;
+          if (selectedTrayFormat.value === '1010') {
+            areaFactor = 0.5;
+          } else if (selectedTrayFormat.value === 'custom') {
+            areaFactor = customArea.value / 200;
+          } else {
+            areaFactor = 1.0; // Standard 1020
+          }
+          
+          const singleTrayWeight = activeVariety.value.d1020 * areaFactor;
+          const count = selectedTrayFormat.value === 'custom' ? 1 : trayCount.value;
+          return singleTrayWeight * count;
+        });
+
+        // Expected final yields estimation
+        const calculatedYieldWeight = computed(() => {
+          return calculatedSeedWeight.value * activeVariety.value.yieldMultiplier;
+        });
+
+        // Chronological scheduler mapping (forward and backward algorithms)
+        const calculatedTimeline = computed(() => {
+          const varParam = activeVariety.value;
+          const totalDays = varParam.blackoutDays + varParam.growDays;
+
+          let sow = null;
+          let harvest = null;
+
+          if (scheduleDirection.value === 'forward') {
+            const rawSow = targetSowDate.value ? new Date(targetSowDate.value + 'T00:00:00') : new Date();
+            sow = new Date(rawSow);
+            harvest = new Date(sow);
+            harvest.setDate(sow.getDate() + totalDays);
+          } else {
+            const rawHarv = targetHarvestDate.value ? new Date(targetHarvestDate.value + 'T00:00:00') : new Date();
+            harvest = new Date(rawHarv);
+            sow = new Date(harvest);
+            sow.setDate(harvest.getDate() - totalDays);
+          }
+
+          // Build Intermediate Dates
+          const lights = new Date(sow);
+          lights.setDate(sow.getDate() + varParam.blackoutDays);
+
+          let soak = null;
+          if (varParam.soakHours > 0) {
+            soak = new Date(sow);
+            soak.setHours(sow.getHours() - varParam.soakHours);
+          }
+
+          return {
+            soak: soak,
+            sow: sow,
+            lights: lights,
+            harvest: harvest
+          };
+        });
+
+        // Financial calculations per single Tray based on active specs
+        const econSeedCost = computed(() => {
+          // Grams of seeds to KG conversions
+          const seedWeightKg = (calculatedSeedWeight.value / trayCount.value) / 1000;
+          return seedWeightKg * econ.value.seedPricePerKg;
+        });
+
+        const econTotalCogs = computed(() => {
+          return econSeedCost.value + econ.value.soilCostPerTray;
+        });
+
+        const econNetMargin = computed(() => {
+          return econ.value.retailPricePerTray - econTotalCogs.value;
+        });
+
+        const econMarginPercentage = computed(() => {
+          if (econ.value.retailPricePerTray === 0) return 0;
+          return Math.round((econNetMargin.value / econ.value.retailPricePerTray) * 100);
+        });
+
+        // Scheduling Date Formatter
+        const formatDate = (dateObj) => {
+          if (!dateObj) return '';
+          return dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        };
+
+        const formatDateString = (rawStr) => {
+          const date = new Date(rawStr);
+          return isNaN(date.getTime()) ? '' : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        };
+
+        const formatNumber = (num) => {
+          return new Intl.NumberFormat('en-US').format(num);
+        };
+
+        // Active Batches Log Manager
+        const addBatch = () => {
+          const batch = {
+            id: Date.now(),
+            cropName: activeVariety.value.name,
+            trayFormat: selectedTrayFormat.value === 'custom' ? `${customArea.value} sq in` : `${selectedTrayFormat.value}x${trayCount.value}`,
+            seedWeight: calculatedSeedWeight.value,
+            timeline: {
+              sow: calculatedTimeline.value.sow.toISOString(),
+              lights: calculatedTimeline.value.lights.toISOString(),
+              harvest: calculatedTimeline.value.harvest.toISOString()
+            }
+          };
+
+          activeBatches.value.unshift(batch);
+          saveBatches();
+          triggerToast('Batch logged into active schedule tracking!');
+        };
+
+        const removeBatch = (idx) => {
+          activeBatches.value.splice(idx, 1);
+          saveBatches();
+        };
+
+        const clearBatches = () => {
+          activeBatches.value = [];
+          saveBatches();
+          triggerToast('Active batch log cleared.');
+        };
+
+        const saveBatches = () => {
+          localStorage.setItem('sproutplan_batches', JSON.stringify(activeBatches.value));
+        };
+
+        // Live Growth Progress Indicators
+        const getStageLabel = (batch) => {
+          const now = new Date();
+          const sow = new Date(batch.timeline.sow);
+          const lights = new Date(batch.timeline.lights);
+          const harvest = new Date(batch.timeline.harvest);
+
+          if (now < sow) return 'Sowing Pending';
+          if (now < lights) return 'In Blackout (Stacked)';
+          if (now < harvest) return 'Under Lights';
+          return 'Ready to Harvest!';
+        };
+
+        const getStageColor = (batch) => {
+          const stage = getStageLabel(batch);
+          if (stage === 'In Blackout (Stacked)') return 'text-slate-400 font-semibold';
+          if (stage === 'Under Lights') return 'text-indigo-400 font-semibold';
+          if (stage === 'Ready to Harvest!') return 'text-emerald-400 font-bold animate-pulse';
+          return 'text-slate-500';
+        };
+
+        const getBatchProgressPercentage = (batch) => {
+          const now = new Date().getTime();
+          const sow = new Date(batch.timeline.sow).getTime();
+          const harvest = new Date(batch.timeline.harvest).getTime();
+
+          if (now < sow) return 0;
+          if (now >= harvest) return 100;
+
+          const totalTime = harvest - sow;
+          const elapsedTime = now - sow;
+          return Math.round((elapsedTime / totalTime) * 100);
+        };
+
+        const triggerToast = (msg) => {
+          toast.value = { show: true, message: msg };
+          setTimeout(() => { toast.value.show = false; }, 3000);
+        };
+
+        // Auto default input dates on load
+        onMounted(() => {
+          const today = new Date().toISOString().split('T')[0];
+          targetSowDate.value = today;
+          targetHarvestDate.value = today;
+
+          const saved = localStorage.getItem('sproutplan_batches');
+          if (saved) {
+            activeBatches.value = JSON.parse(saved);
+          }
+        });
+
+        return {
+          selectedVarietyId,
+          selectedTrayFormat,
+          customArea,
+          trayCount,
+          scheduleDirection,
+          targetSowDate,
+          targetHarvestDate,
+          econ,
+          activeBatches,
+          activeRightTab,
+          toast,
+          cropVarieties,
+          activeVariety,
+          calculatedSeedWeight,
+          calculatedYieldWeight,
+          calculatedTimeline,
+          econSeedCost,
+          econTotalCogs,
+          econNetMargin,
+          econMarginPercentage,
+          formatDate,
+          formatDateString,
+          formatNumber,
+          addBatch,
+          removeBatch,
+          clearBatches,
+          getStageLabel,
+          getStageColor,
+          getBatchProgressPercentage
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
