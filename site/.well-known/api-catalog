@@ -1,0 +1,19 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://leaftix.com",
+      "sitemap": [
+        {
+          "href": "https://leaftix.com/sitemap.xml",
+          "type": "application/xml"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://leaftix.com/",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}
