@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPDSprout | Microgreens Vapor Pressure Deficit & Mold Risk Calculator</title>
+  <meta name="description" content="Calculate Vapor Pressure Deficit (VPD) and dew point for microgreens. Use our interactive climate map to prevent mold outbreaks and optimize yields.">
+  
+  <!-- Tailwind CSS via CDN (Carregamento Seguro) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+      background: #020617;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-[#030712] text-slate-100 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+  <div id="app" class="flex-1 flex flex-col" v-cloak>
+    
+    <!-- Top Navigation Header -->
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50 px-4 py-3.5 sm:px-6">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-emerald-600 text-white p-2 rounded-xl shadow-lg shadow-emerald-500/10">
+            <i class="fa-solid fa-temperature-half text-lg"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">VPDSprout</span>
+            <span class="text-[10px] font-bold uppercase tracking-widest ml-2 px-1.5 py-0.5 rounded bg-slate-900 text-slate-400 border border-slate-800">Mold Guard</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button @click="toggleUnit" class="text-xs text-slate-400 hover:text-white transition">
+            Display: <strong class="text-slate-200">°{{ isFahrenheit ? 'F' : 'C' }}</strong>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Climate Inputs & Local AI Panel (5 Columns) -->
+      <section class="lg:col-span-5 flex flex-col space-y-6">
+        
+        <!-- Live Climate Ingestion Card -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-gauge-high text-emerald-400"></i>
+              <span>1. Ingest Room Metrics</span>
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">Live Sliders</span>
+          </div>
+
+          <!-- Input Controls -->
+          <div class="space-y-4">
+            <!-- Air Temp Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-300 font-medium">Air Temperature</span>
+                <span class="font-bold text-emerald-400">{{ formatTemp(tempAir) }}</span>
+              </div>
+              <input 
+                v-model.number="tempAir" 
+                type="range" 
+                :min="isFahrenheit ? 59 : 15" 
+                :max="isFahrenheit ? 95 : 35" 
+                step="1" 
+                class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              >
+            </div>
+
+            <!-- Humidity Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-300 font-medium">Relative Humidity (RH)</span>
+                <span class="font-bold text-emerald-400">{{ rh }}%</span>
+              </div>
+              <input 
+                v-model.number="rh" 
+                type="range" 
+                min="20" 
+                max="95" 
+                step="1" 
+                class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              >
+            </div>
+
+            <!-- Leaf Temp Offset Slider -->
+            <div class="space-y-1.5 pt-1">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-300 font-medium flex items-center">
+                  Leaf Temp Offset
+                  <i class="fa-solid fa-circle-info text-[10px] text-slate-500 ml-1.5" title="Leaf surface temperature is typically slightly cooler than air due to transpiration."></i>
+                </span>
+                <span class="font-bold text-slate-400 font-mono">{{ leafOffset > 0 ? '+' : '' }}{{ leafOffset }}°C</span>
+              </div>
+              <input 
+                v-model.number="leafOffset" 
+                type="range" 
+                min="-4" 
+                max="0" 
+                step="0.5" 
+                class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-slate-600"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Local GenAI Assistant Panel -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-microchip text-teal-400"></i>
+              <span>2. Local AI HVAC Advisor</span>
+            </h3>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Select Local LLM</label>
+              <select v-model="selectedLlmModel" class="w-full bg-[#152035] border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500" :disabled="llmLoading">
+                <option value="SmolLM2-360M-Instruct-q4f16_1-MLC">SmolLM2 360M (Fast, Cache-Friendly ~130MB)</option>
+                <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen2.5 0.5B (Multilingual ~350MB)</option>
+              </select>
+            </div>
+
+            <button 
+              @click="initLocalLlm" 
+              class="w-full py-2 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center space-x-1.5"
+              :class="llmLoaded ? 'bg-teal-600/20 text-teal-400 border border-teal-500/30' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'"
+              :disabled="llmLoading || !webGpuSupported"
+            >
+              <i v-if="llmLoading" class="fa-solid fa-spinner animate-spin"></i>
+              <i v-else-if="llmLoaded" class="fa-solid fa-circle-check"></i>
+              <i v-else class="fa-solid fa-download"></i>
+              <span>{{ llmLoading ? 'Downloading Model: ' + llmProgress : (llmLoaded ? 'Local Advisor Active' : 'Initialize Local AI') }}</span>
+            </button>
+            <p v-if="!webGpuSupported" class="text-[10px] text-amber-500 leading-relaxed">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i> WebGPU not supported. You can still use the static rule-based climate engine for immediate diagnostic steps.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Interactive VPD Map & Remediation Plan (7 Columns) -->
+      <section class="lg:col-span-7 flex flex-col space-y-4">
+        
+        <!-- Live VPD Status Card -->
+        <div class="grid grid-cols-3 gap-3">
+          <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-800/80 text-center flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">Calculated VPD</span>
+            <strong class="text-xl font-extrabold text-white font-mono">{{ computedVpd.toFixed(2) }} kPa</strong>
+          </div>
+          <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-800/80 text-center flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">VPD Status</span>
+            <span :class="['text-xs font-bold uppercase tracking-wider block mt-1', vpdZone.color]">{{ vpdZone.label }}</span>
+          </div>
+          <div class="bg-slate-900/50 p-3 rounded-xl border border-slate-800/80 text-center flex flex-col justify-between">
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-0.5">Dew Point</span>
+            <strong class="text-xl font-extrabold text-slate-300 font-mono">{{ computedDewPoint }}</strong>
+          </div>
+        </div>
+
+        <!-- Interactive SVG Climate Map -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-3">
+          <div class="flex justify-between items-center border-b border-slate-800 pb-1.5">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Interactive Microgreens VPD Grid</h3>
+            <span class="text-[10px] text-slate-500 font-mono">Temp vs RH%</span>
+          </div>
+
+          <!-- Responsive SVG Plot Grid -->
+          <div class="bg-slate-950 rounded-xl p-3 border border-slate-900/60 flex items-center justify-center">
+            <svg viewBox="0 0 500 220" class="w-full h-44 overflow-visible">
+              <!-- Safety boundary backgrounds (Polygons) -->
+              <!-- Over-saturation / Mold risk zone (VPD < 0.4 kPa) -->
+              <rect x="0" y="0" width="500" height="70" fill="#f43f5e" fill-opacity="0.08" />
+              <!-- Safe Transpiration zone (VPD 0.8 - 1.1 kPa) -->
+              <rect x="0" y="110" width="500" height="50" fill="#10b981" fill-opacity="0.1" />
+              <!-- Dehydration / Extreme Dry Stress (VPD > 1.5 kPa) -->
+              <rect x="0" y="190" width="500" height="30" fill="#ef4444" fill-opacity="0.1" />
+
+              <!-- Horizontal Grid Lines representing RH% boundaries -->
+              <line x1="0" y1="40" x2="500" y2="40" stroke="#1e293b" stroke-dasharray="4,4" />
+              <line x1="0" y1="110" x2="500" y2="110" stroke="#1e293b" stroke-dasharray="4,4" />
+              <line x1="0" y1="180" x2="500" y2="180" stroke="#1e293b" stroke-dasharray="4,4" />
+
+              <!-- Axis Labels -->
+              <text x="5" y="15" fill="#f43f5e" fill-opacity="0.7" font-size="8" class="font-bold">UNDER-TRANSPIRATION / CRITICAL MOLD ZONE (VPD &lt; 0.4 kPa)</text>
+              <text x="5" y="125" fill="#10b981" fill-opacity="0.7" font-size="8" class="font-bold">OPTIMAL MICROGREENS WINDOW (0.8 - 1.1 kPa)</text>
+              <text x="5" y="202" fill="#ef4444" fill-opacity="0.7" font-size="8" class="font-bold">DEHYDRATION / WILTING DANGER ZONE (VPD &gt; 1.5 kPa)</text>
+
+              <!-- Pulsing Pointer indicating current coordinates -->
+              <circle 
+                :cx="chartX" 
+                :cy="chartY" 
+                r="7" 
+                fill="#3b82f6" 
+                fill-opacity="0.3"
+                class="animate-ping"
+              />
+              <circle 
+                :cx="chartX" 
+                :cy="chartY" 
+                r="4.5" 
+                fill="#3b82f6" 
+                stroke="#ffffff" 
+                stroke-width="1.5"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Remediation Plan Workdesk -->
+        <div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800/80 shadow-xl flex flex-col space-y-4">
+          <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles text-emerald-400"></i>
+              <span>Climate Remediation Recipe</span>
+            </h3>
+            <button v-if="remediationPlan" @click="copyRemediationPlan" class="text-[10px] text-emerald-400 hover:underline">
+              <i class="fa-solid fa-copy mr-1"></i> Copy Plan
+            </button>
+          </div>
+
+          <!-- Dynamic Output of Remediation Plans -->
+          <div class="text-xs leading-relaxed text-slate-300">
+            <div v-if="aiLoading" class="p-8 text-center flex flex-col items-center justify-center space-y-3 bg-slate-950 rounded-lg border border-slate-900">
+              <i class="fa-solid fa-spinner animate-spin text-emerald-400 text-lg"></i>
+              <span class="text-[10px] text-slate-500 font-mono">Local AI compiling environmental updates...</span>
+            </div>
+
+            <div v-else-if="remediationPlan" class="bg-slate-950 p-4 rounded-xl border border-slate-900/60 space-y-3">
+              <p class="whitespace-pre-line text-justify">{{ remediationPlan }}</p>
+            </div>
+
+            <!-- Run Local AI Advice button -->
+            <button 
+              v-else
+              @click="generateAiRemediation" 
+              class="w-full py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center justify-center space-x-1.5 shadow"
+              :disabled="!llmLoaded || aiLoading"
+            >
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              <span>Generate Step-by-Step Custom HVAC Plan</span>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Contextual Educational and Informative Section -->
+    <section class="bg-[#060910] border-t border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-6 text-sm text-center">
+        <h2 class="text-xl font-bold text-white">How Offline AI Diagnostics Elevate Farm Biosecurity</h2>
+        <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed text-xs">
+          Maintaining clean vertical grow environments requires immediate identification of crop anomalies. Relying on remote servers creates lag and poses operational security risks.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 text-xs text-left">
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">1. Air-transpiration calculations</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Standard humidity monitors do not report the real evaporation speed of microgreens. By running Vapor Pressure Deficit calculations locally, the app maps environmental data to the specific botanical transpiration needs of delicate sprouts [1, 2].
+            </p>
+          </div>
+          <div class="bg-[#0f172a]/60 p-5 rounded-xl border border-slate-800">
+            <h3 class="font-bold text-slate-200 mb-2">2. Localized Airflow and Ventilation</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Applying exact mechanical adjustments like dehumidifier targets or fan cycles must be immediate. Synthesizing recipes locally on-device guarantees zero-latency execution in off-grid growing setups [2].
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-[#04060b] py-6 px-4 text-center text-xs text-slate-500 mt-auto">
+      <p>&copy; 2026 VPDSprout. Dynamic crop climate safeguards processed entirely inside browser memory.</p>
+    </footer>
+
+  </div>
+
+  <!-- Dynamic ESM execution context with synchronous Vue loading -->
+  <script type="module">
+    // Load Vue 3 strictly as an ES Module to prevent any iframe script-race conditions
+    import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+    createApp({
+      setup() {
+        const isFahrenheit = ref(false);
+        const tempAir = ref(22); // Default 22C
+        const rh = ref(65); // Default 65% RH
+        const leafOffset = ref(-2); // Default -2C leaf offset
+
+        // ML frameworks states
+        const webGpuSupported = ref(false);
+        const selectedLlmModel = ref('SmolLM2-360M-Instruct-q4f16_1-MLC');
+        const llmLoading = ref(false);
+        const llmLoaded = ref(false);
+        const llmProgress = ref('');
+        const aiLoading = ref(false);
+        const aiRemediationPlan = ref('');
+
+        const toast = ref({ show: false, message: '' });
+
+        let webllmInstance = null;
+        let mlcEngine = null;
+
+        // Toggle Celsius / Fahrenheit display
+        const toggleUnit = () => {
+          isFahrenheit.value = !isFahrenheit.value;
+          if (isFahrenheit.value) {
+            tempAir.value = Math.round((tempAir.value * 9/5) + 32);
+          } else {
+            tempAir.value = Math.round((tempAir.value - 32) * 5/9);
+          }
+        };
+
+        const formatTemp = (val) => {
+          return `${val}°${isFahrenheit.value ? 'F' : 'C'}`;
+        };
+
+        const triggerToast = (msg) => {
+          toast.value = { show: true, message: msg };
+          setTimeout(() => { toast.value.show = false; }, 3000);
+        };
+
+        // WebGPU indicators to display hardware support in browser UI
+        const webGpuStatusLabel = computed(() => {
+          return webGpuSupported.value ? 'Active / Hardware Ready' : 'Unsupported on Browser';
+        });
+
+        const webGpuBadgeStyle = computed(() => {
+          return webGpuSupported.value ? 'border-emerald-800 bg-emerald-950/20 text-emerald-400' : 'border-rose-800 bg-rose-950/20 text-rose-400';
+        });
+
+        const webGpuDotStyle = computed(() => {
+          return webGpuSupported.value ? 'bg-emerald-500' : 'bg-rose-500';
+        });
+
+        // Mathematical Vapor Pressure Deficit calculation (in kPa)
+        const computedVpd = computed(() => {
+          // Convert Air Temp to Celsius first if Fahrenheit is active
+          const tAir = isFahrenheit.value ? (tempAir.value - 32) * 5/9 : tempAir.value;
+          const tLeaf = tAir + leafOffset.value;
+
+          // Saturation Vapor Pressure of Air (Tetens equation) [1]
+          const vpsatAir = 0.61078 * Math.exp((17.27 * tAir) / (tAir + 237.3));
+          // Actual Vapor Pressure of Air
+          const vpAir = vpsatAir * (rh.value / 100);
+
+          // Saturation Vapor Pressure of Leaf
+          const vpsatLeaf = 0.61078 * Math.exp((17.27 * tLeaf) / (tLeaf + 237.3));
+
+          // Vapor Pressure Deficit
+          const vpd = vpsatLeaf - vpAir;
+          return Math.max(0, vpd);
+        });
+
+        // Magnus-Tetens Dew Point formula approximation [1]
+        const computedDewPoint = computed(() => {
+          const tAir = isFahrenheit.value ? (tempAir.value - 32) * 5/9 : tempAir.value;
+          const r = rh.value;
+
+          const gamma = ((17.27 * tAir) / (237.3 + tAir)) + Math.log(r / 100);
+          const tDew = (237.3 * gamma) / (17.27 - gamma);
+
+          if (isFahrenheit.value) {
+            return `${Math.round((tDew * 9/5) + 32)}°F`;
+          }
+          return `${tDew.toFixed(1)}°C`;
+        });
+
+        // VPD Growth Range / Safety classifications [2]
+        const vpdZone = computed(() => {
+          const v = computedVpd.value;
+          if (v < 0.4) {
+            return {
+              label: 'Critical Mold Risk',
+              color: 'text-rose-500 animate-pulse',
+              advice: 'DANGER: Air is saturated. Microgreens cannot transpire. Extreme risk of cobweb mold or damping-off.\n\nRemediation Steps:\n1. Turn on high-speed exhaust fans immediately.\n2. Turn on dehumidifiers to lower relative humidity.\n3. Keep tray covers off.'
+            };
+          }
+          if (v < 0.8) {
+            return {
+              label: 'High Mold Risk',
+              color: 'text-amber-500',
+              advice: 'WARNING: Humidity is elevated. Airflow is required to keep plants transpirating and avoid mold.\n\nRemediation Steps:\n1. Increase vertical fan air movement across grow shelves.\n2. Slightly increase air temperature or decrease relative humidity.'
+            };
+          }
+          if (v <= 1.1) {
+            return {
+              label: 'Optimal Growth',
+              color: 'text-emerald-400 font-extrabold',
+              advice: 'SAFE: Excellent transpiration equilibrium. Mold risk is minimal and nutrient absorption is optimized.\n\nRemediation Steps:\n- Maintain current temperature and relative humidity. No adjustments needed.'
+            };
+          }
+          if (v <= 1.5) {
+            return {
+              label: 'Under-Hydration Stress',
+              color: 'text-yellow-400',
+              advice: 'WARNING: Microgreens are transpirating quickly. Soil or medium may dehydrate rapidly.\n\nRemediation Steps:\n1. Increase watering/bottom-watering cycles.\n2. Slightly lower room temperature or increase relative humidity.'
+            };
+          }
+          return {
+            label: 'Severe Dehydration',
+            color: 'text-red-500 font-bold',
+            advice: 'DANGER: Stomata will close. Microgreens are wilting due to severe dry-air stress.\n\nRemediation Steps:\n1. Turn on room humidifiers immediately.\n2. Reduce exhaust/ventilation fan speed.\n3. Give trays a heavy bottom-watering cycle.'
+          };
+        });
+
+        // Chart coordinates mapping (X: Temp [15 to 35], Y: RH% [20 to 100])
+        const chartX = computed(() => {
+          const tAir = isFahrenheit.value ? (tempAir.value - 32) * 5/9 : tempAir.value;
+          const pct = (tAir - 15) / 20; // 20C span
+          return Math.max(10, Math.min(490, pct * 480 + 10));
+        });
+
+        const chartY = computed(() => {
+          const r = rh.value;
+          const pct = (r - 20) / 75; // 80% span
+          // Invert axis (100% RH is top, 20% is bottom)
+          return Math.max(10, Math.min(210, 210 - (pct * 200)));
+        });
+
+        // Static fallback + Local LLM generator [2]
+        const remediationPlan = computed(() => {
+          if (aiRemediationPlan.value) return aiRemediationPlan.value;
+          return vpdZone.value.advice;
+        });
+
+        // WebGPU and WebLLM Model Initialization
+        const checkWebGpuSupport = async () => {
+          if (!navigator.gpu) return false;
+          try {
+            const adapter = await navigator.gpu.requestAdapter();
+            return !!adapter;
+          } catch (e) {
+            return false;
+          }
+        };
+
+        const initLocalLlm = async () => {
+          if (!webGpuSupported.value) return;
+          llmLoading.value = true;
+          llmProgress.value = 'Preparing compilation...';
+
+          try {
+            if (!webllmInstance) {
+              webllmInstance = await import("https://esm.run/@mlc-ai/web-llm");
+            }
+
+            const initProgressCallback = (report) => {
+              llmProgress.value = report.text;
+            };
+
+            mlcEngine = await webllmInstance.CreateMLCEngine(
+              selectedLlmModel.value,
+              { initProgressCallback }
+            );
+
+            llmLoaded.value = true;
+            triggerToast('Local AI assistant initialized successfully.');
+          } catch (e) {
+            console.error(e);
+            triggerToast('Local LLM initialization failed.');
+          } finally {
+            llmLoading.value = false;
+          }
+        };
+
+        // Step 3: Run generative redlining in-browser
+        const generateAiRemediation = async () => {
+          if (!mlcEngine) return;
+
+          aiLoading.value = true;
+          aiRemediationPlan.value = '';
+
+          try {
+            const prompt = `Context:
+You are an expert indoor microgreens climate advisor.
+
+Current Grow Room Metrics:
+- Air Temperature: ${tempAir.value}°${isFahrenheit.value ? 'F' : 'C'}
+- Relative Humidity: ${rh.value}%
+- Calculated Vapor Pressure Deficit (VPD): ${computedVpd.value.toFixed(2)} kPa
+- Environment Zone: ${vpdZone.value.label}
+
+Objective:
+Write 3 concise bullet points outlining immediate HVAC, ventilation, and humidifier/dehumidifier adjustments to bring the room into the optimal microgreens safety window of 0.8 to 1.1 kPa to prevent mold and rot.
+
+Your Output:`;
+
+            const messages = [
+              { role: 'system', content: 'You are an offline vertical farm climate advisor. Provide highly concise, actionable remediation instructions.' },
+              { role: 'user', content: prompt }
+            ];
+
+            const reply = await mlcEngine.chat.completions.create({
+              messages,
+              stream: false,
+              temperature: 0.1
+            });
+
+            aiRemediationPlan.value = reply.choices[0].message.content;
+          } catch (e) {
+            console.error(e);
+            triggerToast('AI generation execution error.');
+          } finally {
+            aiLoading.value = false;
+          }
+        };
+
+        const copyRemediationPlan = async () => {
+          if (!remediationPlan.value) return;
+          try {
+            await navigator.clipboard.writeText(remediationPlan.value);
+            triggerToast('Plan copied to clipboard.');
+          } catch (e) {
+            triggerToast('Copy failed.');
+          }
+        };
+
+        onMounted(async () => {
+          webGpuSupported.value = await checkWebGpuSupport();
+        });
+
+        return {
+          isFahrenheit,
+          tempAir,
+          rh,
+          leafOffset,
+          webGpuSupported,
+          webGpuStatusLabel,
+          webGpuBadgeStyle,
+          webGpuDotStyle,
+          selectedLlmModel,
+          llmLoading,
+          llmLoaded,
+          llmProgress,
+          aiLoading,
+          aiRemediationPlan,
+          computedVpd,
+          computedDewPoint,
+          vpdZone,
+          chartX,
+          chartY,
+          remediationPlan,
+          toggleUnit,
+          formatTemp,
+          initLocalLlm,
+          generateAiRemediation,
+          copyRemediationPlan
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
