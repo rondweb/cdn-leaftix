@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LumenSilo | Vertical Farm DLI & Lighting Cost Planner</title>
+  <meta name="description" content="Calculate Daily Light Integral (DLI) for indoor crops and estimate the monthly electricity consumption and energy cost of your vertical farming LED racks.">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
+  <!-- Vue 3 ESM Browser Build -->
+  <script type="module">
+    import { createApp, ref, computed, onMounted, watch } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+    window.Vue = { createApp, ref, computed, onMounted, watch };
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .large-input:focus-within {
+      border-color: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-emerald-100 selection:text-emerald-900">
+
+  <div id="app" class="flex-1 flex flex-col" v-cloak>
+    
+    <!-- Header -->
+    <header class="border-b border-slate-200 bg-white sticky top-0 z-50 px-4 py-4 sm:px-6">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <div class="bg-emerald-600 text-white p-2.5 rounded-xl shadow-md shadow-emerald-500/10">
+            <i class="fa-solid fa-lightbulb text-xl"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-2xl tracking-tight text-slate-900">LumenSilo</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider ml-2 px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200">AgTech Planner</span>
+          </div>
+        </div>
+        <div class="flex items-center space-x-4 text-xs text-slate-500">
+          <span class="hidden sm:inline-block font-medium"><i class="fa-solid fa-seedling text-emerald-600 mr-1.5"></i>Optimizing grow room economics</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col space-y-6">
+      
+      <!-- Jumbotron -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-92 h-92 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-2xl">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Vertical Farm DLI & Lighting Planner
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+            Link crop biology requirements to physical vertical racks. Calculate exact Daily Light Integral (DLI) and project energy costs in real time.
+          </p>
+        </div>
+      </div>
+
+      <!-- Main Layout Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Column: Input Settings (5 Columns) -->
+        <section class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col space-y-5">
+          
+          <!-- Crop biology selector -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+              <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center space-x-1.5">
+                <i class="fa-solid fa-seedling text-emerald-600"></i>
+                <span>1. Crop Biology Goal</span>
+              </h3>
+            </div>
+            
+            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Target Crop Variety</label>
+            <div class="relative">
+              <select 
+                v-model="selectedCropId" 
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-800 focus:outline-none focus:border-emerald-500 appearance-none cursor-pointer transition"
+                @change="applyCropDefaults"
+              >
+                <option v-for="crop in cropDatabase" :key="crop.id" :value="crop.id">
+                  {{ crop.name }}
+                </option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photoperiod & Light Power Input Sliders -->
+          <div class="space-y-4 pt-2 border-t border-slate-100">
+            
+            <!-- PPFD Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-700 font-semibold flex items-center">
+                  LED Light PPFD
+                  <i class="fa-solid fa-circle-info text-[10px] text-slate-400 ml-1.5" title="Photosynthetic Photon Flux Density (measured at the crop canopy in umol/m²/s)."></i>
+                </span>
+                <span class="font-bold text-emerald-600 font-mono">{{ ppfd }} µmol/m²/s</span>
+              </div>
+              <input 
+                v-model.number="ppfd" 
+                type="range" 
+                min="50" 
+                max="400" 
+                step="5" 
+                class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              >
+            </div>
+
+            <!-- Photoperiod hours Slider -->
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="text-slate-700 font-semibold">Photoperiod (Hours Daily)</span>
+                <span class="font-bold text-emerald-600 font-mono">{{ photoperiod }} hrs</span>
+              </div>
+              <input 
+                v-model.number="photoperiod" 
+                type="range" 
+                min="6" 
+                max="24" 
+                step="1" 
+                class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              >
+            </div>
+
+          </div>
+
+          <!-- Physical Rack Configurations -->
+          <div class="space-y-4 pt-4 border-t border-slate-100">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest border-b border-slate-100 pb-2">
+              2. Physical Rack Settings
+            </h3>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Total Grow Racks</label>
+                <input v-model.number="rackConfig.racks" type="number" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Shelves per Rack</label>
+                <input v-model.number="rackConfig.shelves" type="number" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">LEDs per Shelf</label>
+                <input v-model.number="rackConfig.ledsPerShelf" type="number" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Fixture Wattage (W)</label>
+                <input v-model.number="rackConfig.wattagePerLed" type="number" min="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Local Electricity Rate ($ / kWh)</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-xs text-slate-500">$</span>
+                <input v-model.number="rackConfig.elecRate" type="number" step="0.01" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-6 pr-3.5 py-2 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Right Column: Visual Feedback, Calculations & Blueprint Log (7 Columns) -->
+        <section class="lg:col-span-7 flex flex-col space-y-4">
+          
+          <!-- Live Light DLI & Health Status Gauge -->
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            
+            <!-- Left Side of Card: Biological Light check -->
+            <div class="space-y-4 text-center md:text-left">
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Daily Light Integral (DLI)</span>
+              <div>
+                <strong class="text-4xl font-extrabold text-slate-900 font-mono">{{ computedDli.toFixed(2) }}</strong>
+                <span class="text-xs text-slate-500 ml-1 font-semibold">mol/m²/day</span>
+              </div>
+              <div class="pt-2">
+                <span :class="['px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider', dliStatus.badgeClass]">
+                  {{ dliStatus.label }}
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed text-justify">
+                Target range for <strong class="text-slate-800">{{ activeCrop.name }}</strong> is <strong class="text-slate-800 font-mono">{{ activeCrop.minDli }}–{{ activeCrop.maxDli }} mol/m²/day</strong>.
+              </p>
+            </div>
+
+            <!-- Right Side of Card: Performance Graphic -->
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center justify-center relative overflow-hidden">
+              <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">Horticultural Safety Guard</span>
+              
+              <!-- Color Safety Meter Indicator -->
+              <div class="w-full bg-slate-200 rounded-full h-3.5 overflow-hidden border border-slate-300 relative flex">
+                <div class="h-full bg-rose-500/20 w-[30%]" title="Under-lighting"></div>
+                <div class="h-full bg-emerald-500/30 w-[40%] border-x border-emerald-500/40" title="Optimal Area"></div>
+                <div class="h-full bg-amber-500/20 w-[30%]" title="Over-lighting/Waste"></div>
+
+                <!-- Pulse Pin pointing current DLI relative to scale (0 to 30 DLI span) -->
+                <div 
+                  class="absolute -top-0.5 h-4.5 w-1.5 bg-indigo-600 rounded shadow-md transition-all duration-300"
+                  :style="{ left: Math.min(100, Math.max(0, (computedDli / 30) * 100)) + '%' }"
+                ></div>
+              </div>
+
+              <div class="flex justify-between w-full text-[9px] text-slate-500 mt-2 font-mono">
+                <span>0 mol (Low)</span>
+                <span class="text-emerald-600 font-bold">12 mol (Optimal)</span>
+                <span>30 mol (Excess)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Power Cost Projections Cards -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Daily Power</span>
+              <strong class="text-base font-extrabold text-slate-900 font-mono mt-1 block">{{ formatFloat(computedPower.dailyKwh) }} kWh</strong>
+              <span class="text-[9px] text-slate-400 block">Energy Consumption</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Monthly Cost</span>
+              <strong class="text-base font-extrabold text-slate-900 font-mono mt-1 block">${{ formatFloat(computedPower.monthlyCost) }}</strong>
+              <span class="text-[9px] text-slate-400 block">At local rates</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Yearly Cost</span>
+              <strong class="text-base font-extrabold text-emerald-600 font-mono mt-1 block">${{ formatFloat(computedPower.yearlyCost) }}</strong>
+              <span class="text-[9px] text-slate-400 block">Annualized lighting</span>
+            </div>
+          </div>
+
+          <!-- Blueprints Log (LocalStorage) -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col space-y-4">
+            <div class="border-b border-slate-100 pb-2 flex justify-between items-center">
+              <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center space-x-1.5">
+                <i class="fa-solid fa-folder-tree text-slate-400"></i>
+                <span>Saved Rack Blueprints</span>
+              </h3>
+              <button 
+                @click="saveBlueprint" 
+                class="py-1 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200 rounded-lg text-[11px] font-bold transition flex items-center space-x-1"
+              >
+                <i class="fa-solid fa-bookmark"></i>
+                <span>Save Current Setup</span>
+              </button>
+            </div>
+
+            <!-- List of blueprints -->
+            <div class="space-y-2">
+              <div v-if="blueprints.length === 0" class="py-8 text-center text-slate-500 text-xs italic">
+                Save active layout parameters for fast comparisons.
+              </div>
+              <div 
+                v-else 
+                v-for="(item, idx) in blueprints" 
+                :key="item.id"
+                class="flex justify-between items-center p-3 rounded-xl bg-slate-50 border border-slate-100 hover:border-slate-200 transition text-xs font-semibold"
+              >
+                <div class="space-y-0.5">
+                  <strong class="text-slate-800">{{ item.cropName }} Blueprint</strong>
+                  <p class="text-[10px] text-slate-500 font-mono">
+                    {{ item.racks }} racks • {{ item.shelves }} shelves • {{ item.wattage }}W • ${{ item.monthlyCost }}/mo
+                  </p>
+                </div>
+                <div class="flex space-x-2 shrink-0">
+                  <button @click="loadBlueprint(item)" class="text-indigo-600 hover:underline text-[10px]">Load</button>
+                  <button @click="deleteBlueprint(idx)" class="text-rose-500 hover:underline text-[10px]">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- Contextual Educational Information (SEO Anchor) -->
+    <section class="bg-white border-t border-slate-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-6 text-sm text-center">
+        <h2 class="text-xl font-bold text-slate-900">Understanding DLI & Energy Metrics in Vertical Farming</h2>
+        <p class="text-slate-600 max-w-2xl mx-auto leading-relaxed text-xs">
+          Daily Light Integral (DLI) measures the cumulative amount of active photons delivered to a specific square meter over 24 hours. Matching this to crop-specific biological parameters is critical to maximize yields and minimize energy overheads.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 text-xs text-left">
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+            <h3 class="font-bold text-slate-800 mb-2">1. The Role of Photoperiod</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Extending the photoperiod (hours per day) allows you to achieve target DLI goals even when using lower-powered, more economical LED fixtures. This prevents the leaf damage often associated with high-intensity spikes while minimizing heat generation.
+            </p>
+          </div>
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+            <h3 class="font-bold text-slate-200 mb-2">2. Optimizing Operating Expenses (OPEX)</h3>
+            <p class="text-slate-400 leading-relaxed">
+              Artificial lighting can represent up to 60% of an indoor farm's total energy bill. Protesting and modeling fixture counts, shelf layouts, and wattage loads with LumenSilo before installation helps urban growers structure highly profitable agricultural systems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating Toast Alerts -->
+    <div 
+      v-if="toast.show" 
+      class="fixed bottom-6 right-6 px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl flex items-center space-x-2 text-xs font-semibold text-emerald-400 z-50 transition-all duration-300"
+    >
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span>{{ toast.message }}</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-slate-100 py-6 px-4 text-center text-xs text-slate-500 mt-auto">
+      <p>&copy; 2026 LumenSilo. Open AgTech calculation platforms.</p>
+    </footer>
+
+  </div>
+
+  <script type="module">
+    import { createApp, ref, computed, onMounted } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+
+    // Standard horticultural database of crop light needs [5]
+    const CROP_LIGHT_DB = [
+      { id: 'micro_greens', name: 'Microgreens (Broccoli/Radish)', minDli: 6.0, maxDli: 12.0, defaultPpfd: 120, defaultPhotoperiod: 16 },
+      { id: 'basil_herbs', name: 'Specialty Herbs (Basil/Mint)', minDli: 12.0, maxDli: 18.0, defaultPpfd: 220, defaultPhotoperiod: 18 },
+      { id: 'lettuce_greens', name: 'Leafy Greens (Alface/Butterhead)', minDli: 14.0, maxDli: 17.0, defaultPpfd: 260, defaultPhotoperiod: 17 },
+      { id: 'baby_spinach', name: 'Baby Spinach', minDli: 12.0, maxDli: 15.0, defaultPpfd: 220, defaultPhotoperiod: 16 },
+      { id: 'cilantro', name: 'Cilantro / Coriander', minDli: 10.0, maxDli: 15.0, defaultPpfd: 200, defaultPhotoperiod: 16 }
+    ];
+
+    createApp({
+      setup() {
+        const selectedCropId = ref('micro_greens');
+        const ppfd = ref(120);
+        const photoperiod = ref(16);
+
+        // Physical vertical farm rack inputs [6]
+        const rackConfig = ref({
+          racks: 2,
+          shelves: 4,
+          ledsPerShelf: 2,
+          wattagePerLed: 24, // Standard T5/T8 grow LED wattage
+          elecRate: 0.15 // USD per kWh
+        });
+
+        const blueprints = ref([]);
+        const toast = ref({ show: false, message: '' });
+
+        const cropDatabase = computed(() => CROP_LIGHT_DB);
+
+        const activeCrop = computed(() => {
+          return CROP_LIGHT_DB.find(c => c.id === selectedCropId.value);
+        });
+
+        // Apply crop default presets
+        const applyCropDefaults = () => {
+          const crop = activeCrop.value;
+          if (crop) {
+            ppfd.value = crop.defaultPpfd;
+            photoperiod.value = crop.defaultPhotoperiod;
+            triggerToast(`Applied recommended lighting guidelines for ${crop.name}.`);
+          }
+        };
+
+        // Standard DLI calculation formula [4]
+        // DLI = PPFD * photoperiod * 3600 * 10^-6
+        const computedDli = computed(() => {
+          return ppfd.value * photoperiod.value * 0.0036;
+        });
+
+        // DLI Health / Safety classifications [4]
+        const dliStatus = computed(() => {
+          const dli = computedDli.value;
+          const min = activeCrop.value.minDli;
+          const max = activeCrop.value.maxDli;
+
+          if (dli < min) {
+            return {
+              label: 'Under-lighting (Low Yield)',
+              badgeClass: 'bg-rose-50 border border-rose-200 text-rose-600'
+            };
+          }
+          if (dli > max) {
+            return {
+              label: 'Energy Waste (Over-saturated)',
+              badgeClass: 'bg-amber-50 border border-amber-200 text-amber-600'
+            };
+          }
+          return {
+            label: 'Optimal Crop Window',
+            badgeClass: 'bg-emerald-50 border border-emerald-200 text-emerald-600 font-extrabold'
+          };
+        });
+
+        // Power consumption calculations [5]
+        const computedPower = computed(() => {
+          const totalWattage = rackConfig.value.racks * 
+                               rackConfig.value.shelves * 
+                               rackConfig.value.ledsPerShelf * 
+                               rackConfig.value.wattagePerLed;
+          
+          const dailyKwh = (totalWattage * photoperiod.value) / 1000;
+          const dailyCost = dailyKwh * rackConfig.value.elecRate;
+          const monthlyCost = dailyCost * 30;
+          const yearlyCost = dailyCost * 365;
+
+          return {
+            totalWattage,
+            dailyKwh,
+            monthlyCost,
+            yearlyCost
+          };
+        });
+
+        const formatFloat = (num) => {
+          return new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(num);
+        };
+
+        const triggerToast = (msg) => {
+          toast.value = { show: true, message: msg };
+          setTimeout(() => { toast.value.show = false; }, 3000);
+        };
+
+        // Saved layout logic (Blueprints) [6]
+        const saveBlueprint = () => {
+          const item = {
+            id: Date.now(),
+            cropName: activeCrop.value.name,
+            racks: rackConfig.value.racks,
+            shelves: rackConfig.value.shelves,
+            wattage: rackConfig.value.wattagePerLed,
+            monthlyCost: formatFloat(computedPower.value.monthlyCost)
+          };
+
+          blueprints.value.push(item);
+          localStorage.setItem('lumensilo_blueprints', JSON.stringify(blueprints.value));
+          triggerToast('Configuration blueprint saved successfully.');
+        };
+
+        const loadBlueprint = (item) => {
+          rackConfig.value.racks = item.racks;
+          rackConfig.value.shelves = item.shelves;
+          rackConfig.value.wattagePerLed = item.wattage;
+          triggerToast('Loaded blueprint layout.');
+        };
+
+        const deleteBlueprint = (idx) => {
+          blueprints.value.splice(idx, 1);
+          localStorage.setItem('lumensilo_blueprints', JSON.stringify(blueprints.value));
+        };
+
+        onMounted(() => {
+          const saved = localStorage.getItem('lumensilo_blueprints');
+          if (saved) {
+            blueprints.value = JSON.parse(saved);
+          }
+          applyCropDefaults();
+        });
+
+        return {
+          selectedCropId,
+          ppfd,
+          photoperiod,
+          rackConfig,
+          blueprints,
+          toast,
+          cropDatabase,
+          activeCrop,
+          applyCropDefaults,
+          computedDli,
+          dliStatus,
+          computedPower,
+          formatFloat,
+          saveBlueprint,
+          loadBlueprint,
+          deleteBlueprint
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
