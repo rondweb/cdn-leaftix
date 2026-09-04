@@ -356,6 +356,28 @@
     padding:5px 10px;
     border-radius:2px;
     white-space:nowrap;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    text-decoration:none;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .product-chip:hover{
+    background:rgba(111,205,189,0.12);
+    color:#8FE0D3;
+    border-color:rgba(111,205,189,0.7);
+  }
+  .chip-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--signal);
+    flex:none;
+    animation:chipPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes chipPulse{
+    0%, 100%{ opacity:1; box-shadow:0 0 0 0 rgba(111,205,189,0.5); }
+    50%{ opacity:0.35; box-shadow:0 0 0 4px rgba(111,205,189,0); }
   }
   .back-link{
     font-family:var(--mono);
@@ -804,7 +826,10 @@
       <span class="brand-name">Leaftix</span>
     </a>
     <div class="meta">
-      <span class="product-chip">Climate Sentinel</span>
+      <a class="product-chip" href="https://leaftix-climate-sentinel-521859800995.us-east1.run.app/" rel="noopener" title="Open the live Climate Sentinel dashboard">
+        <span class="chip-dot" aria-hidden="true"></span>
+        Climate Sentinel
+      </a>
       <div class="lang-switcher" id="lang-switcher">
         <button id="lang-btn" aria-haspopup="listbox" aria-expanded="false" data-i18n-aria="a11y.lang">
           <span id="lang-label">EN</span> <span aria-hidden="true">▾</span>
