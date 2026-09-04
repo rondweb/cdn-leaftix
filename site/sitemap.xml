@@ -74,4 +74,19 @@
     <priority>0.8</priority>
   </url>
 
+<!-- ═══════════════════════════════════════════════════════
+       CLIMATE SENTINEL — El Niño 2026 Hotsite
+  ═══════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://leaftix.com/sentinel-elnino.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/sentinel-elnino.html"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://leaftix.com/sentinel-elnino.html?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leaftix.com/sentinel-elnino.html?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://leaftix.com/sentinel-elnino.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/sentinel-elnino.html"/>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
