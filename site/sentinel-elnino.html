@@ -469,6 +469,113 @@
     max-width:22ch;
   }
 
+  /* ---------- HERO VIDEO (facade — iframe loads only on click) ---------- */
+  .hero-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 400px;
+    gap:56px;
+    align-items:start;
+  }
+  .hero-copy{min-width:0;}
+  .hero-video{
+    margin:4px 0 0;
+    min-width:0;
+  }
+  .video-facade{
+    position:relative;
+    display:block;
+    width:100%;
+    aspect-ratio:16/9;
+    padding:0;
+    border:1px solid var(--ink-line);
+    border-radius:3px;
+    overflow:hidden;
+    background:var(--ink-2);
+    cursor:pointer;
+    box-shadow:0 24px 60px rgba(0,0,0,0.35);
+  }
+  .video-facade img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.92;
+    transition:opacity 0.25s ease, transform 0.4s ease;
+  }
+  .video-facade:hover img{opacity:1; transform:scale(1.02);}
+  .video-facade .play-btn{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .video-facade .play-circle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:rgba(11,18,32,0.72);
+    border:1px solid rgba(111,205,189,0.55);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    transition:background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .video-facade:hover .play-circle{
+    background:rgba(111,205,189,0.92);
+    border-color:var(--signal);
+    transform:scale(1.06);
+  }
+  .video-facade .play-circle svg{
+    width:20px;
+    height:20px;
+    fill:var(--signal);
+    margin-left:3px;
+    transition:fill 0.2s ease;
+  }
+  .video-facade:hover .play-circle svg{fill:#0B1220;}
+  .video-player{
+    position:relative;
+    aspect-ratio:16/9;
+    border:1px solid var(--ink-line);
+    border-radius:3px;
+    overflow:hidden;
+    background:#000;
+    box-shadow:0 24px 60px rgba(0,0,0,0.35);
+  }
+  .video-player iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+  .video-caption{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:0.74rem;
+    line-height:1.55;
+    color:var(--text-light-soft);
+    margin:12px 0 0;
+  }
+  .video-caption::before{content:"▸"; color:var(--signal); flex:none;}
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .hero-video{max-width:560px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .video-facade img,
+    .video-facade .play-circle,
+    .video-facade .play-circle svg{transition:none;}
+    .video-facade:hover img,
+    .video-facade:hover .play-circle{transform:none;}
+  }
+
   /* ---------- STAKES INTRO ---------- */
   .stakes-intro{
     padding:104px 0 72px;
@@ -854,17 +961,32 @@
     <path d="M-20 220 C 200 160, 260 300, 420 260 S 660 190, 700 280" stroke="#6FCDBD" stroke-width="1.2" opacity="0.18"/>
   </svg>
   <div class="wrap">
-    <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="https://leaftix.com">Leaftix</a>
-      <span class="sep" aria-hidden="true">/</span>
-      <a href="https://leaftix.com/sentinel-elnino.html">Climate Sentinel</a>
-      <span class="sep" aria-hidden="true">/</span>
-      <span>El Niño 2026</span>
-    </nav>
-    <p class="updated"><span data-i18n="hero.updated">Scores updated daily · Latest reading</span> <time datetime="2026-09-04">September 4, 2026</time></p>
-    <p class="eyebrow">Leaftix Climate Sentinel — El Niño 2026 · Quarterly Track</p>
-    <h1 id="hero-title"><span data-i18n="hero.title1">El Niño 2026 is warming the ocean.</span> <em data-i18n="hero.title2">Nine harvests are already paying for it.</em></h1>
-    <p class="lede" data-i18n-html="hero.lede">Since June, the Pacific has been running <strong>the strongest El Niño since 2015</strong> — a slow-motion signal now reaching coffee farms in Brazil, maize fields in South Africa, and wheat country in Australia. Climate Sentinel reads that signal in real time, months before it reaches a market report.</p>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="https://leaftix.com">Leaftix</a>
+          <span class="sep" aria-hidden="true">/</span>
+          <a href="https://leaftix.com/sentinel-elnino.html">Climate Sentinel</a>
+          <span class="sep" aria-hidden="true">/</span>
+          <span>El Niño 2026</span>
+        </nav>
+        <p class="updated"><span data-i18n="hero.updated">Scores updated daily · Latest reading</span> <time datetime="2026-09-04">September 4, 2026</time></p>
+        <p class="eyebrow">Leaftix Climate Sentinel — El Niño 2026 · Quarterly Track</p>
+        <h1 id="hero-title"><span data-i18n="hero.title1">El Niño 2026 is warming the ocean.</span> <em data-i18n="hero.title2">Nine harvests are already paying for it.</em></h1>
+        <p class="lede" data-i18n-html="hero.lede">Since June, the Pacific has been running <strong>the strongest El Niño since 2015</strong> — a slow-motion signal now reaching coffee farms in Brazil, maize fields in South Africa, and wheat country in Australia. Climate Sentinel reads that signal in real time, months before it reaches a market report.</p>
+      </div>
+      <figure class="hero-video">
+        <button class="video-facade" id="video-facade" type="button" data-video-id="fIJgUATPFCk" data-i18n-aria="video.aria" aria-label="Play video: Monitoring Climate Impacts on Global Agriculture — The Leaftix Sentinel Dashboard">
+          <img src="https://i.ytimg.com/vi/fIJgUATPFCk/maxresdefault.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/fIJgUATPFCk/hqdefault.jpg';">
+          <span class="play-btn" aria-hidden="true">
+            <span class="play-circle">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M8 5v14l11-7z"/></svg>
+            </span>
+          </span>
+        </button>
+        <figcaption class="video-caption" data-i18n="video.caption">Monitoring climate impacts on global agriculture — the Sentinel dashboard, explained</figcaption>
+      </figure>
+    </div>
     <div class="reading">
       <div class="reading-item">
         <div class="num">+2.7°C</div>
@@ -1065,6 +1187,8 @@ const TRANSLATIONS = {
     "hero.r1": "Sea-surface temperature above baseline, Niño 3.4 region",
     "hero.r2": "Agricultural basins under continuous tracking",
     "hero.r3": "Regions already scoring critical risk (81–100)",
+    "video.aria": "Play video: Monitoring Climate Impacts on Global Agriculture — The Leaftix Sentinel Dashboard",
+    "video.caption": "Monitoring climate impacts on global agriculture — the Sentinel dashboard, explained",
     "stakes.title": "This isn't a weather forecast. It's a supply chain forecast.",
     "stakes.p1": "El Niño doesn't rain down on crops directly. It shifts sea-surface temperature across the tropical Pacific, and that shift bends the rivers of air that decide where rain falls for the next year — sometimes flooding a region, sometimes starving it dry. The shift starts in the ocean months before anyone sees it in a field.",
     "stakes.p2": "By the time it shows up as a bad harvest, it has already shown up as a satellite reading. That gap — between the ocean signal and the market reaction — is what Climate Sentinel is built to close.",
@@ -1128,6 +1252,8 @@ const TRANSLATIONS = {
     "hero.r1": "Temperatura da superfície do mar acima da linha de base, região do Niño 3.4",
     "hero.r2": "Bacias agrícolas sob monitoramento contínuo",
     "hero.r3": "Regiões já em risco crítico (81–100)",
+    "video.aria": "Reproduzir vídeo: Monitorando os impactos climáticos na agricultura global — O painel Sentinel da Leaftix",
+    "video.caption": "Monitorando os impactos climáticos na agricultura global — o painel Sentinel, explicado",
     "stakes.title": "Não é uma previsão do tempo. É uma previsão de cadeia de suprimentos.",
     "stakes.p1": "O El Niño não desaba chuva sobre as lavouras. Ele desloca a temperatura da superfície do mar pelo Pacífico tropical, e esse deslocamento dobra os rios de ar que decidem onde vai chover no próximo ano — às vezes afogando uma região, às vezes deixando outra em seca. O deslocamento começa no oceano, meses antes de aparecer no campo.",
     "stakes.p2": "Quando o problema aparece como uma safra ruim, ele já apareceu antes como uma leitura de satélite. Esse vão — entre o sinal do oceano e a reação do mercado — é exatamente o que o Climate Sentinel foi construído para fechar.",
@@ -1191,6 +1317,8 @@ const TRANSLATIONS = {
     "hero.r1": "Température de surface de la mer au-dessus de la référence, région Niño 3.4",
     "hero.r2": "Bassins agricoles suivis en continu",
     "hero.r3": "Régions déjà en risque critique (81–100)",
+    "video.aria": "Lire la vidéo : Suivi des impacts climatiques sur l'agriculture mondiale — Le tableau de bord Sentinel de Leaftix",
+    "video.caption": "Suivi des impacts climatiques sur l'agriculture mondiale — le tableau de bord Sentinel, expliqué",
     "stakes.title": "Ce n'est pas une prévision météo. C'est une prévision de chaîne d'approvisionnement.",
     "stakes.p1": "El Niño ne fait pas pleuvoir directement sur les cultures. Il déplace la température de surface de la mer à travers le Pacifique tropical, et ce déplacement courbe les fleuves d'air qui décident où tombera la pluie l'année suivante — inondant parfois une région, parfois en privant une autre. Le déplacement commence dans l'océan, des mois avant d'apparaître dans un champ.",
     "stakes.p2": "Quand le problème apparaît comme une mauvaise récolte, il est déjà apparu comme une lecture satellite. Cet écart — entre le signal de l'océan et la réaction du marché — est précisément ce que Climate Sentinel a été conçu pour combler.",
@@ -1254,6 +1382,8 @@ const TRANSLATIONS = {
     "hero.r1": "Temperatura superficial del mar por encima de la referencia, región del Niño 3.4",
     "hero.r2": "Cuencas agrícolas bajo seguimiento continuo",
     "hero.r3": "Regiones ya en riesgo crítico (81–100)",
+    "video.aria": "Reproducir vídeo: Monitoreo de impactos climáticos en la agricultura global — El panel Sentinel de Leaftix",
+    "video.caption": "Monitoreo de impactos climáticos en la agricultura global — el panel Sentinel, explicado",
     "stakes.title": "Esto no es un pronóstico del tiempo. Es un pronóstico de la cadena de suministro.",
     "stakes.p1": "El Niño no llueve directamente sobre los cultivos. Desplaza la temperatura superficial del mar por el Pacífico tropical, y ese desplazamiento curva los ríos de aire que deciden dónde lloverá el próximo año — a veces inundando una región, a veces dejando otra en seca. El desplazamiento comienza en el océano, meses antes de verse en el campo.",
     "stakes.p2": "Cuando el problema aparece como una mala cosecha, ya apareció antes como una lectura satelital. Esa brecha —entre la señal del océano y la reacción del mercado— es justo la que Climate Sentinel fue construido para cerrar.",
@@ -1421,9 +1551,37 @@ function initLangSwitcher() {
   });
 }
 
+// ─────────────────────────────────────────────────────────
+// HERO VIDEO — facade pattern: only a thumbnail until clicked,
+// then swaps in a privacy-enhanced YouTube iframe (nocookie).
+// ─────────────────────────────────────────────────────────
+function initVideoFacade() {
+  const facade = document.getElementById('video-facade');
+  if (!facade) return;
+  facade.addEventListener('click', () => {
+    const player = document.createElement('div');
+    player.className = 'video-player';
+    const iframe = document.createElement('iframe');
+    let src = 'https://www.youtube-nocookie.com/embed/' + facade.dataset.videoId + '?autoplay=1&rel=0';
+    // Error 153 hardening: the player needs origin/referrer data to initialize.
+    // file:// pages have no origin, so the param is only sent over http(s).
+    if (location.protocol === 'http:' || location.protocol === 'https:') {
+      src += '&origin=' + encodeURIComponent(location.origin);
+    }
+    iframe.src = src;
+    iframe.title = 'Monitoring Climate Impacts on Global Agriculture: The Leaftix Sentinel Dashboard';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    player.appendChild(iframe);
+    facade.replaceWith(player);
+  });
+}
+
 // Boot
 applyTranslations(detectLang());
 initLangSwitcher();
+initVideoFacade();
 </script>
 </body>
 </html>
