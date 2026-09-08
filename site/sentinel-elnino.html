@@ -564,6 +564,15 @@
     margin:12px 0 0;
   }
   .video-caption::before{content:"▸"; color:var(--signal); flex:none;}
+  .video-yt-link{
+    margin-left:auto;
+    flex:none;
+    color:var(--text-light-soft);
+    text-decoration:none;
+    white-space:nowrap;
+    transition:color 0.2s ease;
+  }
+  .video-yt-link:hover{color:var(--signal);}
   @media (max-width:960px){
     .hero-grid{grid-template-columns:1fr; gap:40px;}
     .hero-video{max-width:560px;}
@@ -571,7 +580,8 @@
   @media (prefers-reduced-motion:reduce){
     .video-facade img,
     .video-facade .play-circle,
-    .video-facade .play-circle svg{transition:none;}
+    .video-facade .play-circle svg,
+    .video-yt-link{transition:none;}
     .video-facade:hover img,
     .video-facade:hover .play-circle{transform:none;}
   }
@@ -984,7 +994,10 @@
             </span>
           </span>
         </button>
-        <figcaption class="video-caption" data-i18n="video.caption">Monitoring climate impacts on global agriculture — the Sentinel dashboard, explained</figcaption>
+        <figcaption class="video-caption">
+          <span data-i18n="video.caption">Monitoring climate impacts on global agriculture — the Sentinel dashboard, explained</span>
+          <a class="video-yt-link" href="https://www.youtube.com/watch?v=fIJgUATPFCk" target="_blank" rel="noopener" title="Watch on YouTube">YouTube ↗</a>
+        </figcaption>
       </figure>
     </div>
     <div class="reading">
@@ -1562,7 +1575,7 @@ function initVideoFacade() {
     const player = document.createElement('div');
     player.className = 'video-player';
     const iframe = document.createElement('iframe');
-    let src = 'https://www.youtube-nocookie.com/embed/' + facade.dataset.videoId + '?autoplay=1&rel=0';
+    let src = 'https://www.youtube-nocookie.com/embed/' + facade.dataset.videoId + '?autoplay=1&rel=0&controls=0&playsinline=1&cc_load_policy=0&iv_load_policy=3';
     // Error 153 hardening: the player needs origin/referrer data to initialize.
     // file:// pages have no origin, so the param is only sent over http(s).
     if (location.protocol === 'http:' || location.protocol === 'https:') {
