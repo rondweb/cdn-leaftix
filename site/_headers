@@ -1,5 +1,15 @@
 /*
-  Link: </.well-known/api-catalog>; rel="api-catalog", </sitemap.xml>; rel="sitemap"
+
+  Link: </sitemap.xml>; rel="sitemap", </.well-known/api-catalog>; rel="api-catalog"
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Content-Type: application/xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Content-Type: text/plain
+  Cache-Control: public, max-age=3600
 
 /.well-known/api-catalog
   Content-Type: application/linkset+json
