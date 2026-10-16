@@ -11,5 +11,9 @@
   Content-Type: text/plain
   Cache-Control: public, max-age=3600
 
+/biostick/
+  Content-Type: text/html
+  Cache-Control: public, max-age=3600
+
 /.well-known/api-catalog
   Content-Type: application/linkset+json

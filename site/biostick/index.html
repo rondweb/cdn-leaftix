@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BioStick by Leaftix — Leaf-Level Microclimate Sensor for VPD, Frost &amp; Irrigation</title>
+<meta name="description" content="BioStick (ex-BioPulse) stick-and-play IoT sensor for leaf-level temperature, humidity, VPD & leaf wetness. Prevent frost, cut irrigation 30% via Wi-Fi/LoRaWAN.">
+<meta name="keywords" content="BioStick, Biopulse, Leaftix BioStick, leaf level VPD sensor greenhouse, microclimate sensor agriculture, leaf wetness sensor botrytis frost, LoRaWAN greenhouse sensor">
+<meta name="author" content="Leaftix">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://leaftix.com/biostick/">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://leaftix.com/sitemap.xml">
+<link rel="alternate" hreflang="en" href="https://leaftix.com/biostick/">
+<link rel="alternate" hreflang="x-default" href="https://leaftix.com/biostick/">
+<meta name="theme-color" content="#0e1511">
+<link rel="icon" type="image/png" href="/leaftix_green.png">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="/leaftix_green.png" as="image" fetchpriority="high">
+<meta property="og:site_name" content="Leaftix">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BioStick by Leaftix — The nervous system of your field">
+<meta property="og:description" content="Stick-and-play leaf-level sensor: Temp, Humidity, Light, VPD, Leaf Wetness. Wi-Fi, Bluetooth, LoRaWAN to Leaftix Platform. Formerly BioPulse.">
+<meta property="og:image" content="https://leaftix.com/og-image.png">
+<meta property="og:url" content="https://leaftix.com/biostick/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BioStick by Leaftix — Leaf-Level Microclimate Sensor">
+<meta name="twitter:description" content="Measure what your leaf feels. VPD, frost & irrigation intelligence in 60s install.">
+<meta name="twitter:image" content="https://leaftix.com/og-image.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://leaftix.com/#organization","name":"Leaftix","url":"https://leaftix.com","logo":"https://leaftix.com/leaftix_green.png","email":"hello@leaftix.com"},
+{"@type":"WebSite","@id":"https://leaftix.com/biostick/#website","url":"https://leaftix.com/biostick/","name":"BioStick by Leaftix","publisher":{"@id":"https://leaftix.com/#organization"},"inLanguage":"en"},
+{"@type":"Product","@id":"https://leaftix.com/biostick/#product","name":"BioStick by Leaftix","alternateName":"Biopulse","brand":{"@type":"Brand","name":"Leaftix"},"description":"Stick-and-play IoT microclimate sensor for precision agriculture. Measures temperature, humidity, light, VPD and leaf wetness at leaf level. Wi-Fi, Bluetooth, LoRaWAN to Leaftix Platform.","url":"https://leaftix.com/biostick/","image":"https://leaftix.com/og-image.png","category":"AgTech IoT sensor"},
+{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://leaftix.com"},{"@type":"ListItem","position":2,"name":"BioStick","item":"https://leaftix.com/biostick/"}]},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What is BioStick (formerly BioPulse)?","acceptedAnswer":{"@type":"Answer","text":"BioStick is Leaftix stick-and-play IoT microclimate sensor placed in the crop zone to measure temperature, humidity, light, VPD and leaf wetness at leaf level, streaming to the Leaftix Platform via Wi-Fi, Bluetooth or LoRaWAN."}},
+{"@type":"Question","name":"How does a leaf-level VPD sensor save irrigation water?","acceptedAnswer":{"@type":"Answer","text":"VPD reveals transpiration demand. BioStick keeps VPD in the photosynthesis sweet spot (e.g. 0.92 kPa at 22.4C/68% RH) so you irrigate only when the plant needs it — up to 30% less water."}},
+{"@type":"Question","name":"Can BioStick prevent frost and Botrytis?","acceptedAnswer":{"@type":"Answer","text":"Yes. Real-time dew point and leaf wetness alerts warn hours before symptoms, helping prevent mold, Botrytis and frost damage in greenhouses and open fields."}},
+{"@type":"Question","name":"BioStick vs weather station 2km away?","acceptedAnswer":{"@type":"Answer","text":"Weather stations report the sky. BioStick reports your canopy — hyper-local conditions your leaves and roots actually experience."}},
+{"@type":"Question","name":"How fast is BioStick installation?","acceptedAnswer":{"@type":"Answer","text":"Stick-and-play in under 60 seconds. Stick it in the crop zone, connect via Wi-Fi/Bluetooth/LoRaWAN, see live data on the Leaftix Platform."}},
+{"@type":"Question","name":"Does BioStick integrate with GaiaOS?","acceptedAnswer":{"@type":"Answer","text":"Yes. BioStick is an edge data source for Leaftix GaiaOS autonomous governance, feeding Digital Twin and multi-agent decisions."}}
+]}
+]}
+</script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          surface: "#0e1511",
+          "surface-variant": "#2f3632",
+          "on-surface": "#dde4de",
+          "on-surface-variant": "#bbcac1",
+          primary: "#60f0bc",
+          "on-primary": "#003827",
+          biogreen: "#22C55E",
+          bioblue: "#0EA5E9",
+          "resilience-green": "#54EA54",
+          outline: "#86948c"
+        },
+        fontFamily: {
+          "body-md": ["Hanken Grotesk"],
+          "label-caps": ["JetBrains Mono"],
+          "headline-lg": ["Montserrat"],
+          "headline-md": ["Montserrat"],
+          "body-lg": ["Hanken Grotesk"]
+        },
+        fontSize: {
+          "headline-lg": ["48px", { lineHeight: "1.2", fontWeight: "800" }],
+          "headline-md": ["32px", { lineHeight: "1.3", fontWeight: "700" }],
+          "body-lg": ["18px", { lineHeight: "1.6", fontWeight: "400" }],
+          "body-md": ["16px", { lineHeight: "1.6", fontWeight: "400" }],
+          "label-caps": ["11px", { lineHeight: "1", letterSpacing: "0.15em", fontWeight: "500" }]
+        }
+      }
+    }
+  };
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+
+<script>
+  const ENV = window.env = {
+    NOCODB_BASE: 'http://nocodb.lnds.space/api/v3',
+    NOCODB_BASE_ID: 'pk1j7lbtpnjs0n2',
+    USERS_TABLE: 'mw9kd9apjsxrgim',
+    EMAIL_FIELD: 'c9j11emufs02m5w',
+    NAME_FIELD: 'cyfc8tdu4x6lsss',
+    SENDER_EMAIL: 'hello@leaftix.com',
+    SENDER_NAME: 'Leaftix BioStick',
+    // TODO: insert real xc-token from https://nocodb.lnds.space/account/tokens
+    NOCODB_TOKEN: '__NOCODB_TOKEN__'
+  };
+</script>
+
+<style>
+  :root {
+    --bs-surface: #0e1511;
+    --bs-primary: #60f0bc;
+    --bs-biogreen: #22C55E;
+    --bs-bioblue: #0EA5E9;
+    --bs-resilience-green: #54EA54;
+    --bs-on-surface: #dde4de;
+    --bs-on-surface-variant: #bbcac1;
+  }
+
+  body {
+    background-color: var(--bs-surface);
+    color: var(--bs-on-surface);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: rgba(14, 21, 17, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 240, 188, 0.3);
+    border-radius: 0.75rem;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    opacity: 0;
+    min-width: 300px;
+    max-width: 90vw;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast.error { border-color: rgba(255, 180, 171, 0.3); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 9999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  .chip-sensor {
+    background: rgba(96, 240, 188, 0.1);
+    border-color: rgba(96, 240, 188, 0.35);
+    color: #60f0bc;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 32px;
+    background: #60f0bc;
+    color: #003827;
+    border: none;
+    border-radius: 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: #4ce6b5;
+    box-shadow: 0 0 30px rgba(96, 240, 188, 0.45);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .form-card {
+    background: rgba(36, 44, 40, 0.5);
+    border: 1px solid rgba(96, 240, 188, 0.2);
+    border-radius: 1rem;
+    padding: 32px 24px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+  .input-group label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #bbcac1;
+    margin-bottom: 8px;
+  }
+  .input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    background: rgba(222, 228, 222, 0.05);
+    border: 1px solid rgba(96, 240, 188, 0.25);
+    border-radius: 0.625rem;
+    color: #dde4de;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 16px;
+  }
+  .input-group input:focus {
+    outline: none;
+    border-color: #60f0bc;
+    box-shadow: 0 0 0 2px rgba(96, 240, 188, 0.2);
+  }
+  .input-group input::placeholder {
+    color: #6e7d74;
+  }
+  .field-hint {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #8a9b91;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(187, 202, 193, 0.1);
+  }
+  .faq-button {
+    width: 100%;
+    text-align: left;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #dde4de;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-button:focus {
+    outline: 2px solid #60f0bc;
+    outline-offset: 4px;
+  }
+  .faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  .faq-panel.open {
+    max-height: 500px;
+    padding-bottom: 16px;
+  }
+  .faq-panel p {
+    font-family: 'Hanken Grotesk', sans-serif;
+    color: #bbcac1;
+    line-height: 1.6;
+    font-size: 15.5px;
+  }
+
+  .cyber-grid {
+    background-image:
+      linear-gradient(to right, rgba(61, 211, 161, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(61, 211, 161, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  ::selection {
+    background: rgba(96, 240, 188, 0.3);
+    color: #60f0bc;
+  }
+
+  @media (max-width: 640px) {
+    .reasons-list {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 24px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .reasons-list::-webkit-scrollbar {
+      display: none;
+    }
+    .reason-card {
+      flex: 0 0 auto;
+      width: min(280px, 92vw);
+      scroll-snap-align: start;
+    }
+  }
+</style>
+</head>
+<body class="font-body-md antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- ════════════════════════════════════════════════════════
+       TOAST NOTIFICATION
+  ═════════════════════════════════════════════════════════ -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span id="toast-icon" class="material-symbols-outlined text-xl">check_circle</span>
+    <span id="toast-msg" class="font-body-md text-sm text-on-surface"></span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       HEADER / NAV
+  ═════════════════════════════════════════════════════════ -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-40 transition-colors duration-300" aria-label="Primary navigation">
+    <div class="relative w-full max-w-[1440px] mx-auto px-6 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="/leaftix_green.png" alt="Leaftix" class="h-8 w-auto" width="40" height="40" loading="eager" />
+        <span class="font-headline-lg text-xl text-on-surface font-bold tracking-tight">Leaftix<span class="text-biogreen"> BioStick</span></span>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8" role="menubar">
+        <a href="#how-it-works" class="font-label-caps text-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase" role="menuitem">How it works</a>
+        <a href="#reasons" class="font-label-caps text-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase" role="menuitem">5 Reasons</a>
+        <a href="#vpd" class="font-label-caps text-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase" role="menuitem">VPD Deep-Dive</a>
+        <a href="#faq" class="font-label-caps text-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase" role="menuitem">FAQ</a>
+      </nav>
+
+      <a href="#waitlist" class="btn-primary font-label-caps text-xs">Join waitlist</a>
+
+      <button id="mobile-menu-btn" class="md:hidden text-on-surface" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined text-2xl">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════
+       HERO
+  ═════════════════════════════════════════════════════════ -->
+  <section id="hero" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 flex flex-col lg:flex-row items-center gap-12 reveal" aria-labelledby="hero-heading">
+    <div class="lg:w-1/2 flex flex-col gap-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-biogreen/30 bg-biogreen/5">
+        <span class="w-1.5 h-1.5 rounded-full bg-biogreen animate-pulse" aria-hidden="true"></span>
+        <span class="font-label-caps text-biogreen text-[10px]">BioStick by Leaftix · Formerly BioPulse</span>
+      </div>
+
+      <h1 id="hero-heading" class="font-headline-lg text-[48px] md:text-[56px] text-on-surface leading-tight mb-6">
+        The nervous system<span class="text-primary"> of your field</span>
+      </h1>
+
+      <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed mb-8 max-w-lg">
+        Stick-and-play leaf-level sensor measuring temperature, humidity, light, VPD and leaf wetness right in the crop zone — not 2km away. Wi-Fi, Bluetooth &amp; LoRaWAN to the Leaftix Platform. Install in under 60 seconds.
+      </p>
+
+      <div class="flex flex-wrap gap-3 mb-10" aria-label="Measured parameters">
+        <span class="chip chip-sensor">Temp</span>
+        <span class="chip chip-sensor">Humidity</span>
+        <span class="chip chip-sensor">Light</span>
+        <span class="chip chip-sensor">VPD</span>
+        <span class="chip chip-sensor">Leaf Wetness</span>
+      </div>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="#waitlist" class="btn-primary">Get early access</a>
+        <a href="#vpd" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-surface-variant/50 bg-surface-variant/40 text-on-surface-variant font-label-caps text-xs uppercase transition-colors hover:border-primary/50 hover:text-primary">See VPD math →</a>
+      </div>
+    </div>
+
+    <div class="lg:w-1/2 flex justify-center reveal">
+      <div class="relative w-full max-w-sm">
+        <div class="relative inline-block">
+          <div class="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 ring-1 ring-primary/20">
+            <div class="w-10 h-10 rounded-full bg-biogreen/20 border border-biogreen flex items-center justify-center">
+              <svg class="w-6 h-6 text-biogreen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l-10 5 10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>
+            </div>
+          </div>
+          <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-px h-12 bg-surface-variant" aria-hidden="true"></div>
+        </div>
+        <p class="font-label-caps text-xs text-on-surface-variant text-center mt-3 uppercase tracking-widest">Stick-and-play leaf sensor · 60s install</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       PROBLEM — #problem
+  ═════════════════════════════════════════════════════════ -->
+  <section id="problem" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="flex flex-col gap-6">
+        <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest">01 // The Problem</p>
+        <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight">Your weather station is 2km away. Your crop isn't.</h2>
+        <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed">
+          Regional weather stations report conditions 2km from your field — not what your leaves actually feel. Canopy temperature, leaf wetness and VPD vary by row, by variety, by hour. By the time a regional forecast shows risk, frost, Botrytis and irrigation waste have already hit.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">error</span><span class="font-body-md text-on-surface-variant">Macro weather ≠ leaf-level microclimate</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">error</span><span class="font-body-md text-on-surface-variant">Frost &amp; Botrytis strike in the canopy first</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-primary shrink-0">error</span><span class="font-body-md text-on-surface-variant">Irrigation on schedule, not on plant demand</span></li>
+        </ul>
+      </div>
+
+      <div class="glass-panel rounded-xl p-8 border-surface-variant/40 relative overflow-hidden cyber-grid">
+        <div class="absolute inset-0 bg-biogreen/5 opacity-40 pointer-events-none"></div>
+        <div class="relative z-10">
+          <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest mb-3">Canopy vs. sky</p>
+          <dl class="space-y-6">
+            <div class="flex items-center gap-4 border-b border-surface-variant/30 pb-4 last:border-0 last:pb-0">
+              <span class="font-label-caps text-xs text-on-surface-variant w-24">Weather station</span>
+              <span class="font-body-md text-on-surface-variant">2 km away — sky level</span>
+            </div>
+            <div class="flex items-center gap-4 border-b border-surface-variant/30 pb-4 last:border-0 last:pb-0">
+              <span class="font-label-caps text-biogreen text-xs w-24">BioStick</span>
+              <span class="font-body-md text-on-surface">In-row — leaf level</span>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       SOLUTION / HOW IT WORKS — #how-it-works
+  ═════════════════════════════════════════════════════════ -->
+  <section id="how-it-works" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="flex flex-col lg:flex-row gap-12 items-center">
+      <div class="lg:w-1/2">
+        <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest mb-4">02 // The Solution</p>
+        <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight mb-6">Leaf-level intelligence, installed in 60 seconds</h2>
+        <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed mb-6">
+          BioStick is a stick-and-play IoT microclimate sensor. Place it in the crop zone, connect via Wi-Fi, Bluetooth or LoRaWAN, and stream live leaf-level data to the Leaftix Platform — where GaiaOS turns it into autonomous irrigation, frost and disease decisions.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-biogreen shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">Stick-and-play install — no wiring, no gateway</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-biogreen shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">Wi-Fi · Bluetooth · LoRaWAN connectivity</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-biogreen shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">Feeds Leaftix Platform &amp; GaiaOS Digital Twin</span></li>
+        </ul>
+      </div>
+
+      <div class="lg:w-1/2 glass-panel rounded-xl p-8 border-surface-variant/40 relative overflow-hidden cyber-grid">
+        <div class="absolute inset-0 bg-bioblue/5 opacity-40 pointer-events-none"></div>
+        <div class="relative z-10 grid grid-cols-2 gap-4">
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-12 h-12 rounded-lg bg-bioblue/10 flex items-center justify-center text-bioblue"><span class="material-symbols-outlined text-xl">wifi</span></div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">Wi-Fi</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-12 h-12 rounded-lg bg-bioblue/10 flex items-center justify-center text-bioblue"><span class="material-symbols-outlined text-xl">bluetooth</span></div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">Bluetooth</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-12 h-12 rounded-lg bg-bioblue/10 flex items-center justify-center text-bioblue"><span class="material-symbols-outlined text-xl">network_node</span></div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">LoRaWAN</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="w-12 h-12 rounded-lg bg-bioblue/10 flex items-center justify-center text-bioblue"><span class="material-symbols-outlined text-xl">cloud</span></div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">Leaftix Platform</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       5 REASONS — #reasons
+  ═════════════════════════════════════════════════════════ -->
+  <section id="reasons" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="flex flex-col lg:flex-row gap-16 items-start">
+      <div class="lg:w-1/3 flex flex-col gap-6">
+        <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest">03 // Five Reasons</p>
+        <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight">Why commercial growers switch from generic stations</h2>
+        <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed">
+          Swipe to discover why commercial growers are switching from generic weather stations to crop-level intelligence.
+        </p>
+      </div>
+
+      <div class="lg:w-2/3">
+        <div class="reasons-list" role="list" aria-label="Five reasons to use BioStick">
+          <article class="reason-card glass-panel rounded-xl p-8 border-surface-variant/40 reveal">
+            <div class="w-10 h-10 rounded-lg bg-biogreen/10 flex items-center justify-center text-biogreen mb-4"><span class="material-symbols-outlined text-xl">location_on</span></div>
+            <h3 class="font-headline-md text-xl text-on-surface mb-2">Crop-level microclimate</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">Unlike weather stations 2km away, BioStick measures hyper-localized conditions at plant canopy level. True leaf-level accuracy.</p>
+          </article>
+
+          <article class="reason-card glass-panel rounded-xl p-8 border-surface-variant/40 reveal">
+            <div class="w-10 h-10 rounded-lg bg-biogreen/10 flex items-center justify-center text-biogreen mb-4"><span class="material-symbols-outlined text-xl">thermostat</span></div>
+            <h3 class="font-headline-md text-xl text-on-surface mb-2">Prevent disease &amp; frost</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">Real-time dew point &amp; leaf wetness alerts. Catch Botrytis, mold &amp; frost risk hours before symptoms appear.</p>
+          </article>
+
+          <article class="reason-card glass-panel rounded-xl p-8 border-surface-variant/40 reveal">
+            <div class="w-10 h-10 rounded-lg bg-biogreen/10 flex items-center justify-center text-biogreen mb-4"><span class="material-symbols-outlined text-xl">opacity</span></div>
+            <h3 class="font-headline-md text-xl text-on-surface mb-2">Optimize irrigation — save 30% water</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">Transpiration analysis via VPD. Water only when the plant needs it. Less waste, healthier roots.</p>
+          </article>
+
+          <article class="reason-card glass-panel rounded-xl p-8 border-surface-variant/40 reveal">
+            <div class="w-10 h-10 rounded-lg bg-biogreen/10 flex items-center justify-center text-biogreen mb-4"><span class="material-symbols-outlined text-xl">auto_graph</span></div>
+            <h3 class="font-headline-md text-xl text-on-surface mb-2">Boost yield &amp; quality</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">Find the photosynthesis sweet spot. Keep VPD &amp; PPFD in the optimal range for higher Brix &amp; uniformity.</p>
+          </article>
+
+          <article class="reason-card glass-panel rounded-xl p-8 border-surface-variant/40 reveal">
+            <div class="w-10 h-10 rounded-lg bg-biogreen/10 flex items-center justify-center text-biogreen mb-4"><span class="material-symbols-outlined text-xl">router</span></div>
+            <h3 class="font-headline-md text-xl text-on-surface mb-2">Data-driven smart farming</h3>
+            <p class="font-body-sm text-sm text-on-surface-variant leading-relaxed">Wi-Fi, Bluetooth, LoRaWAN → Leaftix Platform. Alerts, history, API. One stick, your entire field intelligence.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       VPD DEEP-DIVE — #vpd
+  ═════════════════════════════════════════════════════════ -->
+  <section id="vpd" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="flex flex-col gap-6">
+        <p class="font-label-caps text-bioblue text-xs uppercase tracking-widest">04 // VPD Deep-Dive</p>
+        <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight">VPD in practice: 22.4°C · 68% RH → 0.92 kPa</h2>
+        <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed">
+          Vapor Pressure Deficit (VPD) is the drying power of the air around your leaf. At 22.4°C and 68% relative humidity, BioStick reads a VPD of 0.92 kPa — right in the photosynthesis sweet spot. Staying there means transpiration flows, stomata stay open, and you irrigate only when the plant actually needs it — up to 30% less water.
+        </p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-bioblue shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">0.92 kPa VPD at 22.4°C / 68% RH — photosynthesis sweet spot</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-bioblue shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">Irrigate on plant demand, not on a timer</span></li>
+          <li class="flex items-start gap-3"><span class="material-symbols-outlined text-bioblue shrink-0">check_circle</span><span class="font-body-md text-on-surface-variant">Up to 30% water reduction vs. schedule-based irrigation</span></li>
+        </ul>
+      </div>
+
+      <div class="glass-panel rounded-xl p-8 border-surface-variant/40 relative overflow-hidden cyber-grid">
+        <div class="absolute inset-0 bg-bioblue/5 opacity-40 pointer-events-none"></div>
+        <div class="relative z-10 grid grid-cols-2 gap-6 items-center">
+          <div class="flex flex-col items-center gap-2">
+            <div class="text-3xl font-headline-lg text-on-surface">22.4°C</div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">Leaf temperature</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="text-3xl font-headline-lg text-on-surface">68%</div>
+            <p class="font-label-caps text-xs text-on-surface-variant uppercase">Relative humidity</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="text-3xl font-headline-lg text-biogreen">0.92 kPa</div>
+            <p class="font-label-caps text-xs text-biogreen uppercase">VPD — sweet spot</p>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="text-3xl font-headline-lg text-primary">-30%</div>
+            <p class="font-label-caps text-xs text-primary uppercase">Irrigation reduction</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       EMAIL CAPTURE / WAITLIST — #waitlist
+  ═════════════════════════════════════════════════════════ -->
+  <section id="waitlist" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div class="lg:w-1/2 flex flex-col gap-6">
+        <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest">05 // Join the waitlist</p>
+        <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight">Be the first to deploy BioStick</h2>
+        <p class="font-body-lg text-lg text-on-surface-variant leading-relaxed">
+          Early shipments go to waitlist members first. Leave your name and email and we'll tell you when BioStick is available in your region — plus early VPD playbooks for greenhouse and open-field growers.
+        </p>
+        <p class="font-label-caps text-xs text-on-surface-variant uppercase">We never share your email. Unsubscribe anytime.</p>
+      </div>
+
+      <div class="lg:w-1/2">
+        <form id="waitlist-form" class="form-card" novalidate>
+          <div class="input-group">
+            <label for="waitlist-name">Full name</label>
+            <input id="waitlist-name" name="name" type="text" placeholder="e.g. Maria Santos" required autocomplete="name" />
+          </div>
+          <div class="input-group">
+            <label for="waitlist-email">Work email</label>
+            <input id="waitlist-email" name="email" type="email" placeholder="e.g. maria@agrocoop.com" required autocomplete="email" />
+          </div>
+          <div class="field-hint" id="waitlist-hint"></div>
+          <button type="submit" id="waitlist-btn" class="btn-primary w-full font-label-caps text-xs" aria-busy="false">
+            <span id="waitlist-btn-label">Join waitlist</span>
+            <span id="waitlist-btn-spinner" class="hidden w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" aria-hidden="true"></span>
+            <span id="waitlist-btn-arrow" class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       FAQ — #faq
+  ═════════════════════════════════════════════════════════ -->
+  <section id="faq" class="relative w-full max-w-[1440px] mx-auto px-6 py-24 md:py-36 reveal">
+    <div class="flex flex-col items-center gap-8 mb-12">
+      <p class="font-label-caps text-biogreen text-xs uppercase tracking-widest">06 // FAQ</p>
+      <h2 class="font-headline-lg text-[40px] md:text-[48px] text-on-surface leading-tight text-center">Frequently asked questions</h2>
+    </div>
+
+    <div class="space-y-0">
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-1">
+          <span>What is BioStick (formerly BioPulse)?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-1" class="faq-panel" hidden>
+          <p>BioStick is Leaftix's stick-and-play IoT microclimate sensor placed in the crop zone to measure temperature, humidity, light, VPD and leaf wetness at leaf level, streaming to the Leaftix Platform via Wi-Fi, Bluetooth or LoRaWAN.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-2">
+          <span>How does a leaf-level VPD sensor save irrigation water?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-2" class="faq-panel" hidden>
+          <p>VPD reveals transpiration demand. BioStick keeps VPD in the photosynthesis sweet spot (e.g. 0.92 kPa at 22.4°C / 68% RH) so you irrigate only when the plant needs it — up to 30% less water.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-3">
+          <span>Can BioStick prevent frost and Botrytis?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-3" class="faq-panel" hidden>
+          <p>Yes. Real-time dew point and leaf wetness alerts warn hours before symptoms, helping prevent mold, Botrytis and frost damage in greenhouses and open fields.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-4">
+          <span>BioStick vs. a weather station 2km away?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-4" class="faq-panel" hidden>
+          <p>Weather stations report the sky. BioStick reports your canopy — hyper-local conditions your leaves and roots actually experience.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-5">
+          <span>How fast is BioStick installation?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-5" class="faq-panel" hidden>
+          <p>Stick-and-play in under 60 seconds. Stick it in the crop zone, connect via Wi-Fi/Bluetooth/LoRaWAN, see live data on the Leaftix Platform.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-button" aria-expanded="false" aria-controls="faq-6">
+          <span>Does BioStick integrate with GaiaOS?</span>
+          <span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+        </button>
+        <div id="faq-6" class="faq-panel" hidden>
+          <p>Yes. BioStick is an edge data source for Leaftix GaiaOS autonomous governance, feeding the Digital Twin and multi-agent decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #main-nav.scrolled {
+      background: rgba(14, 21, 17, 0.95) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═════════════════════════════════════════════════════════ -->
+  <footer class="w-full border-t border-surface-variant/30 bg-surface/80 backdrop-blur-md mt-auto">
+    <div class="w-full max-w-[1440px] mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row justify-between items-center gap-8">
+      <div class="flex items-center gap-3">
+        <img src="/leaftix_green.png" alt="Leaftix" class="h-7 w-auto" width="36" height="36" loading="eager" />
+        <span class="font-headline-lg text-base text-on-surface font-bold tracking-tight">Leaftix</span>
+      </div>
+      <nav class="flex flex-wrap items-center gap-8 md:gap-12" aria-label="Footer links">
+        <a href="/" class="font-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase">Home</a>
+        <a href="/biostick/" class="font-label-caps text-xs text-primary underline underline-offset-4" aria-current="page">BioStick</a>
+        <a href="/sentinel-elnino.html" class="font-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase">Climate Sentinel</a>
+        <a href="mailto:hello@leaftix.com" class="font-label-caps text-xs text-on-surface-variant hover:text-primary transition-colors uppercase">Contact</a>
+      </nav>
+      <p class="font-label-caps text-xs text-on-surface-variant/60 uppercase">© 2026 Leaftix — Precision agriculture, governed.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ─────────────────────────────────────────────────────
+    // TOAST
+    // ─────────────────────────────────────────────────────
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const icon = document.getElementById('toast-icon');
+      const msg = document.getElementById('toast-msg');
+      if (!toast || !msg) return;
+      msg.textContent = message;
+      if (icon) {
+        icon.textContent = type === 'success' ? 'check_circle' : 'error';
+        icon.style.color = type === 'success' ? '#60f0bc' : '#ffb4ab';
+      }
+      toast.classList.toggle('error', type === 'error');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // ─────────────────────────────────────────────────────
+    // WAITLIST FORM → NOCODB
+    // POST /api/v3/data/{baseId}/{tableId}/records with xc-token header
+    // ─────────────────────────────────────────────────────
+    (function initWaitlistForm() {
+      const form = document.getElementById('waitlist-form');
+      const btn = document.getElementById('waitlist-btn');
+      const btnLabel = document.getElementById('waitlist-btn-label');
+      const btnSpinner = document.getElementById('waitlist-btn-spinner');
+      const btnArrow = document.getElementById('waitlist-btn-arrow');
+      const hint = document.getElementById('waitlist-hint');
+      if (!form) return;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hint.textContent = '';
+        const name = form.elements.name.value.trim();
+        const email = form.elements.email.value.trim();
+
+        if (!name || !email) {
+          hint.textContent = 'Please fill in both fields.';
+          hint.style.color = '#ffb4ab';
+          return;
+        }
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRe.test(email)) {
+          hint.textContent = 'Please enter a valid email address.';
+          hint.style.color = '#ffb4ab';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        btnLabel.textContent = 'Sending…';
+        if (btnSpinner) btnSpinner.classList.remove('hidden');
+        if (btnArrow) btnArrow.classList.add('hidden');
+
+        const payload = {};
+        payload[ENV.NAME_FIELD] = name;
+        payload[ENV.EMAIL_FIELD] = email;
+
+        try {
+          const response = await fetch(
+            `${ENV.NOCODB_BASE}/data/${ENV.NOCODB_BASE_ID}/${ENV.USERS_TABLE}/records`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'xc-token': ENV.NOCODB_TOKEN
+              },
+              body: JSON.stringify(payload)
+            }
+          );
+          if (!response.ok) {
+            throw new Error(`NocoDB responded ${response.status}`);
+          }
+
+          showToast('Thanks! You are on the BioStick waitlist.', 'success');
+          form.reset();
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'generate_lead', { currency: 'USD', value: 1.0 });
+          }
+        } catch (err) {
+          console.error('Waitlist submission error:', err);
+          hint.textContent = ENV.NOCODB_TOKEN === '__NOCODB_TOKEN__'
+            ? 'Setup pending: insert your real NocoDB xc-token into ENV.NOCODB_TOKEN (see https://nocodb.lnds.space/account/tokens).'
+            : 'Submission failed. Please try again later.';
+          hint.style.color = '#ffb4ab';
+          showToast('Submission failed — check the hint below.', 'error');
+        } finally {
+          btn.disabled = false;
+          btn.setAttribute('aria-busy', 'false');
+          btnLabel.textContent = 'Join waitlist';
+          if (btnSpinner) btnSpinner.classList.add('hidden');
+          if (btnArrow) btnArrow.classList.remove('hidden');
+        }
+      });
+    })();
+
+    // ── JS PART 1 END ──
+
+    // ─────────────────────────────────────────────────────
+    // SCROLL REVEAL
+    // ─────────────────────────────────────────────────────
+    function initScrollReveal() {
+      if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
+        return;
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    }
+
+    // ─────────────────────────────────────────────────────
+    // FAQ ACCORDION
+    // ─────────────────────────────────────────────────────
+    (function initFaq() {
+      document.querySelectorAll('.faq-button').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          const panel = document.getElementById(btn.getAttribute('aria-controls'));
+          document.querySelectorAll('.faq-button').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+          document.querySelectorAll('.faq-panel').forEach((p) => { p.classList.remove('open'); p.setAttribute('hidden', ''); });
+          if (!expanded && panel) {
+            btn.setAttribute('aria-expanded', 'true');
+            panel.classList.add('open');
+            panel.removeAttribute('hidden');
+          }
+        });
+      });
+    })();
+
+    // ─────────────────────────────────────────────────────
+    // NAV SCROLL EFFECT
+    // ─────────────────────────────────────────────────────
+    (function initNavScroll() {
+      const nav = document.getElementById('main-nav');
+      if (!nav) return;
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 20);
+      }, { passive: true });
+    })();
+
+    // ─────────────────────────────────────────────────────
+    // INIT
+    // ─────────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrollReveal();
+      initFaq();
+      initNavScroll();
+    });
+  </script>
+</body>
+</html>

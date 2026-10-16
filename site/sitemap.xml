@@ -36,4 +36,16 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ═════════════════════════════════════════════════════════
+       BIOSTICK — Leaf-Level Microclimate Sensor (English only)
+   ═════════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://leaftix.com/biostick/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/biostick/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/biostick/"/>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
