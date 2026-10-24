@@ -1,5 +1,9 @@
 /*
-
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.tailwindcss.com https://www.googletagmanager.com https://posthog.lnds.space https://www.clarity.ms 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://leaftix.com https://posthog.lnds.space https://www.googletagmanager.com https://www.google-analytics.com https://script.google.com;
   Link: </sitemap.xml>; rel="sitemap", </.well-known/api-catalog>; rel="api-catalog"
   Cache-Control: public, max-age=3600
 

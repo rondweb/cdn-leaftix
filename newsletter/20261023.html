@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Leaftix News</title>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+                background: #1e293b;
+                margin: 0;
+                padding: 16px;
+                line-height: 1.5;
+                font-size: 15px;
+                color: #333;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: #f1f5f9;
+                border-radius: 8px;
+            }
+            .header {
+                background: #334155;
+                color: #f1f5f9;
+                padding: 20px 16px;
+                border-radius: 8px 8px 0 0;
+            }
+            .header .logo {
+                display: block;
+                width: 180px;
+                height: auto;
+                margin: 0 auto 16px auto;
+            }
+            .header h1 {
+                font-size: 20px;
+                font-weight: 600;
+                margin: 0 0 4px 0;
+            }
+            .header p {
+                font-size: 13px;
+                margin: 0;
+                opacity: 0.8;
+            }
+            .content {
+                padding: 20px 16px;
+            }
+            .section {
+                margin-bottom: 32px;
+            }
+            .section:last-child {
+                margin-bottom: 0;
+            }
+            .section-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #031423;
+                margin: 0 0 16px 0;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #22c590;
+            }
+            .item {
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #cbd5e1;
+            }
+            .item:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            .item-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: #031423;
+                margin: 0 0 12px 0;
+            }
+            .item-image {
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+                margin-bottom: 12px;
+                display: block;
+                object-fit: cover;
+            }
+            .item-summary {
+                font-size: 14px;
+                color: #555;
+                margin: 0 0 8px 0;
+            }
+            .item-link {
+                color: #22c590;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            .footer {
+                background: #334155;
+                padding: 16px;
+                text-align: center;
+                font-size: 12px;
+                color: #cbd5e1;
+                border-radius: 0 0 8px 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img
+                    src="https://microgreens.leaftix.com/content/images/2026/10/leaftix_microgreens_stacked_blue-1.png"
+                    alt="Leaftix Microgreens"
+                    class="logo"
+                />
+                <h1>🌱 Leaftix News</h1>
+                <p>October 24, 2026</p>
+            </div>
+            <div class="content">
+                <!-- Tools & Products Section -->
+                <div class="section">
+                    <h2 class="section-title">🧠 New Tools & Products</h2>
+                    <!-- Item 1 -->
+                    <div class="item">
+                        <div class="item-title">SproutDoctor: Edge AI Microgreens Diagnostics via WebGPU</div>
+                        <img
+                            src="https://images.unsplash.com/photo-1653654630422-c9dd3a2ca659?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDV8fG1pY3JvZ3JlZW5zfGVufDB8fHx8MTc5MDYzMDQ4OHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="SproutDoctor Local AI"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A browser-based diagnostic engine executing local AI models via WebGPU with zero cloud
+                            latency. It parses natural grower descriptions into botanical vectors to instantly catch
+                            mold and damping-off patterns while safeguarding operational biosecurity.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/introducing-sproutdoctor-the-first-free-microgreens-diagnosis-mini-app-powered-by-local-ai/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="item">
+                        <div class="item-title">
+                            LumenSilo: Precision CEA Lighting &amp; Photoperiod Modeling Engine
+                        </div>
+                        <img
+                            src="https://images.unsplash.com/photo-1545164415-0fae860defbd?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDN8fGxlZCUyMGxpZ2h0fGVufDB8fHx8MTc4ODk3NzkyOHww&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="LumenSilo Lighting Intelligence"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A dynamic energy and light optimization tool purpose-built for vertical indoor farms.
+                            Calculate Daily Light Integral (DLI), target PPFD profiles, and live electricity expenditure
+                            models tailored across multi-tier rack architectures.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/introducing-lumensilo-the-third-free-app-in-leaftixs-indoor-farming-trilogy/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="item">
+                        <div class="item-title">
+                            VPDSprout: Real-Time Microclimate &amp; Vapor Pressure Deficit Tracker
+                        </div>
+                        <img
+                            src="https://images.unsplash.com/photo-1594178865615-98bece506cce?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDI1fHxtaWNyb2dyZWVucyUyMHxlbnwwfHx8fDE3ODc5NDc1MzV8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="VPDSprout Environmental Engine"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Run offline thermodynamic assessments directly in your browser without telemetry exposure.
+                            VPDSprout computes crop-stage Vapor Pressure Deficits and triggers automated alerts to head
+                            off fungal risks before outbreaks take hold.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/introducing-vpdsprout-real-time-climate-mold-diagnostics-for-microgreens-free/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="item">
+                        <div class="item-title">
+                            SproutPlanner: Automated Cultivation &amp; Staggered Batch Scheduler
+                        </div>
+                        <img
+                            src="https://images.unsplash.com/photo-1648128774169-df843bf4b99c?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDMwfHxtaWNyb2dyZWVuc3xlbnwwfHx8fDE3OTE1NjkzMzZ8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="SproutPlanner Cultivation Tool"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Eliminate seasonal guesswork with an interactive planner that choreographs seeding rounds,
+                            light adjustments, and harvest cutoffs. Generate automated reminders and batch calendars to
+                            guarantee a non-stop rotation of fresh greens.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/the-ultimate-guide-to-growing-microgreens-at-home/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="item">
+                        <div class="item-title">
+                            MicroRack Architect: Modular Tray Geometry &amp; Airflow Configurator
+                        </div>
+                        <img
+                            src="https://images.unsplash.com/photo-1593850684972-6ea75dfb77bd?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDI1fHxtaWNyb2dyZWVuc3xlbnwwfHx8fDE3ODk1ODU1OTd8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="MicroRack Architect"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Part of the unified Leaftix developer suite, this utility designs spatial rack blueprints,
+                            ventilation paths, and tray intervals. It balances vertical shelf capacity with optimal
+                            micro-ventilation to avert thermal hotspots.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-the-complete-beginner-to-pro-guide-for-bigger-harvests-in-2026/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="item">
+                        <div class="item-title">LightTune: Dynamic LED Spectrum Ratio Tuning System</div>
+                        <img
+                            src="https://pixabay.com/get/gb389cf857eee794013053368bd652af600bc9831fafa3af2b833171df001a3970037b356216dd9fa1a0696d4341ce52a9a9d23d10b8397d0cedc6ac3a879263f1280.jpg"
+                            alt="Precision LED Spectrum Setup"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A recipe framework that switches wavelength priorities during canopy development. Shift
+                            dynamically between high blue-light fractions for structural firmness and hyper-red
+                            wavelengths to amplify biomass yield and antioxidant density.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-mastery-a-complete-guide-for-bigger-healthier-harvests/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 7 -->
+                    <div class="item">
+                        <div class="item-title">MoldGuard AI: Computer Vision Early-Spore Detection Model</div>
+                        <div class="item-summary">
+                            An upcoming edge-vision diagnostic model targeting microgreen canopies via micro-camera
+                            feeds. By pairing optical classification with localized ESP32 telemetry, it flags emerging
+                            mycelium before visual signs become catastrophic.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/introducing-sproutdoctor-the-first-free-microgreens-diagnosis-mini-app-powered-by-local-ai/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 8 -->
+                    <div class="item">
+                        <div class="item-title">Aerated Matrix 70/30: Coco-Coir &amp; Perlite Substrate Recipe</div>
+                        <img
+                            src="https://pixabay.com/get/g5222d2632ae0745de849b374d065908ae0b946a01ac046cde1248fca17f22c6a93279382e2e25bb291a8a332b0c008754b505359cf8769da4f852653db7281cd_1280.jpg"
+                            alt="Substrate Blend Optimization"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A lightweight, sterile rooting medium formulated to maximize moisture-holding capacity while
+                            avoiding compaction. Its high oxygen-diffusion index strengthens rooting and provides an
+                            ideal baseline for sensor-monitored sub-irrigation.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-mastery-a-complete-guide-to-growing-nutrientdense-greens/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 9 -->
+                    <div class="item">
+                        <div class="item-title">SeedCount Engine: Precision Density &amp; Biomass Calculator</div>
+                        <img
+                            src="https://pixabay.com/get/g26672da90d0a136daaadf539b370e7c847474f33ce5c90407db780c0aa00ed41da936fe79d55b8ab583cf0ddb4d7493971489c61fa5bab147327e9914350265b_1280.jpg"
+                            alt="Seed Calculator Tool"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A specialized calibration utility that computes exact sowing grams per 1020 tray based on
+                            seed seed-lot mass and germination rates. It eliminates canopy crowding, ensuring even root
+                            development and maximized yield-per-watt.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-2026-a-practical-guide-from-seed-to-harvest-for-every-grower/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                    <!-- Item 10 -->
+                    <div class="item">
+                        <div class="item-title">HydroPulse: Automated Sub-Irrigation Bottom-Watering Rig</div>
+                        <img
+                            src="https://cdn.pixabay.com/photo/2016/05/21/23/13/sprouts-1407661_1280.jpg"
+                            alt="Automated Watering System"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            A bottom-wicking watering protocol engineered to eliminate foliar wetness and fungal
+                            damping-off. By timing capillary saturation cycles, root systems build greater density while
+                            upper leaves stay crisp and dry.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-made-simple-a-practical-guide-for-beginners-to-experts/"
+                            class="item-link"
+                            >Learn more →</a
+                        >
+                    </div>
+                </div>
+                <!-- Global & India Tech News Section -->
+                <div class="section">
+                    <h2 class="section-title">🌍 Global & India Tech Innovations</h2>
+                    <!-- Item 1 -->
+                    <div class="item">
+                        <div class="item-title">
+                            The Macro Nexus: Grid Stress vs. Climate Insulation in Vertical Farming
+                        </div>
+                        <div class="item-summary">
+                            As climate extremes destabilize outdoor farming, indoor vertical farms face surging energy
+                            demands. Next-gen facilities are deploying AI-adaptive LEDs paired with Battery Energy
+                            Storage Systems (BESS) to reduce grid consumption by 15-30%.
+                        </div>
+                        <a
+                            href="https://blog.leaftix.com/blog/vertical-farming-2026-grid-stress-ai-adaptive-leds/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="item">
+                        <div class="item-title">
+                            Beyond Silence: Decoding Ultrasonic Crop Signaling with Bio-Acoustics
+                        </div>
+                        <div class="item-summary">
+                            Groundbreaking precision farming research demonstrates that crops emit distinct acoustic
+                            signatures under drought and biological stress. Engineers are leveraging bio-acoustic
+                            intelligence to build responsive, autonomous greenhouse feedback systems.
+                        </div>
+                        <a
+                            href="https://blog.leaftix.com/blog/beyond-silence-decoding-language-of-crops/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="item">
+                        <div class="item-title">Algorithmic Logistics &amp; CSA Models Slashed Agricultural Waste</div>
+                        <div class="item-summary">
+                            Community Supported Agriculture platforms across North America and global urban hubs are
+                            re-engineering farm-to-table pipelines. Synchronized harvest schedules and hyper-short
+                            distribution networks are establishing zero-waste local food security.
+                        </div>
+                        <a
+                            href="https://blog.leaftix.com/blog/community-supported-agriculture-food-waste-canada/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 4 -->
+                    <div class="item">
+                        <div class="item-title">Urban Agriculture Outlook: High-Density Farming Reaches $3.2B</div>
+                        <div class="item-summary">
+                            Commercial indoor agriculture is seeing massive expansion driven by turnkey IoT hardware and
+                            accessible machine learning diagnostics. Global markets project double-digit compound annual
+                            growth as cities incentivize distributed indoor food production.
+                        </div>
+                        <a
+                            href="https://blog.leaftix.com/blog/urban-farming-market-2026-trends-challenges-outlook/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="item">
+                        <div class="item-title">Decentralized Indoor Farms Reshape Metro Food Infrastructure</div>
+                        <div class="item-summary">
+                            Urban farming shifts from artisanal setups to critical municipal supply infrastructure.
+                            Automated closed-loop units and regional hub networks are providing resilient hyper-local
+                            produce yields independent of seasonal weather volatility.
+                        </div>
+                        <a
+                            href="https://blog.leaftix.com/blog/expectations-for-the-urban-farming-market-in-2026-qualitative-overview/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="item">
+                        <div class="item-title">IoT Telemetry &amp; Micro-Sensor Mesh Networks Across CEA Racks</div>
+                        <img
+                            src="https://cdn.pixabay.com/photo/2016/03/22/00/34/pea-shoots-1271882_1280.jpg"
+                            alt="IoT Crop Telemetry"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Growers are deploying distributed mesh networks combining SHT40 sensors with microcontroller
+                            arrays. Tracking real-time microclimates across canopy tiers prevents localized stagnant
+                            zones and ensures uniform biomass output.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-mastery-a-practical-guide-for-growers-of-every-level/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 7 -->
+                    <div class="item">
+                        <div class="item-title">Photobiology Breakthroughs: Tailoring Secondary Plant Metabolites</div>
+                        <img
+                            src="https://images.unsplash.com/photo-1736696427786-0c9c0893a0cf?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDM5fHxtaWNyb2dyZWVucyUyMHxlbnwwfHx8fDE3ODg5NzUxNDl8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="Photobiology Innovations"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Controlled light experiments reveal targeted spectral stimulation before harvest spikes
+                            anthocyanin and glucosinolate synthesis by up to 40%. The breakthrough enables indoor
+                            growers to modulate taste and nutritional potency on demand.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-guide-proven-tips-for-bigger-harvests-in-2026/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 8 -->
+                    <div class="item">
+                        <div class="item-title">Substrate Microbiome Engineering Replaces Chemical Sanitation</div>
+                        <img
+                            src="https://images.unsplash.com/photo-1758702087578-46d7eacfb9ca?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDMxfHxtaWNyb2dyZWVucyUyMHxlbnwwfHx8fDE3ODc5NDc1NDB8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="Microbiome Engineering in Horticulture"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Researchers have demonstrated that inoculating organic coco-perlite substrates with
+                            beneficial microbial consortia creates systemic pathogen exclusion. The natural biological
+                            barrier suppresses root-rot pathogens without fungicides.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/microgreens-cultivation-in-2026-from-seed-to-harvest-a-practical-guide-for-every-grower/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 9 -->
+                    <div class="item">
+                        <div class="item-title">
+                            Hyper-Localized Controlled Agriculture Lowers Urban Transport Emissions
+                        </div>
+                        <img
+                            src="https://images.unsplash.com/photo-1736697624075-3c636a1c0289?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=M3wxMTc3M3wwfDF8c2VhcmNofDE5fHxtaWNyb2dyZWVucyUyMHxlbnwwfHx8fDE3ODc5NDc1MzV8MA&amp;ixlib=rb-4.1.0&amp;q=80&amp;w=2000"
+                            alt="Urban Food Logistics"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Hyper-local indoor cultivation eliminates traditional cold-chain transit barriers, locking
+                            in cellular hydration and cutting post-harvest degradation. Metropolitan distributors report
+                            up to 7 days extended shelf-life compared to long-haul produce.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/mastering-microgreens-cultivation-from-seed-to-harvest-in-2026/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                    <!-- Item 10 -->
+                    <div class="item">
+                        <div class="item-title">Ultrasonic Seed Priming Doubles Early-Phase Germination Velocities</div>
+                        <img
+                            src="https://cdn.pixabay.com/get/gd859e2f25ed9c58afec6d5d11d24d85085e41ef25e9cbbcf2e5b1864d6218f6573dce71bb1d117a92da79c0df1b4e5403e67d30047089de98d04207e0860a88d_1280.jpg"
+                            alt="Seed Priming Technology"
+                            class="item-image"
+                            onerror="this.style.display='none'"
+                        />
+                        <div class="item-summary">
+                            Controlled hydration and micro-peroxide immersion techniques are revolutionizing commercial
+                            germination timelines. Growers report up to 30% faster emergence, driving ultra-dense,
+                            uniform leaf canopies across commercial trays.
+                        </div>
+                        <a
+                            href="https://microgreens.leaftix.com/from-seed-to-sprout-a-beginner-to-pro-microgreens-cultivation-guide/"
+                            class="item-link"
+                            >Read more →</a
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="footer">Stay curious. Keep building.</div>
+        </div>
+    </body>
+</html>

@@ -3,23 +3,42 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- ═══════════════════════════════════════════════════════
-       MAIN PAGE — English (Primary / x-default)
+       MAIN PAGE — Locale Subdirectories (Primary / x-default = /en/)
   ═══════════════════════════════════════════════════════ -->
   <url>
-    <loc>https://leaftix.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://leaftix.com/?lang=pt"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://leaftix.com/?lang=fr"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/"/>
+    <loc>https://leaftix.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://leaftix.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leaftix.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/en/"/>
     <lastmod>2026-10-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Homepage variants (?lang=pt / ?lang=fr) intentionally NOT listed as separate
-       <loc> entries: Google treats URL parameters as the same URL. Locale
-       alternates are declared via xhtml:link hreflang above and via
-       <link rel="alternate" hreflang> in index.html <head>. -->
+  <url>
+    <loc>https://leaftix.com/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://leaftix.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leaftix.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/en/"/>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://leaftix.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://leaftix.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://leaftix.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://leaftix.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://leaftix.com/en/"/>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Root / redirects to /en/ via _redirects; not listed separately to avoid duplicate URL -->
 
   <!-- ═══════════════════════════════════════════════════════
        CLIMATE SENTINEL — El Niño 2026 Hotsite

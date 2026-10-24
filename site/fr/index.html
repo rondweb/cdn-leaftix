@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en" dir="ltr">
+<html class="dark" lang="fr" dir="ltr">
 
 <head>
   <!-- ═══════════════════════════════════════════════════════
@@ -11,31 +11,29 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="format-detection" content="telephone=no, email=no, address=no">
 
-  <!-- ═══════════════════════════════════════════════════════
-       SEO CORE — Primary
-  ═══════════════════════════════════════════════════════ -->
-  <title data-i18n-title="meta.title">Leaftix GaiaOS — Autonomous Governance for Food Security
-  </title>
+  <!-- SEO CORE — Primary
+       NOTE: <title> and meta description are intentionally HARDCODED in English
+       (no data-i18n-*) so curl / view-source / Googlebot sees them without JS.
+       Body copy still swaps via data-i18n after load. -->
+  <title>Leaftix GaiaOS — Gouvernance Autonome pour la Sécurité Alimentaire</title>
   <meta name="description"
-    content="Leaftix GaiaOS is an autonomous governance OS for sustainable food production. Multi-agent AI, Digital Twin & edge-native architecture for proactive governance."
-    data-i18n-meta="meta.description">
+    content="Leaftix GaiaOS est un système d'exploitation de gouvernance autonome pour la production alimentaire durable. IA multi-agents, Digital Twin et architecture edge-native permettent une gouvernance proactive — pas seulement de la surveillance.">
   <meta name="keywords"
     content="Leaftix GaiaOS, Leaftix, artificial intelligence agriculture, autonomous governance, sustainable production, digital twin, agtech, precision farming, food security, AI agriculture, sustainable food production, autonomous governance, edge computing agriculture">
   <meta name="author" content="Leaftix">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="googlebot" content="index, follow, max-image-preview:large">
-  <link rel="canonical" href="https://leaftix.com">
+  <link rel="canonical" href="https://leaftix.com/fr/">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://leaftix.com/sitemap.xml">
   <link rel="api-catalog" type="application/linkset+json" href="https://leaftix.com/.well-known/api-catalog">
 
-  <!-- ═══════════════════════════════════════════════════════
-       HREFLANG — Multilingual SEO
-       English is the primary / x-default language
-  ═══════════════════════════════════════════════════════ -->
-  <link rel="alternate" hreflang="en" href="https://leaftix.com">
-  <link rel="alternate" hreflang="pt" href="https://leaftix.com?lang=pt">
-  <link rel="alternate" hreflang="fr" href="https://leaftix.com?lang=fr">
-  <link rel="alternate" hreflang="x-default" href="https://leaftix.com">
+  <!-- HREFLANG — Multilingual SEO (static ?lang= variants, Cloudflare Pages)
+       Canonical self-references https://leaftix.com/ ; alternates carry /?lang=.
+       English is the primary / x-default language -->
+  <link rel="alternate" hreflang="en" href="https://leaftix.com/en/">
+  <link rel="alternate" hreflang="pt" href="https://leaftix.com/pt/">
+  <link rel="alternate" hreflang="fr" href="https://leaftix.com/fr/">
+  <link rel="alternate" hreflang="x-default" href="https://leaftix.com/en/">
 
   <!-- ═══════════════════════════════════════════════════════
        DNS-PREFETCH & PRECONNECT — Performance
@@ -45,10 +43,12 @@
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://www.clarity.ms">
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://posthog.lnds.space">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://posthog.lnds.space">
   <link rel="preload" href="leaftix_green.png" as="image" fetchpriority="high">
 
   <!-- ═══════════════════════════════════════════════════════
@@ -66,7 +66,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt"
     content="Leaftix GaiaOS — Autonomous governance operating system by Leaftix for sustainable food production">
-  <meta property="og:url" content="https://leaftix.com">
+  <meta property="og:url" content="https://leaftix.com/">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="pt_BR">
   <meta property="og:locale:alternate" content="fr_FR">
@@ -97,28 +97,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="thumbnail" content="https://leaftix.com/og-image.png">
 
-  <!-- ═══════════════════════════════════════════════════════
-       Google TAG
-  ═══════════════════════════════════════════════════════ -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3PYCP2VPX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-B3PYCP2VPX');
-  </script>
-
-  <!-- ═══════════════════════════════════════════════════════
-       Microsoft Clarity
-  ═══════════════════════════════════════════════════════ -->
-  <script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-      c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-      t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-      y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "xcwjgmupb1");
-  </script>
+  <!-- Google TAG + Clarity load once in the canonical block below (GA4 section).
+       (Removed duplicate minimal gtag/clarity snippet that fired a 2nd page_view.) -->
   <!-- ═══════════════════════════════════════════════════════
        GOOGLE RICH SNIPPETS — Structured Data (JSON-LD)
   ═══════════════════════════════════════════════════════ -->
@@ -315,21 +295,20 @@
   }
   </script>
 
-  <!-- ═══════════════════════════════════════════════════════
-       GOOGLE ANALYTICS 4
-       Value injected via build.ps1 from .env
-  ═══════════════════════════════════════════════════════ -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=XXXXX"></script>
+  <!-- GOOGLE ANALYTICS 4 — single canonical snippet (G-B3PYCP2VPX).
+       A previous duplicate placeholder block (XXXXX, build.ps1) was removed:
+       it fired a second page_view and doubled mobile JS cost. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B3PYCP2VPX"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'XXXXX', {
+    gtag('config', 'G-B3PYCP2VPX', {
       page_title: 'Leaftix GaiaOS Manifesto',
       page_location: window.location.href,
       send_page_view: true
     });
-    // GA4 event helper
+    // GA4 + PostHog dual event helper (PostHog guarded: no-op until real phc_* key set)
     function trackEvent(action, category, label, value) {
       if (typeof gtag !== 'undefined') {
         gtag('event', action, {
@@ -338,19 +317,50 @@
           value: value
         });
       }
+      try {
+        if (typeof posthog !== 'undefined' && typeof posthog.capture === 'function') {
+          posthog.capture(action, { category: category, label: label, value: value, page: 'home' });
+        }
+      } catch (e) { /* PostHog not configured yet — GA4 already fired */ }
     }
   </script>
 
-  <!-- ═══════════════════════════════════════════════════════
-       MICROSOFT CLARITY
-       Value injected via build.ps1 from .env
-  ═══════════════════════════════════════════════════════ -->
+  <!-- MICROSOFT CLARITY — single canonical snippet. Duplicate XXXXX removed. -->
   <script type="text/javascript">
     (function (c, l, a, r, i, t, y) {
       c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
       t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
       y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "XXXXX");
+    })(window, document, "clarity", "script", "xcwjgmupb1");
+  </script>
+
+  <!-- POSTHOG — self-hosted analytics (https://posthog.lnds.space)
+       Status: ACTIVE. Public phc_* key inline (safe for client-side use).
+       Guarded: snippet self-disables only if key is missing. -->
+  <script>
+    (function () {
+      var POSTHOG_KEY = 'phc_rtRzJhxFmBYNTfjPNXKP725E3dRzLDBY4BnZrrtvs9cG'; // PostHog project key (public, safe inline)
+      var POSTHOG_HOST = 'https://posthog.lnds.space';
+      window.__POSTHOG_KEY = POSTHOG_KEY;
+      window.__POSTHOG_HOST = POSTHOG_HOST;
+      if (!POSTHOG_KEY || POSTHOG_KEY.indexOf('PLACEHOLDER') !== -1) return; // not configured yet
+      !function (t, e) {
+        var o, n, p, r; e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) {
+          function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]), t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }
+          (p = t.createElement("script")).type = "text/javascript", p.async = !0, p.src = s.api_host + "/static/array.js", (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r);
+          var u = e; for (void 0 !== a ? u = e[a] = [] : a = "posthog", u.people = u.people || [], u.toString = function (t) { var e = "posthog"; return "posthog" !== a && (e += "." + a), t || (e += " (stub)"), e }, u.people.toString = function () { return u.toString(1) + ".people (stub)" }, o = "capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys onSessionId".split(" "), n = 0; n < o.length; n++)g(u, o[n]); e._i.push([i, s, a])
+        }, e.__SV = 1)
+      }(document, window.posthog || []);
+      posthog.init(POSTHOG_KEY, {
+        api_host: POSTHOG_HOST,
+        autocapture: true,
+        capture_pageview: true,
+        capture_pageleave: true,
+        persistence: 'localStorage+cookie',
+        cross_subdomain_cookie: false
+      });
+      posthog.register({ page: 'home', lang: (document.documentElement.lang || 'en') });
+    })();
   </script>
 
   <!-- ═══════════════════════════════════════════════════════
@@ -684,6 +694,14 @@
         href="#solution" data-i18n="nav.solution" onclick="closeMobileMenu()">The Solution</a>
       <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors"
         href="#architecture" data-i18n="nav.architecture" onclick="closeMobileMenu()">Architecture</a>
+      <a class="font-label-caps text-label-caps text-2xl text-tertiary hover:text-tertiary-fixed transition-colors flex items-center gap-2"
+        href="/sentinel-elnino" onclick="closeMobileMenu()" role="menuitem"
+        title="Leaftix Climate Sentinel — live El Niño crop risk monitor">
+        <span data-i18n="nav.sentinel">Sentinel</span>
+        <span
+          class="px-2 py-0.5 rounded bg-tertiary/15 border border-tertiary/40 text-tertiary text-[10px] leading-none tracking-widest"
+          data-i18n="nav.sentinel.new">NEW</span>
+      </a>
       <a class="font-label-caps text-label-caps text-2xl text-on-surface hover:text-primary transition-colors"
         href="#vision" data-i18n="nav.manifesto" onclick="closeMobileMenu()">Manifesto</a>
       <a class="mt-4 inline-flex items-center justify-center px-8 py-3 bg-primary text-on-primary font-label-caps text-label-caps uppercase font-bold rounded hover:bg-resilience-green transition-colors"
@@ -704,7 +722,7 @@
         <a class="flex items-center gap-3 group" href="/" aria-label="Leaftix — Home page">
           <img alt="Leaftix Logo — Green leaf symbol representing sustainable agriculture technology"
             class="h-8 w-auto drop-shadow-[0_0_10px_rgba(61,211,161,0.5)] group-hover:scale-105 transition-transform"
-            src="leaftix_green.png" width="120" height="32" loading="eager">
+            src="leaftix_green.png" width="120" height="32" loading="eager" decoding="async">
           <span class="font-headline-md text-headline-md font-black tracking-tighter text-primary">Leaftix GaiaOS</span>
         </a>
 
@@ -716,6 +734,13 @@
             href="#solution" data-i18n="nav.solution" role="menuitem">The Solution</a>
           <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-caps text-label-caps uppercase"
             href="#architecture" data-i18n="nav.architecture" role="menuitem">Architecture</a>
+          <a class="flex items-center gap-1.5 text-tertiary hover:text-tertiary-fixed transition-colors duration-300 font-label-caps text-label-caps uppercase"
+            href="/sentinel-elnino" role="menuitem" title="Leaftix Climate Sentinel — live El Niño crop risk monitor">
+            <span data-i18n="nav.sentinel">Sentinel</span>
+            <span
+              class="px-1.5 py-0.5 rounded bg-tertiary/15 border border-tertiary/40 text-tertiary text-[9px] leading-none tracking-widest"
+              data-i18n="nav.sentinel.new">NEW</span>
+          </a>
           <a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-caps text-label-caps uppercase"
             href="#vision" data-i18n="nav.manifesto" role="menuitem">Manifesto</a>
         </div>
@@ -781,9 +806,14 @@
 
       <h1 id="hero-heading"
         class="font-display-lg text-[32px] md:text-[72px] text-on-surface mb-8 max-w-5xl leading-tight glow-text reveal">
-        <span data-i18n="hero.title1">The future of sustainable production</span><br>
-        <span class="text-primary" data-i18n="hero.title2">will be governed.</span>
+        <span data-i18n="hero.title1">Leaftix GaiaOS: Autonomous Governance for Food Security</span><br>
+        <span class="text-primary" data-i18n="hero.title2">The future of sustainable production, governed.</span>
       </h1>
+
+      <noscript>
+        <h2>Leaftix GaiaOS: Autonomous Governance OS for Food Security</h2>
+        <p>Leaftix GaiaOS is an autonomous governance operating system for sustainable food production — multi-agent AI, Digital Twin and edge-native architecture for proactive governance. Join early access.</p>
+      </noscript>
 
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12 reveal"
         data-i18n="hero.subtitle">
@@ -796,6 +826,102 @@
       </a>
     </section>
 
+    <!-- ─── SECTION 0.5: CLIMATE SENTINEL — NEW PRODUCT CALLOUT ── -->
+    <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16" id="sentinel" aria-labelledby="sentinel-heading">
+      <div class="relative glass-panel rounded-xl p-8 md:p-12 overflow-hidden reveal border border-tertiary/30 hover:border-tertiary/60 transition-colors duration-300">
+        <div class="absolute inset-0 cyber-grid opacity-40 pointer-events-none" aria-hidden="true"></div>
+        <div class="absolute -top-32 -right-32 w-[28rem] h-[28rem] rounded-full bg-tertiary/10 blur-3xl pointer-events-none" aria-hidden="true"></div>
+        <span class="material-symbols-outlined absolute -bottom-6 right-4 text-[10rem] leading-none text-tertiary opacity-10 pointer-events-none" aria-hidden="true">tsunami</span>
+
+        <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7 flex flex-col items-start gap-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-tertiary/40 bg-tertiary/10 backdrop-blur-md">
+              <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse" aria-hidden="true"></span>
+              <span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest" data-i18n="sentinel.badge">New · Live Product</span>
+            </div>
+
+            <h2 id="sentinel-heading" class="font-headline-lg text-[32px] md:text-headline-lg text-on-surface leading-tight">
+              <span data-i18n="sentinel.title1">El Niño 2026 is reshaping harvests.</span><br>
+              <span class="text-tertiary glow-text" data-i18n="sentinel.title2">Track it live.</span>
+            </h2>
+
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl" data-i18n="sentinel.body">
+              Leaftix Climate Sentinel turns NOAA sea-surface temperature and CHIRPS rainfall data into daily crop risk scores across 12 agricultural basins — months before it reaches a market report.
+            </p>
+
+            <dl class="flex flex-wrap gap-x-10 gap-y-4">
+              <div class="flex flex-col">
+                <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1" data-i18n="sentinel.stat1.label">Niño 3.4 anomaly</dt>
+                <dd class="font-headline-md text-3xl text-tertiary glow-text">+2.7°C</dd>
+              </div>
+              <div class="flex flex-col">
+                <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1" data-i18n="sentinel.stat2.label">Basins tracked</dt>
+                <dd class="font-headline-md text-3xl text-on-surface">12</dd>
+              </div>
+              <div class="flex flex-col">
+                <dt class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1" data-i18n="sentinel.stat3.label">Critical regions</dt>
+                <dd class="font-headline-md text-3xl text-on-surface">8</dd>
+              </div>
+            </dl>
+
+            <div class="flex flex-wrap items-center gap-5">
+              <a href="/sentinel-elnino"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-tertiary text-on-tertiary font-label-caps text-label-caps uppercase font-bold rounded hover:bg-tertiary-fixed transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,167,111,0.45)] active:scale-95">
+                <span data-i18n="sentinel.cta">Open Climate Sentinel</span>
+                <span class="material-symbols-outlined text-base" aria-hidden="true">arrow_forward</span>
+              </a>
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase" data-i18n="sentinel.free">Free &amp; public · Updated daily</span>
+            </div>
+          </div>
+
+          <!-- Live reading card -->
+          <div class="lg:col-span-5">
+            <div class="relative rounded-xl border border-tertiary/25 bg-nebula-navy/70 backdrop-blur-md p-6 overflow-hidden">
+              <div class="flex items-center justify-between mb-4">
+                <span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" data-i18n="sentinel.card.label">Niño 3.4 · Sea-surface temp</span>
+                <span class="inline-flex items-center gap-1.5 font-label-caps text-label-caps text-tertiary uppercase">
+                  <span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse" aria-hidden="true"></span>LIVE
+                </span>
+              </div>
+
+              <svg class="w-full h-24 mb-4" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="none">
+                <path d="M-10 30 C 80 10, 140 55, 220 40 S 360 10, 410 45" stroke="#ffa76f" stroke-width="1.6" opacity="0.85"/>
+                <path d="M-10 55 C 90 30, 150 75, 230 60 S 370 30, 410 65" stroke="#ffa76f" stroke-width="1.4" opacity="0.5"/>
+                <path d="M-10 80 C 100 50, 160 95, 240 80 S 380 50, 410 85" stroke="#60f0bc" stroke-width="1.2" opacity="0.35"/>
+              </svg>
+
+              <p class="font-headline-md text-5xl text-tertiary glow-text mb-1">+2.7°C</p>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6" data-i18n="sentinel.card.note">above baseline · latest reading, Sept 2026</p>
+
+              <div class="flex flex-col gap-4">
+                <p class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest" data-i18n="sentinel.ranking.title">Top exposure right now</p>
+                <div class="flex items-center justify-between gap-4">
+                  <span class="font-body-md text-body-md text-on-surface" data-i18n="sentinel.rank1">Arabica Coffee · Brazil</span>
+                  <span class="font-label-caps text-label-caps text-tertiary">100<span class="text-on-surface-variant">/100</span></span>
+                </div>
+                <div class="h-1 rounded bg-outline-variant/40 overflow-hidden" aria-hidden="true">
+                  <div class="h-full w-full bg-tertiary/80"></div>
+                </div>
+                <div class="flex items-center justify-between gap-4">
+                  <span class="font-body-md text-body-md text-on-surface" data-i18n="sentinel.rank2">White Maize · South Africa</span>
+                  <span class="font-label-caps text-label-caps text-tertiary">100<span class="text-on-surface-variant">/100</span></span>
+                </div>
+                <div class="h-1 rounded bg-outline-variant/40 overflow-hidden" aria-hidden="true">
+                  <div class="h-full w-full bg-tertiary/80"></div>
+                </div>
+                <div class="flex items-center justify-between gap-4">
+                  <span class="font-body-md text-body-md text-on-surface" data-i18n="sentinel.rank3">Soybeans · Brazil</span>
+                  <span class="font-label-caps text-label-caps text-tertiary">98<span class="text-on-surface-variant">/100</span></span>
+                </div>
+                <div class="h-1 rounded bg-outline-variant/40 overflow-hidden" aria-hidden="true">
+                  <div class="h-full w-[98%] bg-tertiary/80"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- ─── SECTION 1: THE CRISIS ─────────────────────────── -->
     <section class="relative w-full max-w-[1440px] mx-auto px-5 md:px-16" id="crisis" aria-labelledby="crisis-heading">
       <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
@@ -819,7 +945,7 @@
           <img class="w-full h-full object-cover mix-blend-luminosity opacity-70"
             alt="Scientific visualization of ocean temperature anomalies — El Niño event. Global map showing intense heat gradients in emerald green and cyan against a navy blue background, illustrating climate disruption patterns that impact global food production."
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ1cZSKZ6_kqFzbbmjogiRfVtVCL8SFZeHEtLn5rBTR-R-tv8NZ64XOyB57IPIKxo_Rh26HBj30UVKMeb78GhbRWyKlhCfXgQ6W_Q8RXytbFvbSIYdKBwaNLm2_zS2JOofWh0qpXBXZl9rI-KT4KcZzpfuR6s-AorKr1v97-4qwv-hpTFmB17ucnfpy6JcHHnhzUhXT8zCEhKHWplK71qGb__XxjHV3IRO4tm-MQ7VM9GLOKOXULuOo-MssZUGYSqXeNlJwBJa_CcD_ik"
-            width="800" height="400" loading="lazy">
+            width="800" height="400" loading="lazy" decoding="async">
           <div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"
             aria-hidden="true"></div>
         </div>
@@ -902,7 +1028,7 @@
           <img
             alt="Olympus layer of Leaftix GaiaOS: Sovereignty Council with Gaia, Athena and Hermes agents in a strategic deliberation neural network, orchestrating autonomous agricultural governance"
             class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_layers.jpg" width="600"
-            height="400" loading="lazy">
+            height="400" loading="lazy" decoding="async">
         </div>
         <div class="flex flex-col gap-8 reveal">
           <div class="border-l-2 border-tertiary pl-6 py-2">
@@ -955,7 +1081,7 @@
           <img
             alt="Leaftix GaiaOS Tripartite Governance Model diagram: three interconnected layers (Olympus, Terra, Hades) forming a hierarchical neural network for autonomous agricultural governance and decision-making"
             class="w-full h-auto rounded-lg mix-blend-screen opacity-90" src="gaiaos_tripartite.jpg" width="600"
-            height="400" loading="lazy">
+            height="400" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -997,7 +1123,7 @@
             aria-hidden="true"></div>
           <img class="w-full h-full object-cover"
             alt="Futuristic 3D visualization of a global neural network — Leaftix GaiaOS connecting agricultural sensors, edge computing nodes and autonomous machinery in a sustainable production ecosystem powered by multi-agent AI"
-            src="screen.png" width="720" height="480" loading="lazy">
+            src="screen.png" width="720" height="480" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -1059,7 +1185,7 @@
       <!-- Brand -->
       <div class="flex items-center gap-2">
         <img alt="Leaftix Logo — Sustainable agriculture technology brand mark" class="h-6 w-auto opacity-50 grayscale"
-          src="leaftix_green.png" width="80" height="24" loading="lazy">
+          src="leaftix_green.png" width="80" height="24" loading="lazy" decoding="async">
         <span class="font-headline-md text-lg text-on-surface opacity-50">Leaftix GaiaOS</span>
       </div>
 
@@ -1096,10 +1222,11 @@
         "meta.description": "Leaftix GaiaOS is an autonomous governance OS for sustainable food production. Multi-agent AI, Digital Twin & edge-native architecture for proactive governance.",
         "nav.crisis": "The Problem", "nav.solution": "The Solution",
         "nav.architecture": "Architecture", "nav.manifesto": "Manifesto",
+        "nav.sentinel": "Sentinel", "nav.sentinel.new": "NEW",
         "nav.cta": "Request Access",
         "hero.badge": "System Initialization",
-        "hero.title1": "The future of sustainable production",
-        "hero.title2": "will be governed.",
+        "hero.title1": "Leaftix GaiaOS: Autonomous Governance for Food Security",
+        "hero.title2": "The future of sustainable production, governed.",
         "hero.subtitle": "A manifesto for planetary resilience, driven by artificial intelligence and absolute data precision.",
         "crisis.label": "01 // The Crisis",
         "crisis.title": "Conventional agriculture was built on a premise the planet no longer sustains: a stable climate.",
@@ -1130,17 +1257,28 @@
         "vision.invalid": "Please enter a valid email address.",
         "footer.mission": "Our Mission", "footer.docs": "Technical Documentation",
         "footer.privacy": "Privacy Protocol", "footer.status": "System Status",
-        "footer.rights": "All rights reserved."
+        "footer.rights": "All rights reserved.",
+        "sentinel.badge": "New · Live Product",
+        "sentinel.title1": "El Niño 2026 is reshaping harvests.", "sentinel.title2": "Track it live.",
+        "sentinel.body": "Leaftix Climate Sentinel turns NOAA sea-surface temperature and CHIRPS rainfall data into daily crop risk scores across 12 agricultural basins — months before it reaches a market report.",
+        "sentinel.stat1.label": "Niño 3.4 anomaly", "sentinel.stat2.label": "Basins tracked", "sentinel.stat3.label": "Critical regions",
+        "sentinel.cta": "Open Climate Sentinel",
+        "sentinel.free": "Free & public · Updated daily",
+        "sentinel.card.label": "Niño 3.4 · Sea-surface temp",
+        "sentinel.card.note": "above baseline · latest reading, Sept 2026",
+        "sentinel.ranking.title": "Top exposure right now",
+        "sentinel.rank1": "Arabica Coffee · Brazil", "sentinel.rank2": "White Maize · South Africa", "sentinel.rank3": "Soybeans · Brazil"
       },
       pt: {
         "meta.title": "Leaftix GaiaOS — Governança Autônoma para Segurança Alimentar",
         "meta.description": "Leaftix GaiaOS é um sistema operacional de governança autônoma para produção sustentável de alimentos. IA multi-agente, Digital Twin e arquitetura edge-native permitem governança proativa — não apenas monitoramento.",
         "nav.crisis": "O Problema", "nav.solution": "A Solução",
         "nav.architecture": "Arquitetura", "nav.manifesto": "Manifesto",
+        "nav.sentinel": "Sentinel", "nav.sentinel.new": "NOVO",
         "nav.cta": "Solicitar Acesso",
         "hero.badge": "Inicialização do Sistema",
-        "hero.title1": "O futuro da produção sustentável",
-        "hero.title2": "será governado.",
+        "hero.title1": "Leaftix GaiaOS: Governança Autônoma para Segurança Alimentar",
+        "hero.title2": "O futuro da produção sustentável, governado.",
         "hero.subtitle": "Um manifesto pela resiliência planetária, impulsionado por inteligência artificial e precisão absoluta de dados.",
         "crisis.label": "01 // A Crise",
         "crisis.title": "A agricultura convencional foi construída sobre uma premissa que o planeta já não sustenta: clima estável.",
@@ -1171,17 +1309,28 @@
         "vision.invalid": "Por favor, insira um e-mail válido.",
         "footer.mission": "Nossa Missão", "footer.docs": "Documentação Técnica",
         "footer.privacy": "Protocolo de Privacidade", "footer.status": "Status do Sistema",
-        "footer.rights": "Todos os direitos reservados."
+        "footer.rights": "Todos os direitos reservados.",
+        "sentinel.badge": "Novo · Produto ao Vivo",
+        "sentinel.title1": "O El Niño 2026 está redesenhando as safras.", "sentinel.title2": "Monitore ao vivo.",
+        "sentinel.body": "O Leaftix Climate Sentinel transforma dados de temperatura da superfície do mar (NOAA) e de chuva (CHIRPS) em notas diárias de risco de safra em 12 bacias agrícolas — meses antes de chegar a um relatório de mercado.",
+        "sentinel.stat1.label": "Anomalia no Niño 3.4", "sentinel.stat2.label": "Bacias monitoradas", "sentinel.stat3.label": "Regiões críticas",
+        "sentinel.cta": "Abrir Climate Sentinel",
+        "sentinel.free": "Gratuito e público · Atualizado diariamente",
+        "sentinel.card.label": "Niño 3.4 · Temperatura do mar",
+        "sentinel.card.note": "acima da linha de base · última leitura, set/2026",
+        "sentinel.ranking.title": "Maior exposição agora",
+        "sentinel.rank1": "Café Arábica · Brasil", "sentinel.rank2": "Milho Branco · África do Sul", "sentinel.rank3": "Soja · Brasil"
       },
       fr: {
         "meta.title": "Leaftix GaiaOS — Gouvernance Autonome pour la Sécurité Alimentaire",
         "meta.description": "Leaftix GaiaOS est un système d'exploitation de gouvernance autonome pour la production alimentaire durable. IA multi-agents, Digital Twin et architecture edge-native permettent une gouvernance proactive — pas seulement de la surveillance.",
         "nav.crisis": "Le Problème", "nav.solution": "La Solution",
         "nav.architecture": "Architecture", "nav.manifesto": "Manifeste",
+        "nav.sentinel": "Sentinel", "nav.sentinel.new": "NOUVEAU",
         "nav.cta": "Demander l'Accès",
         "hero.badge": "Initialisation du Système",
-        "hero.title1": "L'avenir de la production durable",
-        "hero.title2": "sera gouverné.",
+        "hero.title1": "Leaftix GaiaOS : Gouvernance Autonome pour la Sécurité Alimentaire",
+        "hero.title2": "L'avenir de la production durable, gouverné.",
         "hero.subtitle": "Un manifeste pour la résilience planétaire, propulsé par l'intelligence artificielle et la précision absolue des données.",
         "crisis.label": "01 // La Crise",
         "crisis.title": "L'agriculture conventionnelle a été construite sur une prémisse que la planète ne soutient plus : un climat stable.",
@@ -1212,7 +1361,17 @@
         "vision.invalid": "Veuillez entrer une adresse e-mail valide.",
         "footer.mission": "Notre Mission", "footer.docs": "Documentation Technique",
         "footer.privacy": "Protocole de Confidentialité", "footer.status": "Statut du Système",
-        "footer.rights": "Tous droits réservés."
+        "footer.rights": "Tous droits réservés.",
+        "sentinel.badge": "Nouveau · Produit en Direct",
+        "sentinel.title1": "El Niño 2026 redessine les récoltes.", "sentinel.title2": "Suivez-le en direct.",
+        "sentinel.body": "Leaftix Climate Sentinel transforme les données de température de surface de la mer (NOAA) et de précipitations (CHIRPS) en scores quotidiens de risque de récolte sur 12 bassins agricoles — des mois avant un rapport de marché.",
+        "sentinel.stat1.label": "Anomalie Niño 3.4", "sentinel.stat2.label": "Bassins suivis", "sentinel.stat3.label": "Régions critiques",
+        "sentinel.cta": "Ouvrir Climate Sentinel",
+        "sentinel.free": "Gratuit et public · Mis à jour quotidiennement",
+        "sentinel.card.label": "Niño 3.4 · Température de la mer",
+        "sentinel.card.note": "au-dessus de la référence · dernière lecture, sept. 2026",
+        "sentinel.ranking.title": "Exposition maximale en ce moment",
+        "sentinel.rank1": "Café Arabica · Brésil", "sentinel.rank2": "Maïs blanc · Afrique du Sud", "sentinel.rank3": "Soja · Brésil"
       }
     };
 
@@ -1238,11 +1397,11 @@
       // Update HTML lang attr
       document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
 
-      // Update meta title & description
-      const titleTag = document.querySelector('[data-i18n-title]');
-      if (titleTag && t[titleTag.dataset.i18nTitle]) document.title = t[titleTag.dataset.i18nTitle];
-      const descTag = document.querySelector('[data-i18n-meta]');
-      if (descTag && t[descTag.dataset.i18nMeta]) descTag.content = t[descTag.dataset.i18nMeta];
+      // SEO SAFETY: <title> and <meta name="description"> are intentionally
+      // HARDCODED in <head> (English) and must NOT be overwritten by JS.
+      // Body copy swaps via [data-i18n] below; head tags stay stable for
+      // Googlebot / curl / view-source. (meta.title/meta.description keys
+      // remain in TRANSLATIONS for reference only.)
 
       // Update text content
       document.querySelectorAll('[data-i18n]').forEach(el => {
