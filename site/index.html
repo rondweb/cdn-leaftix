@@ -359,7 +359,7 @@
         persistence: 'localStorage+cookie',
         cross_subdomain_cookie: false
       });
-      posthog.register({ page: 'home', lang: (document.documentElement.lang || 'en') });
+      posthog.register({ page: 'home', lang: (document.documentElement.lang || 'en'), app_source: 'site' });
     })();
   </script>
 
