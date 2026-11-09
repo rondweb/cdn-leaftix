@@ -32,12 +32,27 @@
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       autocapture: true,
+      logs: {
+        serviceName: 'leaftix-web',
+        environment: window.location.hostname === 'localhost' ? 'development' : 'production'
+      },
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false
+      },
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage+cookie',
       cross_subdomain_cookie: false
     });
     posthog.register({ page: 'sproutdoctor', app_source: 'miniapp_sproutdoctor' });
+    window.posthogLog = function (message, attributes) {
+      try {
+        var logger = window.posthog && window.posthog.logger;
+        if (logger && typeof logger.info === 'function') logger.info(message, attributes);
+      } catch (_) {}
+    };
   })();
 </script>
     <!-- MICROSOFT CLARITY -->  
@@ -398,6 +413,46 @@
         let embedderInstance = null;
         let webllmInstance = null;
         let mlcEngine = null;
+        const createAiId = () => (
+          window.crypto && typeof window.crypto.randomUUID === 'function'
+            ? window.crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+        );
+        const aiSessionId = `sproutdoctor-${createAiId()}`;
+        const captureAiGeneration = ({ traceId, messages, reply, latencyMs, error }) => {
+          if (typeof window.posthog === 'undefined' || typeof window.posthog.capture !== 'function') return;
+
+          try {
+            const properties = {
+              $ai_trace_id: traceId,
+              $ai_session_id: aiSessionId,
+              $ai_span_id: createAiId(),
+              $ai_span_name: 'custom_treatment_generation',
+              $ai_model: selectedLlmModel.value,
+              $ai_provider: 'webllm',
+              $ai_input: messages,
+              $ai_latency: latencyMs / 1000,
+              $ai_temperature: 0.1,
+              $ai_stream: false
+            };
+
+            if (reply) {
+              properties.$ai_output_choices = [{
+                role: 'assistant',
+                content: reply.choices[0].message.content
+              }];
+            }
+
+            if (error) {
+              properties.$ai_is_error = true;
+              properties.$ai_error = error.message || String(error);
+            }
+
+            window.posthog.capture('$ai_generation', properties);
+          } catch (_) {
+            // Analytics must not affect local inference.
+          }
+        };
 
         // Status Styles mapping
         const webGpuStatusLabel = computed(() => {
@@ -494,6 +549,12 @@
                 score: highestScore
               };
               addLog(`Matched most likely anomaly: ${bestMatch.category} (Confidence: ${(highestScore * 100).toFixed(1)}%)`);
+              if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+                window.posthog.capture('crop_diagnosis_completed', {
+                  diagnosis_id: bestMatch.id,
+                  match_type: 'dictionary_match'
+                });
+              }
               triggerToast('Diagnosis compiled! See recommendations on the right.');
             } else {
               activeDiagnostic.value = {
@@ -503,6 +564,12 @@
                 severity: 'warning'
               };
               addLog('Description had low confidence matches. Loaded default protection instructions.', true);
+              if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+                window.posthog.capture('crop_diagnosis_completed', {
+                  diagnosis_id: 'unknown_anomaly',
+                  match_type: 'fallback'
+                });
+              }
               triggerToast('Unknown symptoms. Default safeguards loaded.');
             }
 
@@ -547,6 +614,13 @@
             );
 
             llmLoaded.value = true;
+            if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+              window.posthog.capture('local_llm_initialized', {
+                model_id: selectedLlmModel.value,
+                app: 'sproutdoctor'
+              });
+            }
+            window.posthogLog?.('local llm initialized', { miniapp: 'sproutdoctor' });
             addLog('WebLLM offline engine ready to receive query instructions.');
             triggerToast('Local LLM successfully initialized!');
           } catch (e) {
@@ -564,6 +638,9 @@
           aiLoading.value = true;
           aiTreatmentOutput.value = '';
           addLog(`Inference generation initiated for anomaly [${activeDiagnostic.value.category}]`);
+          const traceId = createAiId();
+          const generationStartedAt = Date.now();
+          let messages = [];
 
           try {
             const prompt = `Context:
@@ -583,7 +660,7 @@ Write a step-by-step custom remediation guide (3 steps max). Be precise, action-
 
 Your Output:`;
 
-            const messages = [
+            messages = [
               { role: 'system', content: 'You are an offline vertical farm disease assistant. Provide highly concise, actionable remedies.' },
               { role: 'user', content: prompt }
             ];
@@ -594,9 +671,27 @@ Your Output:`;
               temperature: 0.1
             });
 
+            captureAiGeneration({
+              traceId,
+              messages,
+              reply,
+              latencyMs: Date.now() - generationStartedAt
+            });
             aiTreatmentOutput.value = reply.choices[0].message.content;
+            if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+              window.posthog.capture('custom_treatment_generated', {
+                diagnosis_id: activeDiagnostic.value.id || 'unknown_anomaly',
+                model_id: selectedLlmModel.value
+              });
+            }
             addLog('Local AI model successfully generated remediation blueprint.');
           } catch (e) {
+            captureAiGeneration({
+              traceId,
+              messages,
+              latencyMs: Date.now() - generationStartedAt,
+              error: e
+            });
             addLog(`AI Generation Error: ${e.message}`, true);
             triggerToast('AI generation execution error.');
           } finally {

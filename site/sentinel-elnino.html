@@ -85,6 +85,15 @@
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       autocapture: true,
+      logs: {
+        serviceName: 'leaftix-web',
+        environment: window.location.hostname === 'localhost' ? 'development' : 'production'
+      },
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false
+      },
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage+cookie',

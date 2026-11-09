@@ -32,12 +32,27 @@
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       autocapture: true,
+      logs: {
+        serviceName: 'leaftix-web',
+        environment: window.location.hostname === 'localhost' ? 'development' : 'production'
+      },
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false
+      },
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage+cookie',
       cross_subdomain_cookie: false
     });
     posthog.register({ page: 'sproutplan', app_source: 'miniapp_sproutplan' });
+    window.posthogLog = function (message, attributes) {
+      try {
+        var logger = window.posthog && window.posthog.logger;
+        if (logger && typeof logger.info === 'function') logger.info(message, attributes);
+      } catch (_) {}
+    };
   })();
 </script>
     <!-- MICROSOFT CLARITY -->  
@@ -598,6 +613,14 @@
 
           activeBatches.value.unshift(batch);
           saveBatches();
+          if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+            window.posthog.capture('growing_batch_logged', {
+              crop_id: activeVariety.value.id,
+              tray_format: selectedTrayFormat.value,
+              schedule_direction: scheduleDirection.value
+            });
+          }
+          window.posthogLog?.('growing batch logged', { miniapp: 'sproutplan' });
           triggerToast('Batch logged into active schedule tracking!');
         };
 

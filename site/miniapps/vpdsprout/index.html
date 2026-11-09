@@ -32,12 +32,27 @@
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       autocapture: true,
+      logs: {
+        serviceName: 'leaftix-web',
+        environment: window.location.hostname === 'localhost' ? 'development' : 'production'
+      },
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false
+      },
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage+cookie',
       cross_subdomain_cookie: false
     });
     posthog.register({ page: 'vpdsprout', app_source: 'miniapp_vpdsprout' });
+    window.posthogLog = function (message, attributes) {
+      try {
+        var logger = window.posthog && window.posthog.logger;
+        if (logger && typeof logger.info === 'function') logger.info(message, attributes);
+      } catch (_) {}
+    };
   })();
 </script>
     <!-- MICROSOFT CLARITY -->  
@@ -369,6 +384,46 @@
 
         let webllmInstance = null;
         let mlcEngine = null;
+        const createAiId = () => (
+          window.crypto && typeof window.crypto.randomUUID === 'function'
+            ? window.crypto.randomUUID()
+            : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+        );
+        const aiSessionId = `vpdsprout-${createAiId()}`;
+        const captureAiGeneration = ({ traceId, messages, reply, latencyMs, error }) => {
+          if (typeof window.posthog === 'undefined' || typeof window.posthog.capture !== 'function') return;
+
+          try {
+            const properties = {
+              $ai_trace_id: traceId,
+              $ai_session_id: aiSessionId,
+              $ai_span_id: createAiId(),
+              $ai_span_name: 'vpd_remediation_generation',
+              $ai_model: selectedLlmModel.value,
+              $ai_provider: 'webllm',
+              $ai_input: messages,
+              $ai_latency: latencyMs / 1000,
+              $ai_temperature: 0.1,
+              $ai_stream: false
+            };
+
+            if (reply) {
+              properties.$ai_output_choices = [{
+                role: 'assistant',
+                content: reply.choices[0].message.content
+              }];
+            }
+
+            if (error) {
+              properties.$ai_is_error = true;
+              properties.$ai_error = error.message || String(error);
+            }
+
+            window.posthog.capture('$ai_generation', properties);
+          } catch (_) {
+            // Analytics must not affect local inference.
+          }
+        };
 
         // Toggle Celsius / Fahrenheit display
         const toggleUnit = () => {
@@ -539,6 +594,9 @@
 
           aiLoading.value = true;
           aiRemediationPlan.value = '';
+          const traceId = createAiId();
+          const generationStartedAt = Date.now();
+          let messages = [];
 
           try {
             const prompt = `Context:
@@ -555,7 +613,7 @@ Write 3 concise bullet points outlining immediate HVAC, ventilation, and humidif
 
 Your Output:`;
 
-            const messages = [
+            messages = [
               { role: 'system', content: 'You are an offline vertical farm climate advisor. Provide highly concise, actionable remediation instructions.' },
               { role: 'user', content: prompt }
             ];
@@ -566,8 +624,27 @@ Your Output:`;
               temperature: 0.1
             });
 
+            captureAiGeneration({
+              traceId,
+              messages,
+              reply,
+              latencyMs: Date.now() - generationStartedAt
+            });
             aiRemediationPlan.value = reply.choices[0].message.content;
+            if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+              window.posthog.capture('ai_remediation_generated', {
+                vpd_zone: vpdZone.value.label,
+                temperature_unit: isFahrenheit.value ? 'fahrenheit' : 'celsius'
+              });
+            }
+            window.posthogLog?.('ai remediation generated', { miniapp: 'vpdsprout' });
           } catch (e) {
+            captureAiGeneration({
+              traceId,
+              messages,
+              latencyMs: Date.now() - generationStartedAt,
+              error: e
+            });
             console.error(e);
             triggerToast('AI generation execution error.');
           } finally {

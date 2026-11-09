@@ -32,12 +32,27 @@
     posthog.init(POSTHOG_KEY, {
       api_host: POSTHOG_HOST,
       autocapture: true,
+      logs: {
+        serviceName: 'leaftix-web',
+        environment: window.location.hostname === 'localhost' ? 'development' : 'production'
+      },
+      capture_exceptions: {
+        capture_unhandled_errors: true,
+        capture_unhandled_rejections: true,
+        capture_console_errors: false
+      },
       capture_pageview: true,
       capture_pageleave: true,
       persistence: 'localStorage+cookie',
       cross_subdomain_cookie: false
     });
     posthog.register({ page: 'lumensilo', app_source: 'miniapp_lumensilo' });
+    window.posthogLog = function (message, attributes) {
+      try {
+        var logger = window.posthog && window.posthog.logger;
+        if (logger && typeof logger.info === 'function') logger.info(message, attributes);
+      } catch (_) {}
+    };
   })();
 </script>
     <!-- MICROSOFT CLARITY -->  
@@ -487,6 +502,13 @@
 
           blueprints.value.push(item);
           localStorage.setItem('lumensilo_blueprints', JSON.stringify(blueprints.value));
+          if (typeof window.posthog !== 'undefined' && typeof window.posthog.capture === 'function') {
+            window.posthog.capture('rack_blueprint_saved', {
+              crop_id: activeCrop.value.id,
+              dli_status: dliStatus.value.label
+            });
+          }
+          window.posthogLog?.('rack blueprint saved', { miniapp: 'lumensilo' });
           triggerToast('Configuration blueprint saved successfully.');
         };
 
